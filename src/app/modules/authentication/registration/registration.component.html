@@ -1,0 +1,109 @@
+
+<div class="page_data_loader" *ngIf="show_loader"></div>
+<!-- Titlebar
+	================================================== -->
+	<div id="titlebar" class="gradient">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<h2>Register</h2>
+
+					<!-- Breadcrumbs -->
+					<nav id="breadcrumbs" class="dark">
+						<ul>
+							<li><a >Home</a></li>
+							<li>Register</li>
+						</ul>
+					</nav>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-5 offset-xl-3">
+
+				<div class="login-register-page">
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3 style="font-size: 26px;">Let's create your account!</h3>
+						<span>Already have an account? <a [routerLink]="['/auth/login']">Log In!</a></span>
+					</div>
+
+					<!-- Account Type -->
+					
+					<!-- Form -->
+					<form method="post" id="register-account-form" #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm.valid)">
+						
+						<div class="account-type">
+							<div>
+								<input type="radio" name="account_type" id="freelancer-radio" class="account-type-radio" value="Student"  checked [(ngModel)]="account_type" />
+								<label for="freelancer-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> Student</label>
+							</div>
+
+							<div>
+								<input type="radio" name="account_type" id="employer-radio" class="account-type-radio" value="Freelancer" [(ngModel)]="account_type" />
+								<label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Freelancer</label>
+							</div>
+						</div>
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border"  name="firstname"  [(ngModel)]="firstname" id="firstname" placeholder="First Name" required  #userfirstname="ngModel"/>
+							<div *ngIf="userfirstname.invalid && (userfirstname.dirty || userfirstname.touched)" class="text-danger small">
+								First Name is required. 
+							</div>
+						</div>
+						
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border"  name="lastname"  [(ngModel)]="lastname" id="lastname" placeholder="Last Name" required  #userlastname="ngModel"/>
+							<div *ngIf="userlastname.invalid && (userlastname.dirty || userlastname.touched)" class="text-danger small">
+								Last Name is required. 
+							</div>
+						</div>
+						
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="email" class="input-text with-border" [pattern]="this.common_params.email_valid_regex" name="email_address"  [(ngModel)]="email_address" id="email_address" placeholder="Email Address" required  #emailaddress="ngModel"/>
+							<div *ngIf="emailaddress.invalid && (emailaddress.dirty || emailaddress.touched)" class="text-danger small">
+								Valid Email Address is required. 
+							</div>
+						</div>
+
+						<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border" name="password" id="password" placeholder="Password" required  [(ngModel)]="user_password"  #userpassword="ngModel"/>
+							<div *ngIf="userpassword.invalid && (userpassword.dirty || userpassword.touched)" class="text-danger small">
+								Password is required
+							</div>
+						</div>
+
+						<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border" name="repassword" id="repassword" placeholder="Repeat Password" required  [(ngModel)]="re_enter_password"  #re_password="ngModel"/>
+							<div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)" class="text-danger small">
+								Re Enter Password is required
+							</div>
+						</div>
+						<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" form="register-account-form">Register <i class="icon-material-outline-arrow-right-alt"></i></button>
+						
+						<!-- Button -->
+					</form>
+					
+					<!-- Social Login -->
+					<div class="social-login-separator"><span>or</span></div>
+					<div class="social-login-buttons">
+						<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Register via Facebook</button>
+						<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Register via Google+</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>

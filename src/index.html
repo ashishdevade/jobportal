@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title id="base_title">  </title>
+	<base href="/">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+	<app-root>Loading...</app-root>
+</body>
+
+<script>
+	var title = "";
+	if(sessionStorage.system_config != null && sessionStorage.system_config!= undefined){
+		document.getElementById('base_title').innerHTML = JSON.parse(sessionStorage.system_config)['app_name'];
+	} else {
+		load_config()
+	}
+	
+	function load_config() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById('base_title').innerHTML = JSON.parse(this.responseText)['app_name'];
+			}
+		};
+		xhttp.open("GET", "/assets/config.json", true);
+		xhttp.send();
+	}
+</script>
+</html>
