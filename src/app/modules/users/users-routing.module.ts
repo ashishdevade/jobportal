@@ -9,6 +9,11 @@ const routes: Routes = [
     pathMatch: 'full'    
   }, 
   { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),    
+    data: { showHeader: true, showFooter: true }
+  },
 ];
 
 @NgModule({

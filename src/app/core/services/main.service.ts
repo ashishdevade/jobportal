@@ -47,4 +47,57 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + "/user/register_user", data_object); // this.common_params.httpOptions
 	}
 	
+	get_user_profile_settings(type): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			type : type,
+			user_id : user_id
+			
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_user_profile_settings", data_object); // this.common_params.httpOptions
+	}
+	
+	get_category_list(category_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let data_object = {
+			category_id : category_id
+			
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_all_categories", data_object); // this.common_params.httpOptions
+	}
+	
+	get_subcategory_list(category_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let data_object = {
+			category_id : category_id
+			
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_all_subcategories", data_object); // this.common_params.httpOptions
+	}
+	
+	update_profile_category(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			category : dataset.category,
+			subcategory : dataset.subcategory,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/update_profile_category", data_object); // this.common_params.httpOptions
+	}
+	
+	update_profile_expertise(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			skills : dataset.skills,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/update_profile_expertise", data_object); // this.common_params.httpOptions
+	}
+	
 }

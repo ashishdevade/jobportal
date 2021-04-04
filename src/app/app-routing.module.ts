@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule),    
     data: { showHeader: true, showFooter: true }
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),    
+    data: { showHeader: true, showFooter: true }
+  },
 ];
 
 const config: ExtraOptions = {

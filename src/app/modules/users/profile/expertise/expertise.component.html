@@ -1,0 +1,77 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Expertise -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="expertise-form" #expertiseform="ngForm" (ngSubmit)="onSubmit(expertiseform.valid)">
+				<div class="row">
+
+					<!-- Dashboard Box -->
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Expertise</h3>
+							</div>
+
+							<div class="content with-padding padding-bottom-10">
+								<fieldset >
+									<div class="row">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field">
+												<h5> Select your skills</h5>
+												<input type="text" class="input-text with-border  mb-0 pb-0" name="skills" id="skills" placeholder="Enter Your Skills" required  [(ngModel)]="form_data.skills"  #skillset="ngModel"/>
+												<div class="text-muted">Enter Comma (,) Seperated</div>
+												<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)" class="text-danger small">
+													Skill Set is required
+												</div>
+											</div>
+										</div>
+									</div>
+							</fieldset>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-12">
+					<div class="row">
+						<div class="col-xl-6">
+							<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="expertiseform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+						</div>
+						
+						<div class="col-xl-6">
+							<button type="button" (click)="back_to_category()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</form>
+		
+
+	</div>
+</div>
+</div>

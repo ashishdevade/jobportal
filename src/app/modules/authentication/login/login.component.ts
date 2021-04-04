@@ -41,7 +41,21 @@ export class LoginComponent implements OnInit {
 					sessionStorage.setItem("user_details", JSON.stringify(response['data'][0]));
 					this.show_loader = false;
 					this.common_service.show_toast('s', "Redirecting to dashboard.", "");
-					this.common_service.change_route(['/user/dashboard']);
+					setTimeout(()=>{
+						
+						let new_page_id = (parseInt(response['data'][0]['profile_completed']) + 1);
+						console.log("new_page_id ", new_page_id);
+						let profile_page = this.common_params.profile_settings_list.filter((obj)=>{
+							return parseInt(obj.page_id) == new_page_id
+						});
+						console.log("profile_page ", profile_page);
+						if(profile_page.length > 0){
+							this.common_service.change_route(profile_page[0]['link']);
+						} else {
+							this.common_service.change_route('/user/dashboard');
+						}
+						
+					}, 400);
 					this.show_loader = false;
 				} else {
 					this.user_password = '';

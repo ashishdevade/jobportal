@@ -14,6 +14,20 @@ export class CommonFunctions {
 	{"key":"100", "value":"100"},
 	];
 	
+	public profile_settings_list = [
+	{"page_id":"1", "name": "Category ", "link":"user/profile/category"},
+	{"page_id":"2", "name": "Expertise", "link":"user/profile/expertise"},
+	{"page_id":"3", "name": "Expertise Level", "link":"user/profile/expertise-level"},
+	{"page_id":"4", "name": "Education", "link":"user/profile/category"},
+	{"page_id":"5", "name": "Employment", "link":"user/profile/category"},
+	{"page_id":"6", "name": "Languages", "link":"user/profile/category"},
+	{"page_id":"7", "name": "Hourly Rate", "link":"user/profile/category"},
+	{"page_id":"8", "name": "Title & Overview", "link":"user/profile/category"},
+	{"page_id":"9", "name": "Profile Photo", "link":"user/profile/category"},
+	{"page_id":"10", "name": "Location", "link":"user/profile/category"},
+	{"page_id":"11", "name": "Phone", "link":"user/profile/category"},
+	]
+	
 	public default_size = 10;
 	
 	public httpOptions = {

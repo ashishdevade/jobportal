@@ -1,0 +1,87 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Category -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="category-form" #categoryform="ngForm" (ngSubmit)="onSubmit(categoryform.valid)">
+				<div class="row">
+
+					<!-- Dashboard Box -->
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Category</h3>
+							</div>
+
+							<div class="content with-padding padding-bottom-10">
+								<div class="row">
+									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+										<div class="submit-field">
+											<h5>Category</h5>
+											<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="form_data.category" (change)="get_sub_category()" required #categoryobj="ngModel">
+												<option value="">Select a category</option>
+												<option *ngFor="let item of this.category_list" [value]="item.category_id">{{item.name}}</option>
+											</select>
+											<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)" class="text-danger small">
+												Category is required. 
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-2 mb-2"> </div>
+								<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
+									<div class="row">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field">
+												<h5> Subcategory</h5>
+												<select class="form-control with-border" name="subcategory" id="subcategory"  title="Select Category" [(ngModel)]="form_data.subcategory" required #subcategoryobj="ngModel">
+													<option value=""> Select a Subcategory</option>
+													<option *ngFor="let item of this.sub_category_list" [value]="item.id">{{item.subcategory_name}}</option>
+												</select>
+												<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)" class="text-danger small">
+												Subcategory is required. 
+											</div>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-12">
+						<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="categoryform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+					</div>
+
+				</div>
+			</form>
+			
+
+		</div>
+	</div>
+</div>
