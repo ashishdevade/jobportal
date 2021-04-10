@@ -6,7 +6,9 @@ import { CommonFunctions } from "../../../../core/helpers/common.functions";
 import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
 
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 @Component({
 	selector: 'app-education',
@@ -20,8 +22,7 @@ export class EducationComponent implements OnInit {
 	public show_loader = false;
 	public form_data:any = {};
 	public profile_side_menu = [];
-	modalRef: BsModalRef;
-	
+	 modalRef: BsModalRef;
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -45,10 +46,6 @@ export class EducationComponent implements OnInit {
 			this.show_loader = false;
 			
 		}, 500);
-	}
-	
-	openModal(template: TemplateRef<any>) {
-		this.modalRef = this.modalService.show(template);
 	}
 	
 	onSubmit(isValid: Boolean){
@@ -76,5 +73,12 @@ export class EducationComponent implements OnInit {
 			});
 		}
 	}
+	
+	 openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'gray modal-lg' })
+    );
+  }
 
 }

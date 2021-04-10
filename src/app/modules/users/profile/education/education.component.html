@@ -37,7 +37,7 @@
 								<div>Add the schools you attended, areas of study, and degrees earned.</div>
 								
 								<br>
-								<button type="button" class="btn btn-outline-primary"> <i class="icon-material-outline-add"></i> Add Education</button>
+								<button type="button" class="btn btn-outline-primary" (click)="openModal(template)"> <i class="icon-material-outline-add"></i> Add Education</button>
 								
 							</div>
 							<div class="content with-padding padding-bottom-10">
@@ -67,16 +67,13 @@
 
 
 <ng-template #template>
-	<div class="modal-header">
-		<h4 class="modal-title pull-left">Modal</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-			<span aria-hidden="true">×</span>
-		</button>
-	</div>
-	<div class="modal-body">
-		This is a sample modal dialog box.
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
-	</div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Just a modal with a bunch of words inside, nothing serious.
+  </div>
 </ng-template>

@@ -7,7 +7,7 @@ import { SharedModules  } from '../../../core/shared.module';
 import { ExpertiseComponent } from './expertise/expertise.component';
 import { ExpertiseLevelComponent } from './expertise-level/expertise-level.component';
 import { EducationComponent } from './education/education.component';
-import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [CategoryComponent, ExpertiseComponent, ExpertiseLevelComponent, EducationComponent],
@@ -15,8 +15,7 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
     CommonModule,
     ProfileRoutingModule,
     SharedModules,
-    ModalModule,
-],
-providers : [ BsModalService ]
+    ModalModule.forRoot()
+]
 })
 export class ProfileModule { }
