@@ -38,12 +38,28 @@
 							</div>
 
 							<div class="content with-padding padding-bottom-10">
-								<fieldset >
+								<div class="row">
+									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+										<div class="submit-field">
+											<h5>Skill Set</h5>
+											<select class="form-control with-border" title="Select Skills" name="Skills" id="Skills" [(ngModel)]="form_data.skills" required #categoryobj="ngModel">
+												<option value="">Select Your Skills</option>
+												<option value="1">Skill 1 </option>
+												<option value="2">Skill 2 </option>
+												<option value="other">Other</option>
+											</select>
+											<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)" class="text-danger small">
+												Skillset is required. 
+											</div>
+										</div>
+									</div>
+								</div>
+								<fieldset *ngIf="form_data.skills == 'other'">
 									<div class="row">
 										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 											<div class="submit-field">
-												<h5> Select your skills</h5>
-												<input type="text" class="input-text with-border  mb-0 pb-0" name="skills" id="skills" placeholder="Enter Your Skills" required  [(ngModel)]="form_data.skills"  #skillset="ngModel"/>
+												<h5> Enter your skills</h5>
+												<input type="text" class="input-text with-border  mb-0 pb-0" name="other" id="other" placeholder="Enter Your other" required  [(ngModel)]="form_data.other"  #skillset="ngModel"/>
 												<div class="text-muted">Enter Comma (,) Seperated</div>
 												<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)" class="text-danger small">
 													Skill Set is required

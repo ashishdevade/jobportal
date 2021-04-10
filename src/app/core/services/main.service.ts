@@ -94,10 +94,22 @@ export class MainService {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			skills : dataset.skills,
+			other : dataset.other,
 			user_id : user_id
 		};
 		
 		return this.httpclient.post(this.config_file_data.service_url + "/user/update_profile_expertise", data_object); // this.common_params.httpOptions
+	}
+	
+	update_profile_expertise_level(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			level : dataset.expertise_level,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/update_profile_expertise_level", data_object); // this.common_params.httpOptions
 	}
 	
 }

@@ -1,0 +1,82 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Expertise -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="expertise-form" #educationform="ngForm" (ngSubmit)="onSubmit(educationform.valid)">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Education</h3>
+							</div>
+
+							<div class="content with-padding padding-bottom-10">
+								<div>Add the schools you attended, areas of study, and degrees earned.</div>
+								
+								<br>
+								<button type="button" class="btn btn-outline-primary"> <i class="icon-material-outline-add"></i> Add Education</button>
+								
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-6">
+								<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="educationform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+							</div>
+							
+							<div class="col-xl-6">
+								<button type="button" (click)="back_to_expertise_level()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+			
+
+		</div>
+	</div>
+</div>
+
+
+<ng-template #template>
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">Modal</h4>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		This is a sample modal dialog box.
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+	</div>
+</ng-template>

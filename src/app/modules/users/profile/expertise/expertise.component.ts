@@ -34,10 +34,11 @@ export class ExpertiseComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
-		this.show_loader = false;
+		this.show_loader = true;
 		this.get_user_profile_settings((response_data)=>{
 			this.form_data.skills = response_data['data'][0]['skills'];
-			console.log("this.form_data.skills ", this.form_data.skills);
+			this.form_data.other = response_data['data'][0]['others'];
+			
 			this.show_loader = false;
 		});
 	}
