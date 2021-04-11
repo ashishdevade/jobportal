@@ -1,5 +1,5 @@
 <div class="margin-top-50"></div>
-<div class="page_data_loader" *ngIf="show_loader"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
 
 <div class="container">
 	<div class="row">
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
-			<form method="post" id="expertise-form" #educationform="ngForm" (ngSubmit)="onSubmit(educationform.valid)">
+			<form method="post" id="education-card-form" >
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="dashboard-box margin-top-0">
@@ -35,10 +35,30 @@
 
 							<div class="content with-padding padding-bottom-10">
 								<div>Add the schools you attended, areas of study, and degrees earned.</div>
-								
 								<br>
-								<button type="button" class="btn btn-outline-primary" (click)="openModal(template)"> <i class="icon-material-outline-add"></i> Add Education</button>
 								
+								<div class="education_list_section" *ngIf="this.education_list.length > 0">
+									<div   *ngFor="let education of this.education_list">
+										<div class="education_block row p-2 m-2">
+											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+												<h5>{{education.school}}</h5>
+												<span>{{education.study}}</span> <br>
+												<span>{{education.from_year}} - {{education.to_year}}</span>
+												
+											</div>
+											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+												<button type="button" (click)="delete_education(education.student_education_id)" class="btn btn-sm btn-secondary float-right ml-2"><i class="icon-feather-trash" ></i> </button>
+												
+												<button type="button" (click)="edit_education(template, education.student_education_id)" class="btn btn-sm btn-secondary float-right ml-2"><i class="icon-line-awesome-pencil" ></i> </button>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								
+								<button type="button" class="btn btn-outline-primary" (click)="add_new_education(template)"> <i class="icon-material-outline-add"></i> Add Education</button>
 							</div>
 							<div class="content with-padding padding-bottom-10">
 								<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
@@ -48,7 +68,7 @@
 					<div class="col-xl-12">
 						<div class="row">
 							<div class="col-xl-6">
-								<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="educationform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+								<button type="button" class="button ripple-effect big margin-top-30" (click)="go_to_exployment()" ><i class="icon-feather-check"></i> Next</button>
 							</div>
 							
 							<div class="col-xl-6">
@@ -67,13 +87,105 @@
 
 
 <ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    Just a modal with a bunch of words inside, nothing serious.
-  </div>
-</ng-template>
+	<form method="post" id="expertise-form" #educationform="ngForm" (ngSubmit)="onSubmit(educationform.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> School</h5>
+						<input type="text" class="input-text with-border  mb-0 pb-0" name="school" id="school" placeholder="For Ex. Northwestern university " required  [(ngModel)]="form_data.school"  #schoolname="ngModel"/>
+						<div *ngIf="schoolname.invalid && (schoolname.dirty || schoolname.touched)" class="text-danger small">
+							School is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Area of Study</h5>
+						<input type="text" class="input-text with-border  mb-0 pb-0" name="study" id="study" placeholder="Ex. Computer Science" required  [(ngModel)]="form_data.study"  #studyname="ngModel"/>
+						<div *ngIf="studyname.invalid && (studyname.dirty || studyname.touched)" class="text-danger small">
+							Area of Study is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Degree</h5>
+						<input type="text" class="input-text with-border  mb-0 pb-0" name="degree" id="degree" placeholder="Enter Your degree" required  [(ngModel)]="form_data.degree"  #degreeValue="ngModel"/>
+						<div *ngIf="degreeValue.invalid && (degreeValue.dirty || degreeValue.touched)" class="text-danger small">
+							Degree is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<h6>Dates Attended </h6>
+				</div>
+				
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>From Date </h5>
+						<select class="form-control with-border" title="Select from" name="from" id="from" [(ngModel)]="form_data.from_year" required #from_date="ngModel">
+							<option value="">Select From Date</option>
+							<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
+						</select>
+						<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)" class="text-danger small">
+							From Date is required. 
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>To Date</h5>
+						<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.to_year" required #to_date="ngModel">
+							<option value="">Select To Date (or Expected To Date)</option>
+							<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
+						</select>
+						<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small">
+							To Date is required. 
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <fieldset> -->
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Description </h5>
+							<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe your studies, awards" required  [(ngModel)]="form_data.description"  #skillset="ngModel"></textarea>
+							<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)" class="text-danger small">
+								Description is required
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </fieldset> -->
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="float-left">
+							<!-- <button type="submit" class="button ripple-effect" [disabled]="educationform.invalid"><i class="icon-feather-check"></i> Save & Add More </button> -->
+							<button type="submit" class="button ripple-effect ml-2" [disabled]="educationform.invalid"><i class="icon-feather-check"></i> {{action_button_text}} </button>
+							
+						</div>
+						<div class="float-right">
+							
+							<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times" ></i> Close</button>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-template>

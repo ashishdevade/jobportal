@@ -112,4 +112,57 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + "/user/update_profile_expertise_level", data_object); // this.common_params.httpOptions
 	}
 	
+	add_update_profile_education(dataset, education_id) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			school : dataset.school,
+			study : dataset.study,
+			degree : dataset.degree,
+			from_year : dataset.from_year,
+			to_year : dataset.to_year,
+			description : dataset.description,
+			education_id : education_id,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_education", data_object); // this.common_params.httpOptions
+	}
+	
+	skip_this_step(step_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			step_id : step_id,
+			user_id : user_id
+			 
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/skip_this_step", data_object); // this.common_params.httpOptions
+	}
+	
+	delete_education(education_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			education_id : education_id,
+			user_id : user_id
+			 
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/delete_education", data_object); // this.common_params.httpOptions
+	}
+	
+	get_education_details(education_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			education_id : education_id,
+			user_id : user_id
+			 
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_education_details", data_object); // this.common_params.httpOptions
+	}
+	
 }

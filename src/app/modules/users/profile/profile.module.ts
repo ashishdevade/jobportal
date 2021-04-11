@@ -8,9 +8,10 @@ import { ExpertiseComponent } from './expertise/expertise.component';
 import { ExpertiseLevelComponent } from './expertise-level/expertise-level.component';
 import { EducationComponent } from './education/education.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { EmploymentComponent } from './employment/employment.component';
 
 @NgModule({
-  declarations: [CategoryComponent, ExpertiseComponent, ExpertiseLevelComponent, EducationComponent],
+  declarations: [CategoryComponent, ExpertiseComponent, ExpertiseLevelComponent, EducationComponent, EmploymentComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
