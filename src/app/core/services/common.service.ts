@@ -27,8 +27,6 @@ export class CommonService {
 		if (JSON.parse(sessionStorage.getItem("system_config"))) {
 			this.isSystemLogEnabled = JSON.parse(sessionStorage.getItem("system_config"))["is_system_log_enabled"];
 		}
-
-		console.log("this.isSystemLogEnabled", this.isSystemLogEnabled)
 	}
 
 	change_route(router_link) {
