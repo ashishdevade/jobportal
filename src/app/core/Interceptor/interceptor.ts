@@ -29,7 +29,7 @@ export class Interceptor implements HttpInterceptor {
         });
 
         //logging the updated Parameters to browser's console
-        console.log("Before making api call : ", request);
+        // console.log("Before making api call : ", request);
         return next.handle(request).pipe(
             tap(
                 event => {
