@@ -1,7 +1,9 @@
 {
-	"owner":"Client Name",
-	"app_name":"Internal Job Portal",
-	"product_code":"internal-job-portal",
-	"service_url":"http://localhost:3000",
-	"version":"1.0.0" 
+	"owner": "Client Name",
+	"app_name": "Internal Job Portal",
+	"product_code": "internal-job-portal",
+	"service_url": "http://localhost:3000",
+	"version": "1.0.0",
+	"build_date": "13-April-2021",
+	"is_system_log_enabled": true
 }
