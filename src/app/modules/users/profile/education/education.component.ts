@@ -98,7 +98,7 @@ export class EducationComponent implements OnInit {
 	
 	skip_steps(){
 		this.show_loader = true; 
-		this.service.get_user_profile_settings('education').subscribe(response=> {
+		this.service.skip_this_step(this.page_id).subscribe(response=> {
 			if(response.status == 200){
 				this.show_loader = false;
 				this.common_service.change_route('user/profile/employment');
@@ -146,6 +146,12 @@ export class EducationComponent implements OnInit {
 	
 	add_new_education(template: TemplateRef<any>) {
 		this.education_id = -1;
+		this.form_data.school = "";
+		this.form_data.study = "";
+		this.form_data.degree = "";
+		this.form_data.from_year = "";
+		this.form_data.to_year = "";
+		this.form_data.description = "";
 		this.popup_title = "Add Education";
 		this.action_button_text = "Save";
 		this.success_message = "Education saved successfully.";
@@ -157,6 +163,7 @@ export class EducationComponent implements OnInit {
 		this.popup_title = "Edit Education";
 		this.action_button_text = "Update";
 		this.success_message = "Education updaed successfully.";
+		this.show_loader = true;
 		this.service.get_education_details(education_id).subscribe(response=> {
 			if(response.status == 200){
 				let education_details = response.data[0];
