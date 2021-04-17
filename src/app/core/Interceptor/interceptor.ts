@@ -21,7 +21,7 @@ export class Interceptor implements HttpInterceptor {
         request = request.clone({
             setHeaders: {
                 // Authorization: `Bearer ${token}`,
-                TEST_KEY: "THIS IS TOKEN WITH EVERY REQ",
+             //   TEST_KEY: "THIS IS TOKEN WITH EVERY REQ",
                 // "Access-Control-Allow-Origin": "*",
                 // "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
                 // "Access-Control-Allow-Headers" : "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"

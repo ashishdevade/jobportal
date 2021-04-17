@@ -19,7 +19,7 @@ export class TitleOverviewComponent implements OnInit {
 	public show_loader = false;
 	public form_data:any = {};
 	public profile_side_menu = [];
-	public success_message = "Hourly Rate saved successfully.";
+	public success_message = "Title & Overview saved successfully.";
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
