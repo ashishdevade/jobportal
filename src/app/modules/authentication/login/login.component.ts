@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
 					sessionStorage.setItem("user_id", response['data'][0]['user_account_id']);
 					sessionStorage.setItem("user_details", JSON.stringify(response['data'][0]));
 					this.show_loader = false;
-					this.common_service.show_toast('s', "Redirecting to dashboard.", "");
+					// this.common_service.show_toast('s', "Redirecting to dashboard.", "");
+					this.common_service.PrintLogs(varConstants.INFO, this.className, this.ngOnInit.name, "Redirecting to dashboard");
 					setTimeout(() => {
 
 						let new_page_id = (parseInt(response['data'][0]['profile_completed']) + 1);
