@@ -106,7 +106,7 @@ export class LocationComponent implements OnInit {
 	
 	back_to_title_overview(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/title-overview');
+		this.common_service.change_route('user/profile/photo');
 	}
 
 }

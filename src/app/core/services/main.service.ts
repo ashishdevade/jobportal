@@ -301,6 +301,17 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_phone", data_object); // this.common_params.httpOptions
 	}
 	
+	add_update_profile_photo(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			photo : dataset.photo,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/dd_update_profile_photo", data_object); // this.common_params.httpOptions
+	}
+	
 	
 	
 }

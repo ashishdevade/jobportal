@@ -155,7 +155,7 @@ export class EducationComponent implements OnInit {
 		this.popup_title = "Add Education";
 		this.action_button_text = "Save";
 		this.success_message = "Education saved successfully.";
-		this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
+		this.modalRef = this.modalService.show(template,this.common_params.modal_config );
 	}
 
 	edit_education(template: TemplateRef<any>, education_id) {
@@ -175,7 +175,7 @@ export class EducationComponent implements OnInit {
 				this.form_data.description = education_details.description;
 
 				this.show_loader = false;
-				this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
+				this.modalRef = this.modalService.show(template, this.common_params.modal_config );
 			} else {
 				this.show_loader = false;
 				//	this.common_service.show_toast('e', this.common_service.error_message, "");

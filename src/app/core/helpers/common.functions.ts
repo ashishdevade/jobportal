@@ -55,6 +55,13 @@ export class CommonFunctions {
 	{"page_id":"11", "name": "Phone", "link":"user/profile/category"},
 	]
 	
+	public modal_config = {
+			class: 'modal-lg',
+			backdrop: true,
+			ignoreBackdropClick: true,
+			keyboard  : false,
+		};
+	
 	public default_size = 10;
 	
 	public httpOptions = {

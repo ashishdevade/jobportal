@@ -1,1 +1,92 @@
-<p>profile-photo works!</p>
+<div class="margin-top-50"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Expertise -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="profile-card-form" >
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Profile Photo</h3>
+							</div>
+
+							<div class="content with-padding padding-bottom-10">
+								<div class="text-muted">Please upload a professional portrait that clearly shows your face.</div>
+								<br>
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								
+								<button type="button" class="btn btn-outline-primary" (click)="add_new_photo(template)"> <i class="icon-material-outline-add"></i> Add Profile Photo</button>
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-6">
+								<button type="button" class="button ripple-effect big margin-top-30" (click)="go_to_location()" ><i class="icon-feather-check"></i> Next</button>
+							</div>
+							
+							<div class="col-xl-6">
+								<button type="button" (click)="back_to_titleoverview()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<ng-template #template>
+	<form method="post" id="profile-form" #profilePhotoForm="ngForm" (ngSubmit)="onSubmit(profilePhotoForm.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="float-left">
+						<button type="submit" class="button ripple-effect ml-2" [disabled]="profilePhotoForm.invalid"><i class="icon-feather-check"></i> {{action_button_text}} </button>
+					</div>
+					<div class="float-right">
+						<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times" ></i> Close</button>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-template>

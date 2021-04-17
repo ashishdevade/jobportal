@@ -68,7 +68,7 @@ export class TitleOverviewComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					this.common_service.change_route('user/profile/location');
+					this.common_service.change_route('user/profile/photo');
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -93,7 +93,7 @@ export class TitleOverviewComponent implements OnInit {
 		this.service.skip_this_step(this.page_id).subscribe(response=> {
 			if(response.status == 200){
 				this.show_loader = false;
-				this.common_service.change_route('user/profile/location');
+				this.common_service.change_route('user/profile/photo');
 				
 			} else {
 				this.show_loader = false;

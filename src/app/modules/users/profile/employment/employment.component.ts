@@ -171,7 +171,7 @@ export class EmploymentComponent implements OnInit {
 		this.form_data.to_month = "";
 		this.form_data.to_year = "";
 		this.form_data.description = "";
-		this.modalRef = this.modalService.show( template, Object.assign({}, { class: 'gray modal-lg' }) );
+		this.modalRef = this.modalService.show( template, this.common_params.modal_config );
 	}
 	
 	edit_employment(template: TemplateRef<any>, employement_id){
@@ -195,7 +195,7 @@ export class EmploymentComponent implements OnInit {
 				this.form_data.description = employment_details.job_description;
 				
 				this.show_loader = false;
-				this.modalRef = this.modalService.show( template, Object.assign({}, { class: 'gray modal-lg' }) );
+				this.modalRef = this.modalService.show( template, this.common_params.modal_config );
 			} else {
 				this.show_loader = false;
 				//	this.common_service.show_toast('e', this.common_service.error_message, "");
