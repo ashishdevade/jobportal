@@ -1,0 +1,103 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Expertise -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="title_overview_form" #titleoverview="ngForm" (ngSubmit)="onSubmit(titleoverview.valid)">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Location </h3>
+							</div>
+							<div class="content with-padding padding-bottom-5">
+								<h5>Verify your identity to create a trusted marketplace</h5>
+								<div class="text-muted">We use your street address and phone number to verify your identity, and your zip code to show relevant jobs. Only your city will be shown to clients.</div>
+								<br>
+							</div>
+							<div class="content with-padding padding-bottom-5">
+								<div class="row">
+									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+										<div class="submit-field">
+											<h5>Country</h5>
+											<select class="form-control with-border" title="Select country" name="country" id="country" [(ngModel)]="form_data.country" required #countryobj="ngModel">
+												<option value="">Select a Country</option>
+												<option *ngFor="let item of this.country_list" [value]="item.country_name">{{item.country_name}}</option>
+											</select>
+											<div *ngIf="countryobj.invalid && (countryobj.dirty || countryobj.touched)" class="text-danger small">
+												Country is required. 
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+										<div class="submit-field">
+											<h5> City</h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="city" id="City" placeholder="" required  [(ngModel)]="form_data.city"  #City="ngModel"/>
+											<div *ngIf="City.invalid && (City.dirty || City.touched)" class="text-danger small">
+												City is required
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+										<div class="submit-field">
+											<h5> Street Address</h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="street_address" id="street_address" placeholder="" required  [(ngModel)]="form_data.street_address"  #street_address="ngModel"/>
+											<div *ngIf="street_address.invalid && (street_address.dirty || street_address.touched)" class="text-danger small">
+												Street Address is required
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+										<div class="submit-field">
+											<h5>  ZIP/Postal code</h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="zipcode" id="zipcode" placeholder=""  [(ngModel)]="form_data.zipcode"  #zipcode="ngModel"/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-6">
+								<button type="submit" class="button ripple-effect big margin-top-30" ><i class="icon-feather-check"></i> Save and Proceed</button>
+							</div>
+							
+							<div class="col-xl-6">
+								<button type="button" (click)="back_to_title_overview()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+			
+
+		</div>
+	</div>
+</div>
+

@@ -6,6 +6,9 @@ export class CommonFunctions {
 	public application_path = this.get_current_url();
 	public email_valid_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
+	public default_language = "English";
+	public default_service_rate_per = "20";
+	
 	public page_limit_list  = [
 	{"key":"10", "value":"10"},
 	{"key":"20", "value":"20"},
@@ -13,6 +16,30 @@ export class CommonFunctions {
 	{"key":"50", "value":"50"},
 	{"key":"100", "value":"100"},
 	];
+	
+	public month_array  = [
+	{"key":"1", "value":"January"},
+	{"key":"2", "value":"February"},
+	{"key":"3", "value":"March"},
+	{"key":"4", "value":"April"},
+	{"key":"5", "value":"May"},
+	{"key":"6", "value":"June"},
+	{"key":"7", "value":"July"},
+	{"key":"8", "value":"August"},
+	{"key":"9", "value":"September"},
+	{"key":"10", "value":"October"},
+	{"key":"11", "value":"November"},
+	{"key":"12", "value":"December"},
+	];
+	
+	
+	public proficiency_list  = [
+	{"name":"Basic", "desc":"I write in this language decently"},
+	{"name":"Conversational", "desc":"I write and speak this language well"},
+	{"name":"Fluent", "desc":"I write and speak this language almost perfectly"},
+	{"name":"Native", "desc":"I write and speak this language perfectly, including colloquialisms"},
+	];
+	
 	
 	public profile_settings_list = [
 	{"page_id":"1", "name": "Category ", "link":"user/profile/category"},

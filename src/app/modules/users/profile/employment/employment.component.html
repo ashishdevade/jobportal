@@ -1,1 +1,229 @@
-<p>employment works!</p>
+<div class="margin-top-50"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				
+				<!-- Expertise -->
+				<div class="sidebar-widget">
+					<h3>Profile Setup</h3>
+					<div class="list-group">
+						<ng-container *ngFor="let items of this.profile_side_menu">
+							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
+								{{items.name}} 
+								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
+							</a> 
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="employment-card-form" >
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline">
+								<h3><i class="icon-feather-folder-plus"></i> Employment</h3>
+							</div>
+
+							<div class="content with-padding padding-bottom-10">
+								<h5>Add your past work experience</h5>
+								<div class="text-muted">Build your credibility by showcasing the projects or jobs you have completed.</div>
+								<br>
+								
+								<div class="employment_list_section" *ngIf="this.employment_list.length > 0">
+									<div   *ngFor="let employment of this.employment_list">
+										<div class="employment_block row p-2 m-2">
+											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+												<h5>{{employment.company_name}}</h5>
+												<span>{{employment.job_title}}</span> <br>
+												<span>{{employment.from_month}} {{employment.from_year}} - {{employment.to_month}} {{employment.to_year}}</span>
+												
+											</div>
+											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+												<button type="button" (click)="delete_employment(employment.student_experience_id)" class="btn btn-sm btn-secondary float-right ml-2"><i class="icon-feather-trash" ></i> </button>
+												
+												<button type="button" (click)="edit_employment(template, employment.student_experience_id)" class="btn btn-sm btn-secondary float-right ml-2"><i class="icon-line-awesome-pencil" ></i> </button>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								
+								<button type="button" class="btn btn-outline-primary" (click)="add_new_employment(template)"> <i class="icon-material-outline-add"></i> Add employment</button>
+							</div>
+							<div class="content with-padding padding-bottom-10">
+								<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-6">
+								<button type="button" class="button ripple-effect big margin-top-30" (click)="go_to_languages()" ><i class="icon-feather-check"></i> Next</button>
+							</div>
+							
+							<div class="col-xl-6">
+								<button type="button" (click)="back_to_education()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+			
+
+		</div>
+	</div>
+</div>
+
+
+<ng-template #template>
+	<form method="post" id="employment-form" #employmentform="ngForm" (ngSubmit)="onSubmit(employmentform.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Company</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="company" id="company" placeholder="For ex. Google, IBM " required  [(ngModel)]="form_data.company"  #company="ngModel"/>
+						<div *ngIf="company.invalid && (company.dirty || company.touched)" class="text-danger small">
+							Company is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Job Title</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="job_title" id="job_title" placeholder="For ex. Software Developer" required  [(ngModel)]="form_data.job_title"  #jobtitlename="ngModel"/>
+						<div *ngIf="jobtitlename.invalid && (jobtitlename.dirty || jobtitlename.touched)" class="text-danger small">
+							Job title is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5> Location</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="location" id="location" placeholder="Enter Your location" required  [(ngModel)]="form_data.location"  #location="ngModel"/>
+						<div *ngIf="location.invalid && (location.dirty || location.touched)" class="text-danger small">
+							Degree is required
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>Country</h5>
+						<select class="form-control with-border" title="Select country" name="country" id="country" [(ngModel)]="form_data.country" required #countryobj="ngModel">
+							<option value="">Select a Country</option>
+							<option *ngFor="let item of this.country_list" [value]="item.id">{{item.country_name}}</option>
+						</select>
+						<div *ngIf="countryobj.invalid && (countryobj.dirty || countryobj.touched)" class="text-danger small">
+							Country is required. 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<h6>Job Period </h6>
+				</div>
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>From Month </h5>
+						<select class="form-control with-border" title="Select from" name="from" id="from" [(ngModel)]="form_data.from_month" required #from_Month="ngModel">
+							<option value="">Select From Month</option>
+							<option *ngFor="let year of this.month_arr" value="{{year.value}}">{{year.value}}</option>
+						</select>
+						<div *ngIf="from_Month.invalid && (from_Month.dirty || from_Month.touched)" class="text-danger small">
+							From Month is required. 
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>From Year</h5>
+						<select class="form-control with-border" title="Select Year" name="Year" id="Year" [(ngModel)]="form_data.from_year" required #from_year="ngModel">
+							<option value="">Select From Year</option>
+							<option *ngFor="let year of this.year_array" value="{{year}}">{{year}}</option>
+						</select>
+						<div *ngIf="from_year.invalid && (from_year.dirty || from_year.touched)" class="text-danger small">
+							From Year is required. 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12 text-center pb-3">
+					<span class="text-muted">through</span>
+				</div> 
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>To Month </h5>
+						<select class="form-control with-border" title="Select from" name="from" id="from" [(ngModel)]="form_data.to_month" required #from_date="ngModel">
+							<option value="">Select To Month</option>
+							<option *ngFor="let year of this.month_arr" value="{{year.value}}">{{year.value}}</option>
+						</select>
+						<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)" class="text-danger small">
+							To Month is required. 
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>To Year</h5>
+						<select class="form-control with-border" title="Select To year" name="year" id="year" [(ngModel)]="form_data.to_year" required #to_year="ngModel">
+							<option value="">Select To Year</option>
+							<option *ngFor="let year of this.year_array" value="{{year}}">{{year}}</option>
+						</select>
+						<div *ngIf="to_year.invalid && (to_year.dirty || to_year.touched)" class="text-danger small">
+							To Year is required. 
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <fieldset> -->
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Description </h5>
+							<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe your job" required  [(ngModel)]="form_data.description"  #desciptionSection="ngModel"></textarea>
+							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small">
+								Description is required
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </fieldset> -->
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="float-left">
+							<button type="submit" class="button ripple-effect ml-2" [disabled]="employmentform.invalid"><i class="icon-feather-check"></i> {{action_button_text}} </button>
+						</div>
+						<div class="float-right">
+							<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times" ></i> Close</button>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-template>

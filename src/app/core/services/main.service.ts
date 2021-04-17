@@ -164,5 +164,143 @@ export class MainService {
 		};
 		return this.httpclient.post(this.config_file_data.service_url + "/user/get_education_details", data_object); // this.common_params.httpOptions
 	}
-
+	
+	
+	delete_employment(employment_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			employment_id : employment_id,
+			user_id : user_id
+			 
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/delete_employment", data_object); // this.common_params.httpOptions
+	}
+	
+	get_employment_details(employment_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
+		let data_object = {
+			employment_id : employment_id,
+			user_id : user_id
+			 
+		};
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_employment_details", data_object); // this.common_params.httpOptions
+	}
+	
+	get_countries(country_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let data_object = {
+			country_id : country_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_countries", data_object); // this.common_params.httpOptions
+	}
+	
+	get_calling_code(country_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let data_object = {
+			country_id : country_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_calling_code", data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_employment(dataset, experience_id) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			company_name : dataset.company,
+			job_title : dataset.job_title,
+			location : dataset.location,
+			country : dataset.country,
+			from_month : dataset.from_month,
+			from_year : dataset.from_year,
+			to_month : dataset.to_month,
+			to_year : dataset.to_year,
+			job_description : dataset.description,
+			experience_id : experience_id,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_employment", data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_language(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			languages : dataset.languages,
+			// experience_id : experience_id,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_language", data_object); // this.common_params.httpOptions
+	}
+	
+	get_language_list(country_id): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let data_object = {
+			country_id : country_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/get_language_list", data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_hourlyrate(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			hourly_date : dataset.hourly_date,
+			service_fees : dataset.service_fees,
+			receive_rate : dataset.receive_rate,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_hourlyrate", data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_title_overview(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			job_title : dataset.job_title,
+			professional_overview : dataset.professional_overview,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_title_overview", data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_location(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			country : dataset.country,
+			city : dataset.city,
+			street_address : dataset.street_address,
+			zipcode : dataset.zipcode,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_location", data_object); // this.common_params.httpOptions
+	}
+	
+	
+	add_update_profile_phone(dataset) : Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			country_calling_code : dataset.country_calling_code,
+			phone_number : dataset.phone_number,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + "/user/add_update_profile_phone", data_object); // this.common_params.httpOptions
+	}
+	
+	
+	
 }
