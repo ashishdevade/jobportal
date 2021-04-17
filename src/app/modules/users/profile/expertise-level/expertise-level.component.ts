@@ -79,7 +79,7 @@ export class ExpertiseLevelComponent implements OnInit {
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
 			this.service.update_profile_expertise_level(dataset).subscribe(res => {
 				if (res['status'] == 200) {
-					this.common_service.show_toast('s', "Expertise saved successfully.", "");
+					this.common_service.show_toast('s', "Expertise Level saved successfully.", "");
 					this.show_loader = false;
 
 					setTimeout(() => {
