@@ -5,66 +5,48 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-4">
 			<div class="sidebar-container">
-
 				<!-- Expertise -->
-				<!-- <div class="sidebar-widget">
-					<h3>Profile Setup</h3>
-					<div class="list-group">
-						<ng-container *ngFor="let items of this.profile_side_menu">
-							<a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
-								{{items.name}} 
-								<span class="badge badge-pill"  [ngClass]="{'badge-primary': page_id > items.page_id, 'bade-success': page_id < items.page_id}" ><i class="icon-material-outline-check"></i></span>
-							</a> 
-						</ng-container>
-					</div>
-				</div> -->
 				<app-sidebar [page_id]="page_id"></app-sidebar>
 				<!-- Keywords -->
 				<div class="clearfix"></div>
-
 			</div>
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
 			<form method="post" id="employment-card-form">
+				<app-card [cardMetaData]="{cardTitle: 'Employment'}">
+					<h5>Add your past work experience</h5>
+					<div class="text-muted">Build your credibility by showcasing the projects or jobs you
+						have completed.</div>
+					<br>
+
+					<div class="employment_list_section" *ngIf="this.employment_list.length > 0">
+						<div *ngFor="let employment of this.employment_list">
+							<div class="employment_block row p-2 m-2">
+								<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+									<h5>{{employment.company_name}}</h5>
+									<span>{{employment.job_title}}</span> <br>
+									<span>{{employment.from_month}} {{employment.from_year}} -
+										{{employment.to_month}} {{employment.to_year}}</span>
+
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<button type="button" (click)="delete_employment(employment.student_experience_id)"
+										class="btn btn-sm btn-secondary float-right ml-2"><i
+											class="icon-feather-trash"></i> </button>
+
+									<button type="button"
+										(click)="edit_employment(template, employment.student_experience_id)"
+										class="btn btn-sm btn-secondary float-right ml-2"><i
+											class="icon-line-awesome-pencil"></i> </button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</app-card>
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="dashboard-box margin-top-0">
-							<div class="headline">
-								<h3><i class="icon-feather-folder-plus"></i> Employment</h3>
-							</div>
-
-							<div class="content with-padding padding-bottom-10">
-								<h5>Add your past work experience</h5>
-								<div class="text-muted">Build your credibility by showcasing the projects or jobs you
-									have completed.</div>
-								<br>
-
-								<div class="employment_list_section" *ngIf="this.employment_list.length > 0">
-									<div *ngFor="let employment of this.employment_list">
-										<div class="employment_block row p-2 m-2">
-											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-												<h5>{{employment.company_name}}</h5>
-												<span>{{employment.job_title}}</span> <br>
-												<span>{{employment.from_month}} {{employment.from_year}} -
-													{{employment.to_month}} {{employment.to_year}}</span>
-
-											</div>
-											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-												<button type="button"
-													(click)="delete_employment(employment.student_experience_id)"
-													class="btn btn-sm btn-secondary float-right ml-2"><i
-														class="icon-feather-trash"></i> </button>
-
-												<button type="button"
-													(click)="edit_employment(template, employment.student_experience_id)"
-													class="btn btn-sm btn-secondary float-right ml-2"><i
-														class="icon-line-awesome-pencil"></i> </button>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
 							<div class="content with-padding padding-bottom-10">
 
 								<button type="button" class="btn btn-outline-primary"

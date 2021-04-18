@@ -16,9 +16,22 @@ import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
 import { LocationComponent } from './location/location.component';
 import { PhoneComponent } from './phone/phone.component';
 import { SidebarComponent } from 'src/app/Shared/sidebar/sidebar.component';
+import { CardComponent } from 'src/app/Shared/card/card.component';
 
 @NgModule({
-  declarations: [CategoryComponent, ExpertiseComponent, ExpertiseLevelComponent, EducationComponent, EmploymentComponent, LanguagesComponent, HourlyRateComponent, TitleOverviewComponent, ProfilePhotoComponent, LocationComponent, PhoneComponent, SidebarComponent],
+  declarations: [CategoryComponent,
+    ExpertiseComponent,
+    ExpertiseLevelComponent,
+    EducationComponent,
+    EmploymentComponent,
+    LanguagesComponent,
+    HourlyRateComponent,
+    TitleOverviewComponent,
+    ProfilePhotoComponent,
+    LocationComponent,
+    PhoneComponent,
+    SidebarComponent,
+    CardComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
