@@ -5,9 +5,9 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-4">
 			<div class="sidebar-container">
-				
+
 				<!-- Expertise -->
-				<div class="sidebar-widget">
+				<!-- <div class="sidebar-widget">
 					<h3>Profile Setup</h3>
 					<div class="list-group">
 						<ng-container *ngFor="let items of this.profile_side_menu">
@@ -17,8 +17,8 @@
 							</a> 
 						</ng-container>
 					</div>
-				</div>
-
+				</div> -->
+				<app-sidebar [page_id]="page_id"></app-sidebar>
 				<!-- Keywords -->
 				<div class="clearfix"></div>
 
@@ -42,14 +42,17 @@
 									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 										<div class="submit-field">
 											<h5>Skill Set</h5>
-											<select class="form-control with-border" title="Select Skills" name="Skills" id="Skills" [(ngModel)]="form_data.skills" required #categoryobj="ngModel">
+											<select class="form-control with-border" title="Select Skills" name="Skills"
+												id="Skills" [(ngModel)]="form_data.skills" required
+												#categoryobj="ngModel">
 												<option value="">Select Your Skills</option>
 												<option value="1">Skill 1 </option>
 												<option value="2">Skill 2 </option>
 												<option value="other">Other</option>
 											</select>
-											<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)" class="text-danger small">
-												Skillset is required. 
+											<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)"
+												class="text-danger small">
+												Skillset is required.
 											</div>
 										</div>
 									</div>
@@ -59,35 +62,42 @@
 										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 											<div class="submit-field">
 												<h5> Enter your skills</h5>
-												<input type="text" class="input-text with-border  mb-0 pb-0" name="other" id="other" placeholder="Enter Your other" required  [(ngModel)]="form_data.other"  #skillset="ngModel"/>
+												<input type="text" class="input-text with-border  mb-0 pb-0"
+													name="other" id="other" placeholder="Enter Your other" required
+													[(ngModel)]="form_data.other" #skillset="ngModel" />
 												<div class="text-muted">Enter Comma (,) Seperated</div>
-												<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)" class="text-danger small">
+												<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)"
+													class="text-danger small">
 													Skill Set is required
 												</div>
 											</div>
 										</div>
 									</div>
-							</fieldset>
-							
+								</fieldset>
+
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-xl-12">
-					<div class="row">
-						<div class="col-xl-6">
-							<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="expertiseform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
-						</div>
-						
-						<div class="col-xl-6">
-							<button type="button" (click)="back_to_category()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-6">
+								<button type="submit" class="button ripple-effect big margin-top-30"
+									[disabled]="expertiseform.invalid"><i class="icon-feather-check"></i> Save and
+									Proceed</button>
+							</div>
+
+							<div class="col-xl-6">
+								<button type="button" (click)="back_to_category()"
+									class="button gray ripple-effect big margin-top-30 float-right"><i
+										class="icon-feather-chevron-left"></i> Back</button>
+							</div>
 						</div>
 					</div>
+
 				</div>
+			</form>
 
-			</div>
-		</form>
-		
 
+		</div>
 	</div>
-</div>
 </div>

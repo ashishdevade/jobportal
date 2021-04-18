@@ -11,7 +11,7 @@ import { Interceptor } from './core/Interceptor/interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

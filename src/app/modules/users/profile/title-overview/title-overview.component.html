@@ -5,9 +5,9 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-4">
 			<div class="sidebar-container">
-				
+
 				<!-- Expertise -->
-				<div class="sidebar-widget">
+				<!-- <div class="sidebar-widget">
 					<h3>Profile Setup</h3>
 					<div class="list-group">
 						<ng-container *ngFor="let items of this.profile_side_menu">
@@ -17,15 +17,16 @@
 							</a> 
 						</ng-container>
 					</div>
-				</div>
-
+				</div> -->
+				<app-sidebar [page_id]="page_id"></app-sidebar>
 				<!-- Keywords -->
 				<div class="clearfix"></div>
 
 			</div>
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
-			<form method="post" id="title_overview_form" #titleoverview="ngForm" (ngSubmit)="onSubmit(titleoverview.valid)">
+			<form method="post" id="title_overview_form" #titleoverview="ngForm"
+				(ngSubmit)="onSubmit(titleoverview.valid)">
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="dashboard-box margin-top-0">
@@ -35,7 +36,8 @@
 
 							<div class="content with-padding padding-bottom-5">
 								<h5>Add about your job role and responsibilities </h5>
-								<div class="text-muted">Write a great profile, add your professional overview, mention your skills, experience and interests .</div>
+								<div class="text-muted">Write a great profile, add your professional overview, mention
+									your skills, experience and interests .</div>
 								<br>
 							</div>
 							<div class="content with-padding padding-bottom-5">
@@ -43,20 +45,28 @@
 									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 										<div class="submit-field">
 											<h5> Title</h5>
-											<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Example: Writing " required  [(ngModel)]="form_data.job_title"  #titleobj="ngModel"/>
-											<div *ngIf="titleobj.invalid && (titleobj.dirty || titleobj.touched)" class="text-danger small">
+											<input type="text" class="input-text with-border  mb-0 pb-0" name="title"
+												id="title" placeholder="Example: Writing " required
+												[(ngModel)]="form_data.job_title" #titleobj="ngModel" />
+											<div *ngIf="titleobj.invalid && (titleobj.dirty || titleobj.touched)"
+												class="text-danger small">
 												Title is required
 											</div>
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 										<div class="submit-field">
 											<h5> Professional Overview </h5>
-											<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile." required  [(ngModel)]="form_data.professional_overview"  #desciptionSection="ngModel" rows="10"></textarea>
-											<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small">
+											<textarea type="text" class="input-text with-border  mb-0 pb-0"
+												name="description" id="description"
+												placeholder="Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile."
+												required [(ngModel)]="form_data.professional_overview"
+												#desciptionSection="ngModel" rows="10"></textarea>
+											<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)"
+												class="text-danger small">
 												Professional Overview is required
 											</div>
 										</div>
@@ -71,20 +81,22 @@
 					<div class="col-xl-12">
 						<div class="row">
 							<div class="col-xl-6">
-								<button type="submit" class="button ripple-effect big margin-top-30" ><i class="icon-feather-check"></i> Save and Proceed</button>
+								<button type="submit" class="button ripple-effect big margin-top-30"><i
+										class="icon-feather-check"></i> Save and Proceed</button>
 							</div>
-							
+
 							<div class="col-xl-6">
-								<button type="button" (click)="back_to_hr_rate()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left" ></i> Back</button>
+								<button type="button" (click)="back_to_hr_rate()"
+									class="button gray ripple-effect big margin-top-30 float-right"><i
+										class="icon-feather-chevron-left"></i> Back</button>
 							</div>
 						</div>
 					</div>
 
 				</div>
 			</form>
-			
+
 
 		</div>
 	</div>
 </div>
-
