@@ -96,7 +96,7 @@ export class EducationComponent implements OnInit {
 
 	}
 	
-	skip_steps(){
+	/*skip_steps(){
 		this.show_loader = true; 
 		this.service.skip_this_step(this.page_id).subscribe(response=> {
 			if(response.status == 200){
@@ -112,7 +112,7 @@ export class EducationComponent implements OnInit {
 			this.common_service.show_toast('e', this.common_service.error_message, "");
 
 		});
-	}
+	}*/
 
 	onSubmit(isValid: Boolean) {
 		console.log("isValid ", isValid);
