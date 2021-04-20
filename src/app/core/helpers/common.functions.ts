@@ -47,12 +47,17 @@ export class CommonFunctions {
 	{"page_id":"3", "name": "Expertise Level", "link":"user/profile/expertise-level"},
 	{"page_id":"4", "name": "Education", "link":"user/profile/education"},
 	{"page_id":"5", "name": "Employment", "link":"user/profile/employment"},
-	{"page_id":"6", "name": "Languages", "link":"user/profile/category"},
-	{"page_id":"7", "name": "Hourly Rate", "link":"user/profile/category"},
-	{"page_id":"8", "name": "Title & Overview", "link":"user/profile/category"},
-	{"page_id":"9", "name": "Profile Photo", "link":"user/profile/category"},
-	{"page_id":"10", "name": "Location", "link":"user/profile/category"},
-	{"page_id":"11", "name": "Phone", "link":"user/profile/category"},
+	{"page_id":"6", "name": "Languages", "link":"user/profile/languages"},
+	{"page_id":"7", "name": "Hourly Rate", "link":"user/profile/hourly-rate"},
+	{"page_id":"8", "name": "Title & Overview", "link":"user/profile/title-overview"},
+	{"page_id":"9", "name": "Profile Photo", "link":"user/profile/photo"},
+	{"page_id":"10", "name": "Location", "link":"user/profile/location"},
+	{"page_id":"11", "name": "Phone", "link":"user/profile/phone"},
+	
+	{"page_id":"12", "name": "Projects", "link":"user/profile/projects"},
+	{"page_id":"13", "name": "License & Certification", "link":"user/profile/license-certification"},
+	{"page_id":"14", "name": "Job Type", "link":"user/profile/job-type"},
+	
 	]
 	
 	public modal_config = {

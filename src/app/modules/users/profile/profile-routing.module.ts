@@ -11,6 +11,9 @@ import { TitleOverviewComponent } from './title-overview/title-overview.componen
 import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
 import { LocationComponent } from './location/location.component';
 import { PhoneComponent } from './phone/phone.component';
+import { JobTypeComponent } from './job-type/job-type.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { LicenseCertificationComponent } from './license-certification/license-certification.component';
 
 const routes: Routes = [
  {
@@ -29,6 +32,9 @@ const routes: Routes = [
   { path: 'photo', component: ProfilePhotoComponent },
   { path: 'location', component: LocationComponent },
   { path: 'phone', component: PhoneComponent },
+  { path: 'projects', component:  ProjectsComponent },
+  { path: 'license-certification', component: LicenseCertificationComponent },
+  { path: 'job-type', component: JobTypeComponent },
 ];
 
 @NgModule({

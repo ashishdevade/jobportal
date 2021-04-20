@@ -17,6 +17,9 @@ import { LocationComponent } from './location/location.component';
 import { PhoneComponent } from './phone/phone.component';
 import { SidebarComponent } from 'src/app/Shared/sidebar/sidebar.component';
 import { CardComponent } from 'src/app/Shared/card/card.component';
+import { JobTypeComponent } from './job-type/job-type.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { LicenseCertificationComponent } from './license-certification/license-certification.component';
 
 @NgModule({
   declarations: [CategoryComponent,
@@ -31,7 +34,10 @@ import { CardComponent } from 'src/app/Shared/card/card.component';
     LocationComponent,
     PhoneComponent,
     SidebarComponent,
-    CardComponent],
+    CardComponent,
+    JobTypeComponent,
+    ProjectsComponent,
+    LicenseCertificationComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,

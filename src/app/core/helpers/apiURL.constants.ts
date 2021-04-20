@@ -23,5 +23,7 @@ export const apiUrl = {
     UPDATE_PROFILE_TITLE: "/user/add_update_profile_title_overview",
     UPDATE_PROFILE_LOC: "/user/add_update_profile_location",
     UPDATE_PROFILE_PHONE: "/user/add_update_profile_phone",
-    UPDATE_PROFILE_PHOTO: "/user/dd_update_profile_photo"
+    UPDATE_PROFILE_PHOTO: "/user/dd_update_profile_photo",
+    UPDATE_PROFILE_JOB_TYPE: "/user/update_profile_job_type"
+    
 }

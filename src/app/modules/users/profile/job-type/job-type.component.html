@@ -1,0 +1,66 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+
+				<!-- Expertise -->
+				<app-sidebar [page_id]="page_id"></app-sidebar>
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="expertise-form" #JobTypeform="ngForm" (ngSubmit)="onSubmit(JobTypeform.valid)">
+			<app-card [cardMetaData]="{cardTitle: 'Job Type'}">
+				<div class="content with-padding padding-bottom-10">
+					<h5>What kind of Job Type are you looking for?</h5>
+					<ng-container *ngIf="job_type.length > 0">
+						<div class="row">
+							<ng-container *ngFor="let items of job_type">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="card cursor-pointer" (click)="select_level(items.value)">
+										<div class="card-body text-center"
+										[ngClass]="{'border border-primary': form_data.job_type == items.value}">
+										<div class="form-check">
+											<input class="form-check-input text-right float-right w-100" type="radio" name="JobType" id="JobType" [(ngModel)]="form_data.job_type" [value]="items.value">
+											<!-- <label class="form-check-label" for="JobType">
+												Default radio
+											</label> -->
+										</div>
+										<br>
+										<div class="text-center">{{items.heading}}</div>
+										<span class="text-muted text-center"> {{items.description}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+			</div>
+		</app-card>
+		<div class="row">
+
+			<div class="col-xl-12">
+				<div class="row">
+					<div class="col-xl-6">
+						<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="JobTypeform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+				</div>
+
+				<div class="col-xl-6">
+					<button type="button" (click)="back_to_expertise()" class="button gray ripple-effect big margin-top-30 float-right"><i class="icon-feather-chevron-left"></i> Back</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</form>
+
+
+</div>
+</div>
+</div>

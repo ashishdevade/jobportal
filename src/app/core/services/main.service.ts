@@ -295,6 +295,19 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_PHOTO, data_object); // this.common_params.httpOptions
 	}
 	
+	update_profile_job_type(dataset) : Observable<any> {
+	// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			job_type : dataset.job_type,
+			user_id : user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_JOB_TYPE, data_object); // this.common_params.httpOptions
+	}
+	
+	
+	
 	
 	
 }
