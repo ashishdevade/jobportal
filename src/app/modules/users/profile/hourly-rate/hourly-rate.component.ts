@@ -23,6 +23,8 @@ export class HourlyRateComponent implements OnInit {
 	public profile_side_menu = [];
 	public success_message = "Hourly Rate saved successfully.";
 	public default_rate = "";
+	public links:any = {};
+	
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -33,6 +35,7 @@ export class HourlyRateComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.default_rate = this.common_params.default_service_rate_per;
 		
 		this.form_data.hourly_date = "";
@@ -76,7 +79,7 @@ export class HourlyRateComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					this.common_service.change_route('user/profile/title-overview');
+					this.common_service.change_route(this.links.next_link);
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -93,7 +96,7 @@ export class HourlyRateComponent implements OnInit {
 	
 	back_to_lang(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/languages');
+		this.common_service.change_route(this.links.previous_link);
 	}
 	
 	calculate_hourly_rate(){

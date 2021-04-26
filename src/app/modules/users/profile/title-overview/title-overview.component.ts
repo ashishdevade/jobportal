@@ -19,6 +19,7 @@ export class TitleOverviewComponent implements OnInit {
 	public show_loader = false;
 	public form_data:any = {};
 	public profile_side_menu = [];
+	public links:any = {};
 	public success_message = "Title & Overview saved successfully.";
 	constructor(
 		private router: Router,
@@ -29,6 +30,7 @@ export class TitleOverviewComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.job_title = "";
 		this.form_data.professional_overview = "";
 		this.get_user_profile_settings((response)=>{
@@ -68,7 +70,7 @@ export class TitleOverviewComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					this.common_service.change_route('user/profile/photo');
+					this.common_service.change_route(this.links.next_link);
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -85,7 +87,7 @@ export class TitleOverviewComponent implements OnInit {
 	
 	back_to_hr_rate(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/hourly-rate');
+		this.common_service.change_route(this.links.previous_link);
 	}
 	
 	skip_steps(){
@@ -93,7 +95,7 @@ export class TitleOverviewComponent implements OnInit {
 		this.service.skip_this_step(this.page_id).subscribe(response=> {
 			if(response.status == 200){
 				this.show_loader = false;
-				this.common_service.change_route('user/profile/photo');
+				this.common_service.change_route(this.links.next_link);
 				
 			} else {
 				this.show_loader = false;

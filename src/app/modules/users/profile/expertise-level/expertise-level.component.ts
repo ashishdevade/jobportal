@@ -19,6 +19,7 @@ export class ExpertiseLevelComponent implements OnInit {
 	public form_data: any = {};
 	public profile_side_menu = [];
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
+	public links:any = {};
 	public expertise_level = [
 		{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
 		{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
@@ -34,6 +35,7 @@ export class ExpertiseLevelComponent implements OnInit {
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.expertise_level = this.expertise_level[0]['value'];
 		this.show_loader = true;
 		this.get_user_profile_settings((response) => {
@@ -69,7 +71,7 @@ export class ExpertiseLevelComponent implements OnInit {
 
 	back_to_expertise() {
 		console.log("in here ");
-		this.common_service.change_route('user/profile/expertise');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 	onSubmit(isValid: Boolean) {
@@ -83,7 +85,7 @@ export class ExpertiseLevelComponent implements OnInit {
 					this.show_loader = false;
 
 					setTimeout(() => {
-						this.common_service.change_route('user/profile/education');
+						this.common_service.change_route(this.links.next_link);
 					}, 200);
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");

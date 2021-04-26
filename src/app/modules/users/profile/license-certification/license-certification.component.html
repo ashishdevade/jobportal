@@ -1,1 +1,173 @@
-<p>license-certification works!</p>
+<div class="margin-top-50"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+				<!-- Expertise -->
+				<app-sidebar [page_id]="page_id"></app-sidebar>
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="employment-card-form">
+				<app-card [cardMetaData]="{cardTitle: 'License & Certification'}">
+					<h5 class="mt-3 ml-3">Add your certifications</h5>
+					<div class="text-muted mt-3 ml-3">Build your credibility by showcasing the certifications and licenses you have achieved.</div>
+					<br>
+					<div class="license_cer_list_section" *ngIf="this.license_cer_list.length > 0">
+						<div *ngFor="let license_cer of this.license_cer_list">
+							<div class="license_cer_block row p-2 m-2">
+								<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+									<h5>{{license_cer.certificate_name}}</h5>
+									<span>{{license_cer.description}}</span> <br>
+									<span>{{license_cer.certificate_link}}</span> <br>
+									<span *ngIf="license_cer.type == 'certificate'">{{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
+									<span *ngIf="license_cer.type == 'license'"><b>Till</b> - {{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<button type="button" (click)="delete_license_certificate(license_cer.student_certificate_id)" class="btn btn-sm btn-secondary float-right ml-2"><i
+										class="icon-feather-trash"></i> </button>
+										<button type="button" (click)="edit_license_certificate(template, license_cer.student_certificate_id)" class="btn btn-sm btn-secondary float-right ml-2"><i class="icon-line-awesome-pencil"></i> </button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</app-card>
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="dashboard-box margin-top-0">
+								<div class="content with-padding padding-bottom-10">
+
+									<button type="button" class="btn btn-outline-primary"
+									(click)="add_new_license_certificatte(template)"> <i class="icon-material-outline-add"></i> Add License or Certificate </button>
+								</div>
+								<div class="content with-padding padding-bottom-10">
+									<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-12">
+							<div class="row">
+								<div class="col-xl-6">
+									<button type="button" class="button ripple-effect big margin-top-30"
+									(click)="go_to_language()"><i class="icon-feather-check"></i> Next</button>
+								</div>
+
+								<div class="col-xl-6">
+									<button type="button" (click)="back_to_projects()"
+									class="button gray ripple-effect big margin-top-30 float-right"><i
+									class="icon-feather-chevron-left"></i> Back</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<ng-template #template>
+		<form method="post" id="employment-form" #license_cer_form="ngForm" (ngSubmit)="onSubmit(license_cer_form.valid)">
+			<div class="modal-header">
+				<h4 class="modal-title pull-left">{{popup_title}} </h4>
+				<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="section-headline margin-top-25 margin-bottom-12">
+							<h5>License or Certificate ?</h5>
+						</div>
+						<div class="radio">
+							<input id="radio-1" name="document_type" type="radio" value="license" [(ngModel)]="form_data.type" #docType="ngModel">
+							<label for="radio-1"><span class="radio-label"></span> License</label>
+						</div>
+						<div class="radio mb-3 ml-3" >
+							<input id="radio-2" name="document_type" type="radio" value="certificate" [(ngModel)]="form_data.type" #docType="ngModel">
+							<label for="radio-2"><span class="radio-label"></span> Certificate</label>
+						</div>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Name</h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="" required [(ngModel)]="form_data.title" #projtitle="ngModel" />
+							<div *ngIf="projtitle.invalid && (projtitle.dirty || projtitle.touched)" class="text-danger small"> Title is required </div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Description </h5>
+							<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the License or certificate" required [(ngModel)]="form_data.description" #desciptionSection="ngModel"></textarea>
+							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Provider </h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="provider" id="provider" placeholder="License or Certificate Provider" required
+							[(ngModel)]="form_data.provider" #clprovider="ngModel" />
+							<div *ngIf="clprovider.invalid && (clprovider.dirty || clprovider.touched)" class="text-danger small"> Provider is required </div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+						<div class="submit-field">
+							<h5>Date Earned </h5>
+						</div>
+						<div class="clearfix"></div>
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
+							<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+						<div class="submit-field">
+							<h5>Date Expiry (Optional) </h5>
+						</div>
+						<div class="clearfix"></div>
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" required [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> {{type}} Link </h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link" required [(ngModel)]="form_data.link" #license_cer_link="ngModel" />
+							<div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="license_cer_form.invalid"><i class="icon-feather-check"></i> {{action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-template>

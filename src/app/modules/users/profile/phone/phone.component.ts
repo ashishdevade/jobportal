@@ -19,6 +19,7 @@ export class PhoneComponent implements OnInit {
 	public form_data:any = {};
 	public profile_side_menu = [];
 	public calling_code_list= [];
+	public links:any = {};
 	public success_message = "Phone saved successfully.";
 	constructor(
 		private router: Router,
@@ -29,6 +30,7 @@ export class PhoneComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.get_calling_code("");
 		this.get_user_profile_settings((response)=>{
 			if(response['data'].length > 0){
@@ -82,7 +84,7 @@ export class PhoneComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					// this.common_service.change_route('user/profile/phone');
+					// this.common_service.change_route(this.links.next_link);
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -99,7 +101,7 @@ export class PhoneComponent implements OnInit {
 	
 	back_to_location(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/location');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 }

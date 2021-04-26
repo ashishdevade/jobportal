@@ -23,6 +23,7 @@ export class LanguagesComponent implements OnInit {
 	public profile_side_menu = [];
 	public proficiency_list  = [];
 	public success_message = "Languages saved successfully.";
+	public links:any = {};
 	public language_list = [];
 	
 	constructor(
@@ -35,6 +36,7 @@ export class LanguagesComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.languages = [{
 			"names":this.common_params.default_language,
 			"proficiency":"",
@@ -102,7 +104,7 @@ export class LanguagesComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					this.common_service.change_route('user/profile/hourly-rate');
+					this.common_service.change_route(this.links.next_link);
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -119,7 +121,7 @@ export class LanguagesComponent implements OnInit {
 	
 	back_to_employment(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/employment');
+		this.common_service.change_route(this.links.previous_link);
 	}
 	
 	add_more_language(){

@@ -18,22 +18,25 @@ export class ExpertiseComponent implements OnInit {
 	public form_data: any = {};
 	public profile_side_menu = [];
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
+	public links:any = {};
 	public items = [
-		{ display: 'Pizza', value: 1 },
-		{ display: 'Pasta', value: 2 },
-		{ display: 'Parmesan', value: 3 },
+	{ display: 'Pizza', value: 1 },
+	{ display: 'Pasta', value: 2 },
+	{ display: 'Parmesan', value: 3 },
 	];
 
 	constructor(
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
-	) { }
+		) { }
 
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
+		
 		this.show_loader = true;
 		this.get_user_profile_settings((response_data) => {
 			this.form_data.skills = response_data['data'][0]['skills'];
@@ -65,8 +68,7 @@ export class ExpertiseComponent implements OnInit {
 	}
 
 	back_to_category() {
-		console.log("in here ");
-		this.common_service.change_route('user/profile/category');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 	onSubmit(isValid: Boolean) {
@@ -80,7 +82,7 @@ export class ExpertiseComponent implements OnInit {
 					this.show_loader = false;
 
 					setTimeout(() => {
-						this.common_service.change_route('user/profile/expertise-level');
+						this.common_service.change_route(this.links.next_link);
 					}, 200);
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");

@@ -20,6 +20,7 @@ export class LocationComponent implements OnInit {
 	public form_data:any = {};
 	public profile_side_menu = [];
 	public success_message = "Location saved successfully.";
+	public links:any = {};
 	public country_list = [];
 	constructor(
 		private router: Router,
@@ -30,6 +31,7 @@ export class LocationComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.get_countries("");
 		this.form_data.country = "";
 		this.form_data.city = "";
@@ -89,7 +91,7 @@ export class LocationComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.show_loader = false;
-					this.common_service.change_route('user/profile/phone');
+					this.common_service.change_route(this.links.next_link);
 					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -106,7 +108,7 @@ export class LocationComponent implements OnInit {
 	
 	back_to_title_overview(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/photo');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 }

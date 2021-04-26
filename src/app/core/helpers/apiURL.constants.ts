@@ -24,6 +24,12 @@ export const apiUrl = {
     UPDATE_PROFILE_LOC: "/user/add_update_profile_location",
     UPDATE_PROFILE_PHONE: "/user/add_update_profile_phone",
     UPDATE_PROFILE_PHOTO: "/user/dd_update_profile_photo",
-    UPDATE_PROFILE_JOB_TYPE: "/user/update_profile_job_type"
-    
+    UPDATE_PROFILE_JOB_TYPE: "/user/update_profile_job_type",
+    DELETE_PROFILE_PROJECTS: "/user/delete_project",
+    GET_PROJECT_DETAILS : "/user/get_project_details",
+    ADD_UPDATE_PROFILE_PROJECT : "/user/add_update_profile_project",
+    DELETE_LICENSE_CERTIFICATE: "/user/delete_license_certificate",
+    GET_LICENSE_CERTIFICATE_DETAILS: "/user/get_license_certificate_details",
+    ADD_UPDATE_LICENSE_CERTIFICATE: "/user/add_update_license_certificate",
+
 }

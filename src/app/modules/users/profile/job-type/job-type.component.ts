@@ -17,6 +17,7 @@ export class JobTypeComponent implements OnInit {
 	public show_loader = false;
 	public form_data: any = {};
 	public profile_side_menu = [];
+	public links:any = {};
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
 	public job_type = [
 		{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
@@ -35,6 +36,7 @@ export class JobTypeComponent implements OnInit {
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.job_type = this.job_type[0]['value'];
 		this.show_loader = true;
 		this.get_user_profile_settings((response) => {
@@ -70,7 +72,7 @@ export class JobTypeComponent implements OnInit {
 
 	back_to_expertise() {
 		console.log("in here ");
-		this.common_service.change_route('user/profile/expertise');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 	onSubmit(isValid: Boolean) {
@@ -84,7 +86,7 @@ export class JobTypeComponent implements OnInit {
 					this.show_loader = false;
 
 					setTimeout(() => {
-						this.common_service.change_route('user/profile/education');
+						this.common_service.change_route(this.links.next_link);
 					}, 200);
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");

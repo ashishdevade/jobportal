@@ -28,6 +28,7 @@ export class EmploymentComponent implements OnInit {
 	public employment_list = [];
 	public country_list = [];
 	public popup_title = "";
+	public links:any = {};
 	public action_button_text = "";
 	
 	modalRef: BsModalRef;
@@ -42,6 +43,7 @@ export class EmploymentComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.from_year  = "";
 		this.form_data.to_year = "";
 		let d = new Date();
@@ -97,14 +99,14 @@ export class EmploymentComponent implements OnInit {
 	
 	back_to_education(){
 		console.log("in here ");
-		this.common_service.change_route('user/profile/education');
+		this.common_service.change_route(this.links.previous_link);
 	}
 	
 	go_to_languages(){
 		if(this.employment_list.length == 0){
 			this.common_service.show_toast('e', 'No Employment Details added, Please add employment by clicking "Add Employment"', "");
 		} else {
-			this.common_service.change_route('user/profile/languages');
+			this.common_service.change_route(this.links.next_link);
 		}
 		
 	}
@@ -114,7 +116,7 @@ export class EmploymentComponent implements OnInit {
 		this.service.skip_this_step(this.page_id).subscribe(response=> {
 			if(response.status == 200){
 				this.show_loader = false;
-				this.common_service.change_route('user/profile/languages');
+				this.common_service.change_route(this.links.next_link);
 				
 			} else {
 				this.show_loader = false;

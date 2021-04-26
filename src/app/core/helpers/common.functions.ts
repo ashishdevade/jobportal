@@ -42,30 +42,28 @@ export class CommonFunctions {
 	
 	
 	public profile_settings_list = [
-	{"page_id":"1", "name": "Category ", "link":"user/profile/category"},
-	{"page_id":"2", "name": "Expertise", "link":"user/profile/expertise"},
-	{"page_id":"3", "name": "Expertise Level", "link":"user/profile/expertise-level"},
-	{"page_id":"4", "name": "Education", "link":"user/profile/education"},
-	{"page_id":"5", "name": "Employment", "link":"user/profile/employment"},
-	{"page_id":"6", "name": "Languages", "link":"user/profile/languages"},
-	{"page_id":"7", "name": "Hourly Rate", "link":"user/profile/hourly-rate"},
-	{"page_id":"8", "name": "Title & Overview", "link":"user/profile/title-overview"},
-	{"page_id":"9", "name": "Profile Photo", "link":"user/profile/photo"},
-	{"page_id":"10", "name": "Location", "link":"user/profile/location"},
-	{"page_id":"11", "name": "Phone", "link":"user/profile/phone"},
-	
-	{"page_id":"12", "name": "Projects", "link":"user/profile/projects"},
-	{"page_id":"13", "name": "License & Certification", "link":"user/profile/license-certification"},
-	{"page_id":"14", "name": "Job Type", "link":"user/profile/job-type"},
-	
+	{"page_id" :"1", "name" : "Category ", "link":"user/profile/category", "order" : "1", "previous_page" : "0", "next_page" : "14" },
+	{"page_id" : "14", "name" : "Job Type", "link":"user/profile/job-type", "order" : "2", "previous_page" : "1", "next_page" : "2" },
+	{"page_id" :"2", "name" : "Expertise", "link":"user/profile/expertise", "order" : "3", "previous_page" : "14", "next_page" : "3" },
+	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "4", "previous_page" : "3", "next_page" : "4" },
+	{"page_id" :"4", "name" : "Education", "link":"user/profile/education", "order" : "5", "previous_page" : "3", "next_page" : "5" },
+	{"page_id" :"5", "name" : "Employment", "link":"user/profile/employment", "order" : "6", "previous_page" : "4", "next_page" : "12" },
+	{"page_id" : "12", "name" : "Projects", "link":"user/profile/projects", "order" : "7", "previous_page" : "5", "next_page" : "13" },
+	{"page_id" : "13", "name" : "License & Certification", "link":"user/profile/license-certification", "order" : "8", "previous_page" : "12", "next_page" : "6" },
+	{"page_id" :"6", "name" : "Languages", "link":"user/profile/languages", "order" : "9", "previous_page" : "13", "next_page" : "7" },
+	{"page_id" :"7", "name" : "Hourly Rate", "link":"user/profile/hourly-rate", "order" : "10", "previous_page" : "6", "next_page" : "8" },
+	{"page_id" :"8", "name" : "Title & Overview", "link":"user/profile/title-overview", "order" : "11", "previous_page" : "7", "next_page" : "9" },
+	{"page_id" :"9", "name" : "Profile Photo", "link":"user/profile/photo", "order" : "12", "previous_page" : "8", "next_page" : "10" },
+	{"page_id" : "10", "name" : "Location", "link":"user/profile/location", "order" : "13", "previous_page" : "9", "next_page" : "11" },
+	{"page_id" : "11", "name" : "Phone", "link":"user/profile/phone", "order" : "14", "previous_page" : "10", "next_page" : "0" }
 	]
 	
 	public modal_config = {
-			class: 'modal-lg',
-			backdrop: true,
-			ignoreBackdropClick: true,
-			keyboard  : false,
-		};
+		class: 'modal-lg',
+		backdrop: true,
+		ignoreBackdropClick: true,
+		keyboard  : false,
+	};
 	
 	public default_size = 10;
 	
@@ -96,6 +94,39 @@ export class CommonFunctions {
 		temp = (window.location.protocol + '//' + sanitized);
 
 		return temp;
+	}
+	
+	public get_profile_previous_next_page(current_page_id){
+		var previous_page_link = "";
+		var next_page_link = "";
+		
+		let cpage_index = this.profile_settings_list.findIndex((obj) => {
+			return obj['page_id'] == current_page_id
+		});
+	 
+		if(cpage_index !== -1){
+			let previous_page_id = this.profile_settings_list[cpage_index]['previous_page'];
+			if(previous_page_id != '0'){
+				let ppage_index = 	this.profile_settings_list.findIndex((obj)=>{
+					return (obj.page_id) ==previous_page_id
+				})
+				
+				previous_page_link = this.profile_settings_list[ppage_index]['link'];
+				
+			}
+			
+			let next_page_id = this.profile_settings_list[cpage_index]['next_page'];
+			if(next_page_id != '0'){
+				let npage_index = 	this.profile_settings_list.findIndex((obj)=>{
+					return (obj.page_id) ==next_page_id
+				})
+				
+				next_page_link = this.profile_settings_list[npage_index]['link'];
+			}
+		}  
+		
+		return { "previous_link" : previous_page_link, "next_link" : next_page_link }
+			
 	}
 	
 	public get_random_no(){

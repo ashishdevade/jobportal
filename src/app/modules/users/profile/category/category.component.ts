@@ -18,18 +18,19 @@ export class CategoryComponent implements OnInit {
 	public show_loader = false;
 	public sub_category_list = [];
 	public form_data: any = {};
+	public links:any = {};
 
 	constructor(
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
-	) { }
+		) { }
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;
-		//	this.common_service.show_toast('s', "Connection missing, Please select a connection .", "");
-		//	this.show_loader = true;
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
+		
 		this.show_loader = true;
 		this.form_data.category = "";
 		this.form_data.subcategory = "";
@@ -133,7 +134,7 @@ export class CategoryComponent implements OnInit {
 					this.show_loader = false;
 
 					setTimeout(() => {
-						this.common_service.change_route('user/profile/expertise');
+						this.common_service.change_route(this.links.next_link);
 					}, 200);
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");

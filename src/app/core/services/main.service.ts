@@ -285,7 +285,7 @@ export class MainService {
 	}
 	
 	add_update_profile_photo(dataset) : Observable<any> {
-	// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			photo : dataset.photo,
@@ -296,7 +296,7 @@ export class MainService {
 	}
 	
 	update_profile_job_type(dataset) : Observable<any> {
-	// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
+		// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			job_type : dataset.job_type,
@@ -306,8 +306,80 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_JOB_TYPE, data_object); // this.common_params.httpOptions
 	}
 	
+	delete_project(project_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+
+		let data_object = {
+			project_id: project_id,
+			user_id: user_id
+
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.DELETE_PROFILE_PROJECTS, data_object); // this.common_params.httpOptions
+	}
+
+	get_project_details(project_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+
+		let data_object = {
+			project_id: project_id,
+			user_id: user_id
+
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_PROJECT_DETAILS, data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_profile_project(dataset, project_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			title : dataset.title,
+			description : dataset.description,
+			link : dataset.link,
+			project_duration : dataset.project_duration,
+			project_id: project_id,
+			user_id: user_id
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_PROFILE_PROJECT, data_object); // this.common_params.httpOptions
+	}
 	
 	
+	delete_license_certificate(lic_certificate_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+
+		let data_object = {
+			lic_certificate_id: lic_certificate_id,
+			user_id: user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.DELETE_LICENSE_CERTIFICATE, data_object); // this.common_params.httpOptions
+	}
+
+	get_license_certificate_details(lic_certificate_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+
+		let data_object = {
+			lic_certificate_id: lic_certificate_id,
+			user_id: user_id
+		};
+		
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_LICENSE_CERTIFICATE_DETAILS, data_object); // this.common_params.httpOptions
+	}
 	
+	add_update_license_certificate(dataset, lic_certificate_id): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			type:  dataset.type,
+			title:  dataset.title,
+			description:  dataset.description,
+			provider:  dataset.provider,
+			link:  dataset.link,
+			date_earned:  dataset.date_earned,
+			date_expirty:  dataset.date_expirty,
+			lic_certificate_id: lic_certificate_id,
+			user_id: user_id
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_LICENSE_CERTIFICATE, data_object); // this.common_params.httpOptions
+	}
 	
 }
