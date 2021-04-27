@@ -45,7 +45,7 @@ export class CommonFunctions {
 	{"page_id" :"1", "name" : "Category ", "link":"user/profile/category", "order" : "1", "previous_page" : "0", "next_page" : "14" },
 	{"page_id" : "14", "name" : "Job Type", "link":"user/profile/job-type", "order" : "2", "previous_page" : "1", "next_page" : "2" },
 	{"page_id" :"2", "name" : "Expertise", "link":"user/profile/expertise", "order" : "3", "previous_page" : "14", "next_page" : "3" },
-	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "4", "previous_page" : "3", "next_page" : "4" },
+	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "4", "previous_page" : "2", "next_page" : "4" },
 	{"page_id" :"4", "name" : "Education", "link":"user/profile/education", "order" : "5", "previous_page" : "3", "next_page" : "5" },
 	{"page_id" :"5", "name" : "Employment", "link":"user/profile/employment", "order" : "6", "previous_page" : "4", "next_page" : "12" },
 	{"page_id" : "12", "name" : "Projects", "link":"user/profile/projects", "order" : "7", "previous_page" : "5", "next_page" : "13" },

@@ -42,12 +42,22 @@
 								<div class="submit-field">
 									<h5> Phone Number</h5>
 									<input type="text" class="form-control with-border  mb-0 pb-0 height-38"
-										name="phone_number" id="phone_number" placeholder="" required
-										[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel" />
-									<div *ngIf="phone_numberobj.invalid && (phone_numberobj.dirty || phone_numberobj.touched)"
-										class="text-danger small">
-										Phone Number is required
+										name="phone_number" id="phone_number" placeholder="" required maxlength="10"
+										[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel"
+										pattern="\d{10}$" />
+									<div *ngIf="phone_numberobj?.invalid && (phone_numberobj?.dirty || phone_numberobj?.touched)"
+										class="error">
+										<div class="text-danger small" *ngIf="phone_numberobj.errors.required">
+											Phone number is required
+										</div>
+										<!-- <div class="text-danger small" *ngIf="phone_numberobj.errors.maxlength">
+							  Phone Minimum Length is {{lastname.errors.maxlength?.requiredLength}}
+							</div> -->
+										<div class="text-danger small" *ngIf="phone_numberobj.errors.pattern">
+											Please enter a valid phone number
+										</div>
 									</div>
+
 								</div>
 							</div>
 						</div>

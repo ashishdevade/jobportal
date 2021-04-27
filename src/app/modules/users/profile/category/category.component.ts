@@ -39,7 +39,7 @@ export class CategoryComponent implements OnInit {
 			this.get_user_profile_settings((response) => {
 				if (response.status == 200) {
 					this.form_data.category = response.data[0]['category_id']
-					this.form_data.subcategory = response.data[0]['student_category_id']
+					this.form_data.subcategory = response.data[0]['subcategory_id']
 					this.get_subcategory_list("");
 				}
 			});
