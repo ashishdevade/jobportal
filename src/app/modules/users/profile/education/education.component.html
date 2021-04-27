@@ -84,7 +84,7 @@
 
 
 <ng-template #template>
-	<form method="post" id="expertise-form" #educationform="ngForm" (ngSubmit)="onSubmit(educationform.valid)">
+	<form method="post" id="expertise-form" name="educationform" #educationform="ngForm" (ngSubmit)="onSubmit(educationform.valid)">
 		<div class="modal-header">
 			<h4 class="modal-title pull-left">{{popup_title}} </h4>
 			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -141,10 +141,10 @@
 
 				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 					<div class="submit-field">
-						<h5>From Date </h5>
+						<h5>From </h5>
 						<select class="form-control with-border" title="Select from" name="from" id="from"
 							[(ngModel)]="form_data.from_year" required #from_date="ngModel">
-							<option value="">Select From Date</option>
+							<option value="">Select From Year</option>
 							<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
 						</select>
 						<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)"
@@ -155,10 +155,10 @@
 				</div>
 				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 					<div class="submit-field">
-						<h5>To Date</h5>
+						<h5>To</h5>
 						<select class="form-control with-border" title="Select todate" name="todate" id="todate"
 							[(ngModel)]="form_data.to_year" required #to_date="ngModel">
-							<option value="">Select To Date (or Expected To Date)</option>
+							<option value="">Select To Year (or Expected To Year)</option>
 							<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
 						</select>
 						<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small">

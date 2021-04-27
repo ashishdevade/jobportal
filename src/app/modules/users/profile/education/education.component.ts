@@ -1,5 +1,5 @@
 
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CommonFunctions } from "../../../../core/helpers/common.functions";
@@ -8,6 +8,7 @@ import { MainService } from "../../../../core/services/main.service";
 
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 	styleUrls: ['./education.component.scss']
 })
 export class EducationComponent implements OnInit {
-
+	@ViewChild('educationform') educationform: any;
 	public page_id = 4;
 	public common_params = new CommonFunctions();
 	public show_loader = false;
@@ -116,7 +117,7 @@ export class EducationComponent implements OnInit {
 
 	onSubmit(isValid: Boolean) {
 		console.log("isValid ", isValid);
-		if (isValid) {
+		if (isValid && this.isYearValuesCorrect()) {
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
 			this.service.add_update_profile_education(dataset, this.education_id).subscribe(res => {
@@ -205,9 +206,18 @@ export class EducationComponent implements OnInit {
 			}, error => {
 				this.show_loader = false;
 				this.common_service.show_toast('e', this.common_service.error_message, "");
-
 			});
 		}
 	}
 
+	isYearValuesCorrect(){
+		if(this.form_data.from_year && this.form_data.to_year){
+			if(this.form_data.from_year > this.form_data.to_year){
+				this.common_service.show_toast('e', "To Year can't be greater than From Year", "");
+				return false;	
+			}else{
+				return true;
+			}
+		}
+	}
 }
