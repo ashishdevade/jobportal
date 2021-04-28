@@ -131,7 +131,7 @@ export class EmploymentComponent implements OnInit {
 	
 	onSubmit(isValid: Boolean){
 		console.log("isValid ", isValid);
-		if (isValid){
+		if (isValid && this.isYearValuesCorrect()){
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
 			this.service.add_update_profile_employment(dataset, this.employement_id).subscribe(res=> {
@@ -232,4 +232,18 @@ export class EmploymentComponent implements OnInit {
 		}
 	}
 
+	isYearValuesCorrect(){
+		let from_ts = new Date(this.form_data.from_month+this.form_data.from_year);
+		let to_ts = new Date(this.form_data.to_month+this.form_data.to_year);
+
+				if(from_ts && to_ts){
+					if(from_ts > to_ts){
+						this.common_service.show_toast('e', "Job Period From value can't be greater than To value", "");
+						return false;	
+					}else{
+						return true;
+					}
+
+				}
+			}
 }

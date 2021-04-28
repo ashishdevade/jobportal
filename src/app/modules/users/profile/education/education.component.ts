@@ -213,7 +213,7 @@ export class EducationComponent implements OnInit {
 	isYearValuesCorrect(){
 		if(this.form_data.from_year && this.form_data.to_year){
 			if(this.form_data.from_year > this.form_data.to_year){
-				this.common_service.show_toast('e', "To Year can't be greater than From Year", "");
+				this.common_service.show_toast('e', "Education Period From Year value can't be greater than To Year value", "");
 				return false;	
 			}else{
 				return true;
