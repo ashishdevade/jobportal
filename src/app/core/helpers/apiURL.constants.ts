@@ -31,5 +31,7 @@ export const apiUrl = {
     DELETE_LICENSE_CERTIFICATE: "/user/delete_license_certificate",
     GET_LICENSE_CERTIFICATE_DETAILS: "/user/get_license_certificate_details",
     ADD_UPDATE_LICENSE_CERTIFICATE: "/user/add_update_license_certificate",
+    ALL_SKILLS: "/user/get_skills",
+    
 
 }

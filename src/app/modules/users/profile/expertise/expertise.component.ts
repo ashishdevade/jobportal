@@ -17,13 +17,10 @@ export class ExpertiseComponent implements OnInit {
 	public show_loader = false;
 	public form_data: any = {};
 	public profile_side_menu = [];
-	public autocompleteItems = ['Item1', 'item2', 'item3'];
+	public skills_list = [];
 	public links:any = {};
-	public items = [
-	{ display: 'Pizza', value: 1 },
-	{ display: 'Pasta', value: 2 },
-	{ display: 'Parmesan', value: 3 },
-	];
+	public name = 'SkillSet';
+	
 
 	constructor(
 		private router: Router,
@@ -39,11 +36,13 @@ export class ExpertiseComponent implements OnInit {
 		
 		this.show_loader = true;
 		this.get_user_profile_settings((response_data) => {
-			this.form_data.skills = response_data['data'][0]['skills'];
+			this.form_data.skills = JSON.parse(response_data['data'][0]['skills']);
 			this.form_data.other = response_data['data'][0]['others'];
 
 			this.show_loader = false;
 		});
+		
+		this.get_skills("");
 	}
 
 	get_user_profile_settings(callback) {
@@ -65,6 +64,25 @@ export class ExpertiseComponent implements OnInit {
 
 			});
 		}, 50);
+	}
+	
+	get_skills(callback){
+		this.show_loader = true;
+		console.log(" in get_skills ");
+		this.service.get_skills(-1).subscribe(response=> {
+			if(response.status == 200){
+				this.skills_list = response.data;
+			} 
+			
+			if (callback != "" && callback != undefined) {
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
 	}
 
 	back_to_category() {

@@ -21,7 +21,7 @@ import { CardComponent } from 'src/app/Shared/card/card.component';
 import { JobTypeComponent } from './job-type/job-type.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { LicenseCertificationComponent } from './license-certification/license-certification.component';
-
+import { NgSelectModule } from '@ng-select/ng-select'; 
 
 @NgModule({
 	declarations: [CategoryComponent,
@@ -46,6 +46,7 @@ import { LicenseCertificationComponent } from './license-certification/license-c
 	SharedModules,
 	ModalModule.forRoot(),
 	BsDatepickerModule.forRoot(),
+	NgSelectModule
 	]
 })
 export class ProfileModule { }

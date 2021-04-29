@@ -88,7 +88,7 @@ export class MainService {
 	update_profile_expertise(dataset): Observable<any> {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
-			skills: dataset.skills,
+			skills: (dataset.skills),
 			other: dataset.other,
 			user_id: user_id
 		};
@@ -380,6 +380,14 @@ export class MainService {
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_LICENSE_CERTIFICATE, data_object); // this.common_params.httpOptions
+	}
+	
+	
+	get_skills(skill_id): Observable<any> {
+		let data_object = {
+			skill_id: skill_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_SKILLS, data_object); // this.common_params.httpOptions
 	}
 	
 }
