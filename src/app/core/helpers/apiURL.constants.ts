@@ -15,6 +15,7 @@ export const apiUrl = {
     DELETE_EMP: "/user/delete_employment",
     EMP_DETAILS: "/user/get_employment_details",
     GET_COUNTRIES: "/user/get_countries",
+    GET_STATES: "/user/get_states",
     CALLING_CODE: "/user/get_calling_code",
     UPDATE_PROFILE_EMP: "/user/add_update_profile_employment",
     UPDATE_PROFILE_LANG: "/user/add_update_profile_language",

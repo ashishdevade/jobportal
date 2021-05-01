@@ -182,8 +182,14 @@ export class MainService {
 		let data_object = {
 			country_id: country_id
 		};
-
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_COUNTRIES, data_object); // this.common_params.httpOptions
+	}
+	
+	get_states(country_id): Observable<any> {
+		let data_object = {
+			country_id: country_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_STATES, data_object); // this.common_params.httpOptions
 	}
 
 	get_calling_code(country_id): Observable<any> {
@@ -262,7 +268,10 @@ export class MainService {
 		this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
-			country: dataset.country,
+			country_id: dataset.country_id,
+			country: dataset.country_name,
+			state_id: dataset.state_id,
+			state: dataset.state_name,
 			city: dataset.city,
 			street_address: dataset.street_address,
 			zipcode: dataset.zipcode,
