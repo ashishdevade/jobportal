@@ -13,41 +13,58 @@
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
 			<form method="post" id="hourlyrate_form" #hourlyRateForm="ngForm"
-				(ngSubmit)="onSubmit(hourlyRateForm.valid)">
-				<app-card [cardMetaData]="{cardTitle: 'Hourly Rate'}">
-					<div class="content with-padding padding-bottom-10">
+			(ngSubmit)="onSubmit(hourlyRateForm.valid)">
+			<app-card [cardMetaData]="{cardTitle: 'Hourly Rate'}">
+				<div class="content with-padding padding-bottom-10">
 
-						<div class="text-muted">Clients will see this rate on your profile and in search results
-							once you publish your profile. You can adjust your rate every time you submit a
-							proposal.</div>
-						<br>
-					</div>
-					<div class="content with-padding padding-bottom-10">
-						<div class="row">
-							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-								<div class="font-weight-bold">Hourly Rate</div>
-								<div class="text-muted">Total amount the client will see</div>
-							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text">$</span>
-									</div>
-									<input type="text" class="form-control text-right" name="hourly_rate"
-										id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" required
-										[(ngModel)]="form_data.hourly_date" #hourlyRate="ngModel"
-										(input)="calculate_hourly_rate()" />
-									<div class="input-group-append">
-										<span class="input-group-text">/hr</span>
-									</div>
+					<div class="text-muted">Clients will see this rate on your profile and in search results
+						once you publish your profile. You can adjust your rate every time you submit a
+					proposal.</div>
+					<br>
+				</div>
+				<div class="content with-padding padding-bottom-10">
+					<div class="row" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
+						<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+							<div class="font-weight-bold">Hourly Rate</div>
+							<div class="text-muted">Total amount the client will see</div>
+						</div>
+						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">$</span>
 								</div>
-								<div *ngIf="hourlyRate.invalid && (hourlyRate.dirty || hourlyRate.touched)"
-									class="text-danger small">
-									hourly rate is required
+								<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" required [(ngModel)]="form_data.hourly_date" #hourlyRate="ngModel" (input)="calculate_hourly_rate()" />
+								<div class="input-group-append">
+									<span class="input-group-text">/hr</span>
+								</div>
+							</div>
+							<div *ngIf="hourlyRate.invalid && (hourlyRate.dirty || hourlyRate.touched)" class="text-danger small">
+								hourly rate is required
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="this.form_data.job_type == '1' || this.form_data.job_type == '2' || this.form_data.job_type == '3'">
+						<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+							<div class="font-weight-bold">Salary Expectation</div>
+							<div class="text-muted"> Montly Salary you are expecting and the client will see</div>
+						</div>
+						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">$</span>
+								</div>
+								<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" 
+								[(ngModel)]="form_data.salary_expectation" #hourlyRate="ngModel"  />
+								<div class="input-group-append">
+									<span class="input-group-text">/M</span>
 								</div>
 							</div>
 						</div>
-						<hr>
+						
+						<div class="content with-padding padding-bottom-10 pl-0">
+							<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
+						</div>
+					</div>
 						<!-- <div class="row">
 							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
 								<div class="font-weight-bold">Service Fee</div>
@@ -98,21 +115,21 @@
 						<div class="row">
 							<div class="col-xl-6">
 								<button type="submit" class="button ripple-effect big margin-top-30"><i
-										class="icon-feather-check"></i> Save and Proceed</button>
-							</div>
+									class="icon-feather-check"></i> Save and Proceed</button>
+								</div>
 
-							<div class="col-xl-6">
-								<button type="button" (click)="back_to_lang()"
+								<div class="col-xl-6">
+									<button type="button" (click)="back_to_lang()"
 									class="button gray ripple-effect big margin-top-30 float-right"><i
-										class="icon-feather-chevron-left"></i> Back</button>
+									class="icon-feather-chevron-left"></i> Back</button>
+								</div>
 							</div>
 						</div>
+
 					</div>
-
-				</div>
-			</form>
+				</form>
 
 
+			</div>
 		</div>
 	</div>
-</div>

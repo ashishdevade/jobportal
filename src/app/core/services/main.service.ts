@@ -244,6 +244,7 @@ export class MainService {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			hourly_date: dataset.hourly_date,
+			salary_expectation: dataset.salary_expectation,
 			service_fees: dataset.service_fees,
 			receive_rate: dataset.receive_rate,
 			user_id: user_id

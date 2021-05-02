@@ -41,11 +41,14 @@ export class HourlyRateComponent implements OnInit {
 		this.form_data.hourly_date = "";
 		this.form_data.service_fees = "0.00";
 		this.form_data.receive_rate = "0.00";
+		this.form_data.job_type = "0";
 		this.get_user_profile_settings((response)=>{
 			if(response['data'].length > 0){
-				this.form_data.hourly_date = response['data'][0]['hourly_rate'];
+				this.form_data.hourly_date  = response['data'][0]['hourly_rate'];
+				this.form_data.salary_expectation  = response['data'][0]['salary_expectation'];				
 				this.form_data.service_fees = response['data'][0]['service_fees'];
 				this.form_data.receive_rate = response['data'][0]['receive_rate'];
+				this.form_data.job_type     = response['data'][0]['job_type'];
 			}
 		});
 	}
@@ -92,6 +95,24 @@ export class HourlyRateComponent implements OnInit {
 				
 			});
 		}
+	}
+	
+	skip_steps(){
+		this.show_loader = true; 
+		this.service.skip_this_step(this.page_id).subscribe(response=> {
+			if(response.status == 200){
+				this.show_loader = false;
+				this.common_service.change_route(this.links.next_link);
+				
+			} else {
+				this.show_loader = false;
+				//	this.common_service.show_toast('e', this.common_service.error_message, "");
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+			
+		});
 	}
 	
 	back_to_lang(){
