@@ -29,7 +29,7 @@ export class ProfilePhotoComponent implements OnInit {
 	imageChangedEvent: any = '';
 	croppedImage: any = '';
 	public preview_profile_photo:any = '';
-	
+	fileToReturn:any;
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -55,12 +55,37 @@ export class ProfilePhotoComponent implements OnInit {
 	
 
 	fileChangeEvent(event: any): void {
+		console.log("event--",event)
 		this.imageChangedEvent = event;
+		
 	}
 	
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event.base64;
+
+		this.fileToReturn = this.base64ToFile(
+		  event.base64,
+		  this.imageChangedEvent.target.files[0].name,
+		)
+	
+		console.log(this.imageChangedEvent.target.files[0]);
+		console.log("FILE OBJ --> ",this.fileToReturn);
+		return this.fileToReturn;
 	}
+	
+	base64ToFile(data, filename) {
+		const arr = data.split(',');
+		const mime = arr[0].match(/:(.*?);/)[1];
+		const bstr = atob(arr[1]);
+		let n = bstr.length;
+		let u8arr = new Uint8Array(n);
+	
+		while(n--){
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+	
+		return new File([u8arr], filename, { type: mime });
+	  }
 	
 	imageLoaded() {
 	}
@@ -71,6 +96,9 @@ export class ProfilePhotoComponent implements OnInit {
 	loadImageFailed() {
 	}
 	
+	imageFile(event: ImageData){
+		console.log("IMAGE FIEevent--",event)
+	}
 	get_user_profile_settings(callback){
 		setTimeout(() => {
 			this.service.get_user_profile_settings('profile-photo').subscribe(response=> {
