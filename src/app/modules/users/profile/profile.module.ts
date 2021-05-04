@@ -22,6 +22,7 @@ import { JobTypeComponent } from './job-type/job-type.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { LicenseCertificationComponent } from './license-certification/license-certification.component';
 import { NgSelectModule } from '@ng-select/ng-select'; 
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
 	declarations: [CategoryComponent,
@@ -46,7 +47,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 	SharedModules,
 	ModalModule.forRoot(),
 	BsDatepickerModule.forRoot(),
-	NgSelectModule
+	NgSelectModule,
+	ImageCropperModule
 	]
 })
 export class ProfileModule { }

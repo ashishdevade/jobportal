@@ -294,11 +294,11 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_PHONE, data_object); // this.common_params.httpOptions
 	}
 	
-	add_update_profile_photo(dataset) : Observable<any> {
+	add_update_profile_photo(photo_string) : Observable<any> {
 		// 	this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
-			photo : dataset.photo,
+			profile_photo : photo_string,
 			user_id : user_id
 		};
 		

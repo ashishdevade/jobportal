@@ -6,8 +6,8 @@ import { CommonFunctions } from "../../../../core/helpers/common.functions";
 import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
 
-
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
 	selector: 'app-profile-photo',
@@ -26,6 +26,9 @@ export class ProfilePhotoComponent implements OnInit {
 	public links:any = {};
 	public success_message = "Profile Picture Saved Successfully";
 	modalRef: BsModalRef;
+	imageChangedEvent: any = '';
+	croppedImage: any = '';
+	public preview_profile_photo:any = '';
 	
 	constructor(
 		private router: Router,
@@ -41,11 +44,36 @@ export class ProfilePhotoComponent implements OnInit {
 		
 		this.popup_title = "Add profile photo";
 		this.action_button_text	 = "Save";
+		
+		this.show_loader = true;
+		this.get_user_profile_settings((response)=>{
+			 this.preview_profile_photo = response['data'][0]['profile_photo'];
+			this.show_loader = false; 
+			console.log(" in get_user_profile_settings ");
+		});
+	}
+	
+
+	fileChangeEvent(event: any): void {
+		this.imageChangedEvent = event;
+	}
+	
+	imageCropped(event: ImageCroppedEvent) {
+		this.croppedImage = event.base64;
+	}
+	
+	imageLoaded() {
+	}
+	
+	cropperReady() {
+	}
+	
+	loadImageFailed() {
 	}
 	
 	get_user_profile_settings(callback){
 		setTimeout(() => {
-			this.service.get_user_profile_settings('employment').subscribe(response=> {
+			this.service.get_user_profile_settings('profile-photo').subscribe(response=> {
 				if(response.status == 200){
 					if(callback != "" && callback != undefined){
 						callback(response);
@@ -104,10 +132,10 @@ export class ProfilePhotoComponent implements OnInit {
 		console.log("isValid ", isValid);
 		if (isValid){
 			this.show_loader = true;
-			let dataset = JSON.parse(JSON.stringify(this.form_data));
-			this.service.add_update_profile_photo(dataset).subscribe(res=> {
+			this.service.add_update_profile_photo(this.croppedImage).subscribe(res=> {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
+					this.preview_profile_photo = this.croppedImage;
 					// this.common_service.change_route(this.links.next_link);
 					setTimeout(()=>{
 						this.show_loader = false;
