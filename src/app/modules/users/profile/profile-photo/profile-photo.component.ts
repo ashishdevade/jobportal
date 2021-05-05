@@ -27,8 +27,10 @@ export class ProfilePhotoComponent implements OnInit {
 	public success_message = "Profile Picture Saved Successfully";
 	modalRef: BsModalRef;
 	imageChangedEvent: any = '';
+	imageCrioppedChangedEvent: any = '';
 	croppedImage: any = '';
 	public preview_profile_photo:any = '';
+	public service_url = '';
 	fileToReturn:any;
 	constructor(
 		private router: Router,
@@ -44,32 +46,43 @@ export class ProfilePhotoComponent implements OnInit {
 		
 		this.popup_title = "Add profile photo";
 		this.action_button_text	 = "Save";
+		this.service_url = JSON.parse(sessionStorage.system_config)['service_url'];
 		
 		this.show_loader = true;
 		this.get_user_profile_settings((response)=>{
-			 this.preview_profile_photo = response['data'][0]['profile_photo'];
+			this.preview_profile_photo = this.service_url + '/' + response['data'][0]['profile_photo'];
 			this.show_loader = false; 
-			console.log(" in get_user_profile_settings ");
+			
 		});
 	}
 	
 
 	fileChangeEvent(event: any): void {
-		console.log("event--",event)
+		
 		this.imageChangedEvent = event;
+		
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			let current_selected_file = event.target.files[0];
+			reader.onload = (event) => { 
+				let upload_file = event.target.result;
+			}
+		}
 		
 	}
 	
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event.base64;
-
+		
+		this.imageCrioppedChangedEvent = event;
 		this.fileToReturn = this.base64ToFile(
-		  event.base64,
-		  this.imageChangedEvent.target.files[0].name,
-		)
-	
-		console.log(this.imageChangedEvent.target.files[0]);
-		console.log("FILE OBJ --> ",this.fileToReturn);
+			event.base64,
+			this.imageChangedEvent.target.files[0].name,
+			)
+		
+		
+		// console.log("FILE OBJ --> ",this.fileToReturn);
 		return this.fileToReturn;
 	}
 	
@@ -79,13 +92,13 @@ export class ProfilePhotoComponent implements OnInit {
 		const bstr = atob(arr[1]);
 		let n = bstr.length;
 		let u8arr = new Uint8Array(n);
-	
+		
 		while(n--){
 			u8arr[n] = bstr.charCodeAt(n);
 		}
-	
+		
 		return new File([u8arr], filename, { type: mime });
-	  }
+	}
 	
 	imageLoaded() {
 	}
@@ -94,6 +107,7 @@ export class ProfilePhotoComponent implements OnInit {
 	}
 	
 	loadImageFailed() {
+		this.croppedImage = '';
 	}
 	
 	imageFile(event: ImageData){
@@ -143,7 +157,7 @@ export class ProfilePhotoComponent implements OnInit {
 	}
 	
 	back_to_titleoverview(){
-		console.log("in here ");
+		
 		this.common_service.change_route(this.links.previous_link);
 	}
 	
@@ -160,10 +174,18 @@ export class ProfilePhotoComponent implements OnInit {
 		console.log("isValid ", isValid);
 		if (isValid){
 			this.show_loader = true;
-			this.service.add_update_profile_photo(this.croppedImage).subscribe(res=> {
+			var form_obj = new FormData();
+			let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+			form_obj.append('user_id', user_id);
+			
+			if(this.fileToReturn!= undefined && this.fileToReturn!= ""){
+				form_obj.append('profile_picture', this.fileToReturn,this.fileToReturn.name);
+			}
+			
+			this.service.add_update_profile_photo(form_obj).subscribe(res=> {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
-					this.preview_profile_photo = this.croppedImage;
+					this.preview_profile_photo = this.service_url + "/" +res['data']['profile_photo'];
 					// this.common_service.change_route(this.links.next_link);
 					setTimeout(()=>{
 						this.show_loader = false;
