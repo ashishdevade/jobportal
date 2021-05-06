@@ -375,7 +375,7 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_LICENSE_CERTIFICATE_DETAILS, data_object); // this.common_params.httpOptions
 	}
 	
-	add_update_license_certificate(dataset, lic_certificate_id): Observable<any> {
+	/*add_update_license_certificate(dataset, lic_certificate_id): Observable<any> {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			type:  dataset.type,
@@ -390,8 +390,11 @@ export class MainService {
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_LICENSE_CERTIFICATE, data_object); // this.common_params.httpOptions
-	}
+	}*/
 	
+	add_update_license_certificate(form_data, lic_certificate_id): Observable<any> {
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_LICENSE_CERTIFICATE, form_data); // this.common_params.httpOptions
+	}
 	
 	get_skills(skill_id): Observable<any> {
 		let data_object = {

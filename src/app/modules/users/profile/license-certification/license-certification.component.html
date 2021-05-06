@@ -129,20 +129,19 @@
 					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 						<div class="submit-field">
 							<h5>Date Earned </h5>
+							<div class="">
+								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
+								<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
+							</div>
 						</div>
-						<div class="clearfix"></div>
-						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-							<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
-							<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
-						</div>
+						
 					</div>
 					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 						<div class="submit-field">
 							<h5>Date Expiry (Optional) </h5>
-						</div>
-						<div class="clearfix"></div>
-						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-							<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" required [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+							<div class="">
+								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" required [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+							</div>
 						</div>
 					</div>
 				</div>
@@ -153,6 +152,24 @@
 							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link" required [(ngModel)]="form_data.link" #license_cer_link="ngModel" />
 							<div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div>
 						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5>Upload Certificate  </h5>
+							<div class="">
+								<input type="file" (change)="fileChangeEvent($event)" />
+								<span class="text-muted">Uploading Certificate Increases credibility drastically, You can upload PDF file or Certificate Screenshot</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row mb-5" *ngIf="this.form_data.uploaded_document!= ''">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<a download  [href]="this.form_data.uploaded_document" target="_blank" class="btn btn-success ml-2" ><i class="icon-feather-download"></i>Download Document</a>
 					</div>
 				</div>
 				

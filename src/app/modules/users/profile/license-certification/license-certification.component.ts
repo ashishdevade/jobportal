@@ -29,6 +29,10 @@ export class LicenseCertificationComponent implements OnInit {
 	public popup_title = "";
 	public links:any = {};
 	public action_button_text = "";
+	public fileChangedEvent = '';
+	public current_selected_file:any;
+	public service_url = '';
+	public upload_file:any;
 	
 	modalRef: BsModalRef;
 	
@@ -42,6 +46,7 @@ export class LicenseCertificationComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.service_url = JSON.parse(sessionStorage.system_config)['service_url'];
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.from_year  = "";
 		this.form_data.to_year = "";
@@ -59,6 +64,21 @@ export class LicenseCertificationComponent implements OnInit {
 			console.log(" in get_user_profile_settings ");
 		});
 	}
+	
+	fileChangeEvent(event: any): void {
+		this.fileChangedEvent = event;
+		
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			this.current_selected_file = event.target.files[0];
+			reader.onload = (event) => { 
+				this.upload_file = event.target.result;
+			}
+		}
+		
+	}
+	
 	
 	get_user_profile_settings(callback){
 		setTimeout(() => {
@@ -117,7 +137,25 @@ export class LicenseCertificationComponent implements OnInit {
 		if (isValid){
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
-			this.service.add_update_license_certificate(dataset, this.license_certificate_id).subscribe(res=> {
+			
+			var form_obj = new FormData();
+			let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+			form_obj.append('user_id', user_id);
+			form_obj.append('license_certificate_id', this.license_certificate_id.toString());
+			
+			if(this.current_selected_file!= undefined && this.current_selected_file!= ""){
+				form_obj.append('license_document', this.current_selected_file, this.current_selected_file.name);
+			}
+			
+			form_obj.append('type', dataset.type);
+			form_obj.append('title', dataset.title);
+			form_obj.append('description', dataset.description);
+			form_obj.append('provider', dataset.provider);
+			form_obj.append('link', dataset.link);
+			form_obj.append('date_earned', dataset.date_earned);
+			form_obj.append('date_expirty', dataset.date_expirty);
+			
+			this.service.add_update_license_certificate(form_obj, this.license_certificate_id).subscribe(res=> {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					
@@ -154,6 +192,7 @@ export class LicenseCertificationComponent implements OnInit {
 		this.form_data.link = "";
 		this.form_data.date_earned = "";
 		this.form_data.date_expirty = "";
+		this.form_data.uploaded_document = '';
 
 		this.modalRef = this.modalService.show( template, this.common_params.modal_config );
 	}
@@ -168,13 +207,14 @@ export class LicenseCertificationComponent implements OnInit {
 		this.service.get_license_certificate_details(license_certificate_id).subscribe(response=> {
 			if(response.status == 200){
 				let project_details = response.data[0];
-				this.form_data.type = "license";
-				this.form_data.title = "";
-				this.form_data.description = "";
-				this.form_data.provider = "";
-				this.form_data.link = "";
-				this.form_data.date_earned = "";
-				this.form_data.date_expirty = "";
+				this.form_data.type = project_details.type;
+				this.form_data.title = project_details.certificate_name;
+				this.form_data.description = project_details.description;
+				this.form_data.provider = project_details.provider;
+				this.form_data.link = project_details.certificate_link;
+				this.form_data.date_earned = new Date(project_details.date_earned);
+				this.form_data.date_expirty = new Date(project_details.date_ended);
+				this.form_data.uploaded_document = this.service_url + '/' + project_details['uploaded_document'];;
 				/*this.form_data.title = project_details.title;
 				this.form_data.description = project_details.description;
 				this.form_data.link = project_details.link;
