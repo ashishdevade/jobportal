@@ -134,7 +134,7 @@ export class LicenseCertificationComponent implements OnInit {
 	
 	onSubmit(isValid: Boolean){
 		console.log("isValid ", isValid);
-		if (isValid){
+		if (isValid && this.isSelectedDatesCorrect()){
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
 			
@@ -256,5 +256,14 @@ export class LicenseCertificationComponent implements OnInit {
 		}
 	}
 
+	isSelectedDatesCorrect(){
+		if((this.form_data.date_earned <= this.form_data.date_expirty) && this.form_data.date_expirty <= new Date()){
+				return true;
+		}
+		else{
+			this.common_service.show_toast('e', "Please enter a valid date selection", "");
+			return false;
+		}
+	}
 
 }
