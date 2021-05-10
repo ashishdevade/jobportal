@@ -51,7 +51,7 @@ export class CommonFunctions {
 	{"page_id" : "12", "name" : "Projects", "link":"user/profile/projects", "order" : "7", "previous_page" : "5", "next_page" : "13" },
 	{"page_id" : "13", "name" : "License & Certification", "link":"user/profile/license-certification", "order" : "8", "previous_page" : "12", "next_page" : "6" },
 	{"page_id" :"6", "name" : "Languages", "link":"user/profile/languages", "order" : "9", "previous_page" : "13", "next_page" : "7" },
-	{"page_id" :"7", "name" : "Hourly Rate", "link":"user/profile/hourly-rate", "order" : "10", "previous_page" : "6", "next_page" : "8" },
+	{"page_id" :"7", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "10", "previous_page" : "6", "next_page" : "8" },
 	{"page_id" :"8", "name" : "Title & Overview", "link":"user/profile/title-overview", "order" : "11", "previous_page" : "7", "next_page" : "9" },
 	{"page_id" :"9", "name" : "Profile Photo", "link":"user/profile/photo", "order" : "12", "previous_page" : "8", "next_page" : "10" },
 	{"page_id" : "10", "name" : "Location", "link":"user/profile/location", "order" : "13", "previous_page" : "9", "next_page" : "11" },
