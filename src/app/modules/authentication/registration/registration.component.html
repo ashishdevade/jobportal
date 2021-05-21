@@ -48,12 +48,19 @@
 							</div>
 
 							<div>
-								<input type="radio" name="account_type" id="employer-radio" class="account-type-radio" value="Freelancer" [(ngModel)]="account_type" />
+								<input type="radio" name="account_type" id="employer-radio" class="account-type-radio" value="Company" [(ngModel)]="account_type" />
 								<label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Company</label>
 							</div>
 						</div>
+						<div class="input-with-icon-left" *ngIf="account_type == 'Company'">
+							<i class="icon-material-outline-location-city"></i>
+							<input type="text" class="input-text with-border"  name="company_name"  [(ngModel)]="company_name" id="company_name" placeholder="Company Name" required  #company_name_obj="ngModel"/>
+							<div *ngIf="company_name_obj.invalid && (company_name_obj.dirty || company_name_obj.touched)" class="text-danger small">
+								Company Name is required. 
+							</div>
+						</div>
 						<div class="input-with-icon-left">
-							<i class="icon-material-baseline-mail-outline"></i>
+							<i class="icon-material-outline-person-pin"></i>
 							<input type="text" class="input-text with-border"  name="firstname"  [(ngModel)]="firstname" id="firstname" placeholder="First Name" required  #userfirstname="ngModel"/>
 							<div *ngIf="userfirstname.invalid && (userfirstname.dirty || userfirstname.touched)" class="text-danger small">
 								First Name is required. 
@@ -61,7 +68,7 @@
 						</div>
 						
 						<div class="input-with-icon-left">
-							<i class="icon-material-baseline-mail-outline"></i>
+							<i class="icon-material-outline-account-circle"></i>
 							<input type="text" class="input-text with-border"  name="lastname"  [(ngModel)]="lastname" id="lastname" placeholder="Last Name" required  #userlastname="ngModel"/>
 							<div *ngIf="userlastname.invalid && (userlastname.dirty || userlastname.touched)" class="text-danger small">
 								Last Name is required. 
@@ -77,7 +84,7 @@
 						</div>
 
 						<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
-							<i class="icon-material-outline-lock"></i>
+							<i class="icon-line-awesome-key"></i>
 							<input type="password" class="input-text with-border" name="password" id="password" placeholder="Password" required  [(ngModel)]="user_password"  #userpassword="ngModel"/>
 							<div *ngIf="userpassword.invalid && (userpassword.dirty || userpassword.touched)" class="text-danger small">
 								Password is required
@@ -85,7 +92,7 @@
 						</div>
 
 						<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
-							<i class="icon-material-outline-lock"></i>
+							<i class="icon-line-awesome-key"></i>
 							<input type="password" class="input-text with-border" name="repassword" id="repassword" placeholder="Repeat Password" required  [(ngModel)]="re_enter_password"  #re_password="ngModel"/>
 							<div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)" class="text-danger small">
 								Re Enter Password is required

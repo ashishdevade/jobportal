@@ -13,6 +13,7 @@ export const apiUrl = {
     DELETE_EDU: "/user/delete_education",
     EDU_DETAILS: "/user/get_education_details",
     DELETE_EMP: "/user/delete_employment",
+    ALL_SKILLS: "/user/get_skills",
     EMP_DETAILS: "/user/get_employment_details",
     GET_COUNTRIES: "/user/get_countries",
     GET_STATES: "/user/get_states",
@@ -32,5 +33,6 @@ export const apiUrl = {
     DELETE_LICENSE_CERTIFICATE: "/user/delete_license_certificate",
     GET_LICENSE_CERTIFICATE_DETAILS: "/user/get_license_certificate_details",
     ADD_UPDATE_LICENSE_CERTIFICATE: "/user/add_update_license_certificate",
-    ALL_SKILLS: "/user/get_skills",
+    UPDATE_PROFILE_JOB_LOCATION_PREFERENCE: "/user/update_profile_job_location_preference",
+    UPDATE_PROFILE_TIMELINE_HIRING: "/user/update_profile_timeline_hiring",
 }

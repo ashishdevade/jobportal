@@ -13,6 +13,7 @@ import { MainService } from "../../../core/services/main.service";
 export class RegistrationComponent implements OnInit {
 
 	public common_params = new CommonFunctions();
+	public company_name = "";
 	public firstname = "";
 	public lastname = "";
 	public email_address = "";
@@ -36,10 +37,9 @@ export class RegistrationComponent implements OnInit {
 			if(this.user_password == this.re_enter_password){
 				this.show_loader = true;
 				
-				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type).subscribe(response => {
+				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name).subscribe(response => {
 					console.log("response ", response );
 					if(response['data'] != undefined){
-						
 						sessionStorage.setItem("is_logged_in", '1');
 						sessionStorage.setItem("user_id", response['data']['user_account_id']);
 						sessionStorage.setItem("user_details", JSON.stringify(response['data']));

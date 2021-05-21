@@ -30,6 +30,7 @@ export class EducationComponent implements OnInit {
 	public education_list = [];
 	public popup_title = "";
 	public action_button_text = "";
+	public links:any = {};
 
 	modalRef: BsModalRef;
 
@@ -42,7 +43,8 @@ export class EducationComponent implements OnInit {
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
 		this.form_data.from_year = "";
 		this.form_data.to_year = "";
 		let d = new Date();
@@ -84,7 +86,7 @@ export class EducationComponent implements OnInit {
 
 	back_to_expertise_level() {
 		console.log("in here ");
-		this.common_service.change_route('user/profile/expertise-level');
+		this.common_service.change_route(this.links.previous_link);
 	}
 
 	go_to_exployment() {
@@ -92,7 +94,7 @@ export class EducationComponent implements OnInit {
 			this.common_service.show_toast('e', 'No Education Details added, Please add education by clicking "Add Education"', "");
 
 		} else {
-			this.common_service.change_route('user/profile/employment');
+			this.common_service.change_route(this.links.next_link);
 		}
 
 	}
@@ -179,7 +181,6 @@ export class EducationComponent implements OnInit {
 				this.modalRef = this.modalService.show(template, this.common_params.modal_config );
 			} else {
 				this.show_loader = false;
-				//	this.common_service.show_toast('e', this.common_service.error_message, "");
 			}
 		}, error => {
 			this.show_loader = false;

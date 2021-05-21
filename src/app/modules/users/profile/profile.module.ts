@@ -23,6 +23,9 @@ import { ProjectsComponent } from './projects/projects.component';
 import { LicenseCertificationComponent } from './license-certification/license-certification.component';
 import { NgSelectModule } from '@ng-select/ng-select'; 
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { JobLocationPreferComponent } from './job-location-prefer/job-location-prefer.component';
+import { TimelineHiringComponent } from './timeline-hiring/timeline-hiring.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
 	declarations: [CategoryComponent,
@@ -40,7 +43,10 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 	CardComponent,
 	JobTypeComponent,
 	ProjectsComponent,
-	LicenseCertificationComponent],
+	LicenseCertificationComponent,
+	ReviewComponent,
+	JobLocationPreferComponent,
+	TimelineHiringComponent],
 	imports: [
 	CommonModule,
 	ProfileRoutingModule,

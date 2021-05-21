@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonFunctions } from "../../../../core/helpers/common.functions";
 import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
+import { SharedService } from "../../../../core/services/shared.service";
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
@@ -36,12 +37,13 @@ export class ProfilePhotoComponent implements OnInit {
 		private router: Router,
 		public common_service : CommonService,
 		public service : MainService,
-		private modalService: BsModalService
+		private modalService: BsModalService,
+		public shared_service : SharedService
 		) { }
 	
 	ngOnInit() {
 		this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		
 		this.popup_title = "Add profile photo";
@@ -49,7 +51,7 @@ export class ProfilePhotoComponent implements OnInit {
 		this.service_url = JSON.parse(sessionStorage.system_config)['service_url'];
 		
 		this.show_loader = true;
-		this.get_user_profile_settings((response)=>{
+		this.get_user_profile_settings('profile-photo', (response)=>{
 			this.preview_profile_photo = this.service_url + '/' + response['data'][0]['profile_photo'];
 			this.show_loader = false; 
 			
@@ -113,9 +115,9 @@ export class ProfilePhotoComponent implements OnInit {
 	imageFile(event: ImageData){
 		console.log("IMAGE FIEevent--",event)
 	}
-	get_user_profile_settings(callback){
+	get_user_profile_settings(type, callback){
 		setTimeout(() => {
-			this.service.get_user_profile_settings('profile-photo').subscribe(response=> {
+			this.service.get_user_profile_settings(type).subscribe(response=> {
 				if(response.status == 200){
 					if(callback != "" && callback != undefined){
 						callback(response);
@@ -186,12 +188,17 @@ export class ProfilePhotoComponent implements OnInit {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
 					this.preview_profile_photo = this.service_url + "/" +res['data']['profile_photo'];
-					// this.common_service.change_route(this.links.next_link);
-					setTimeout(()=>{
-						this.show_loader = false;
-						this.modalRef.hide();
+					this.get_user_profile_settings('user-account', (response)=>{
+						this.shared_service.loginValue(response['data']);
 						
-					}, 200);
+						setTimeout(()=>{
+							this.show_loader = false;
+							this.modalRef.hide();
+							
+						}, 200);
+					});
+					
+					// this.common_service.change_route(this.links.next_link);
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
 					this.show_loader = false;

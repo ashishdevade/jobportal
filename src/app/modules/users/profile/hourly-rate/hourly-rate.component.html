@@ -65,71 +65,29 @@
 							<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>
 						</div>
 					</div>
-						<!-- <div class="row">
-							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-								<div class="font-weight-bold">Service Fee</div>
-								<div class="text-muted">The Service Fee is 20% when you begin a contract with a
-									new client. Once you bill over $500 with your client, the fee will be 10%.
-								</div>
-							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text">$</span>
-									</div>
-									<input type="text" class="form-control text-right"
-										aria-label="Amount (to the nearest dollar)" name="service_fees"
-										id="service_fees" readonly [(ngModel)]="form_data.service_fees">
-									<div class="input-group-append">
-										<span class="input-group-text">/hr</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-								<div class="font-weight-bold">You'll receive</div>
-								<div class="text-muted">The estimated amount you'll receive after service fees
-								</div>
-							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text">$</span>
-									</div>
-									<input type="text" class="form-control text-right"
-										aria-label="Amount (to the nearest dollar)" name="receive_rates"
-										id="receive_rates" readonly [(ngModel)]="form_data.receive_rate">
-									<div class="input-group-append">
-										<span class="input-group-text">/hr</span>
-									</div>
-								</div>
-							</div>
-						</div> -->
-					</div>
+				</div>
 
-				</app-card>
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="row">
+			</app-card>
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="row">
+						<div class="col-xl-6">
+							<button type="submit" class="button ripple-effect big margin-top-30"><i
+								class="icon-feather-check"></i> Save and Proceed</button>
+							</div>
+
 							<div class="col-xl-6">
-								<button type="submit" class="button ripple-effect big margin-top-30"><i
-									class="icon-feather-check"></i> Save and Proceed</button>
-								</div>
-
-								<div class="col-xl-6">
-									<button type="button" (click)="back_to_lang()"
-									class="button gray ripple-effect big margin-top-30 float-right"><i
-									class="icon-feather-chevron-left"></i> Back</button>
-								</div>
+								<button type="button" (click)="back_to_lang()"
+								class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i
+								class="icon-feather-chevron-left"></i> Back</button>
 							</div>
 						</div>
-
 					</div>
-				</form>
+
+				</div>
+			</form>
 
 
-			</div>
 		</div>
 	</div>
+</div>

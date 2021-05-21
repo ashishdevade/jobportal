@@ -5,6 +5,7 @@ export class CommonFunctions {
 	public href: any = window.location.href;
 	public application_path = this.get_current_url();
 	public email_valid_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	public default_image = "/assets/images/user-avatar-placeholder.png";
 	
 	public default_language = "English";
 	public default_service_rate_per = "20";
@@ -32,6 +33,16 @@ export class CommonFunctions {
 	{"key":"12", "value":"December"},
 	];
 	
+	public expertise_level = [
+		{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
+		{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
+		{ value: 3, heading: 'Expert', description: "I have comprehensive and deep expertise in this field" },
+	];
+	
+	public location_preference = [
+		{ value: 1, heading: 'Remote Job', description: "Work from which ever locaiton you like" },
+		{ value: 2, heading: 'On Site', description: "Move/ Shift to the actual work site" },
+	];
 	
 	public proficiency_list  = [
 	{"name":"Basic", "desc":"I write in this language decently"},
@@ -39,7 +50,6 @@ export class CommonFunctions {
 	{"name":"Fluent", "desc":"I write and speak this language almost perfectly"},
 	{"name":"Native", "desc":"I write and speak this language perfectly, including colloquialisms"},
 	];
-	
 	
 	public profile_settings_list = [
 	{"page_id" :"1", "name" : "Category ", "link":"user/profile/category", "order" : "1", "previous_page" : "0", "next_page" : "14" },
@@ -57,6 +67,22 @@ export class CommonFunctions {
 	{"page_id" : "10", "name" : "Location", "link":"user/profile/location", "order" : "13", "previous_page" : "9", "next_page" : "11" },
 	{"page_id" : "11", "name" : "Phone", "link":"user/profile/phone", "order" : "14", "previous_page" : "10", "next_page" : "0" }
 	]
+	
+	public company_profile_settings_list = [
+	{"page_id" : "1", "name" : "Company Location", "link":"user/profile/location", "order" : "1", "previous_page" : "0", "next_page" : "2" },
+	{"page_id" :"2", "name" : "Category ", "link":"user/profile/category", "order" : "2", "previous_page" : "1", "next_page" : "3" },
+	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "3", "previous_page" : "2", "next_page" : "4" },
+	{"page_id" : "4", "name" : "Job Type", "link":"user/profile/job-type", "order" : "4", "previous_page" : "3", "next_page" : "5" },
+	{"page_id" :"5", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "5", "previous_page" : "4", "next_page" : "6" },
+	{"page_id" : "6", "name" : "Job Location Preference", "link":"user/profile/job-location-preference", "order" : "6", "previous_page" : "5", "next_page" : "7" },
+	{"page_id" : "7", "name" : "Timeline For Hiring", "link":"user/profile/timeline-hiring", "order" : "7", "previous_page" : "6", "next_page" : "8" },
+	{"page_id" :"8", "name" : "Job Title & Description", "link":"user/profile/title-overview", "order" : "8", "previous_page" : "7", "next_page" : "0" },
+	]
+	
+	public timeline_hiring = [
+		{ value: 1, heading: 'Immediate', description: "Work from which ever locaiton you like" },
+		{ value: 2, heading: 'Within _____', description: "Move/ Shift to the actual work site" },
+	];
 	
 	public modal_config = {
 		class: 'modal-lg',
@@ -76,6 +102,19 @@ export class CommonFunctions {
 			'Expires': '0'
 		})
 	}
+	
+	public get_profile_menu_accees_based(){
+		let setting_list = [];
+		if(sessionStorage.account_type == 'Company'){
+			setting_list = this.company_profile_settings_list;
+			
+		} else if(sessionStorage.account_type == 'Student'){
+			setting_list = this.profile_settings_list;
+		}
+		
+		return setting_list;
+	}
+	
 	
 	public get_current_url() {
 		let temp: any = this.href.substring(0, this.href.lastIndexOf('/'));
@@ -100,33 +139,35 @@ export class CommonFunctions {
 		var previous_page_link = "";
 		var next_page_link = "";
 		
-		let cpage_index = this.profile_settings_list.findIndex((obj) => {
+		let access_url = this.get_profile_menu_accees_based();
+		
+		let cpage_index = access_url.findIndex((obj) => {
 			return obj['page_id'] == current_page_id
 		});
-	 
+		
 		if(cpage_index !== -1){
-			let previous_page_id = this.profile_settings_list[cpage_index]['previous_page'];
+			let previous_page_id = access_url[cpage_index]['previous_page'];
 			if(previous_page_id != '0'){
-				let ppage_index = 	this.profile_settings_list.findIndex((obj)=>{
+				let ppage_index = 	access_url.findIndex((obj)=>{
 					return (obj.page_id) ==previous_page_id
 				})
 				
-				previous_page_link = this.profile_settings_list[ppage_index]['link'];
+				previous_page_link = access_url[ppage_index]['link'];
 				
 			}
 			
-			let next_page_id = this.profile_settings_list[cpage_index]['next_page'];
+			let next_page_id = access_url[cpage_index]['next_page'];
 			if(next_page_id != '0'){
-				let npage_index = 	this.profile_settings_list.findIndex((obj)=>{
+				let npage_index = 	access_url.findIndex((obj)=>{
 					return (obj.page_id) ==next_page_id
 				})
 				
-				next_page_link = this.profile_settings_list[npage_index]['link'];
+				next_page_link = access_url[npage_index]['link'];
 			}
 		}  
 		
 		return { "previous_link" : previous_page_link, "next_link" : next_page_link }
-			
+		
 	}
 	
 	public get_random_no(){

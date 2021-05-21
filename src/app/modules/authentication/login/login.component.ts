@@ -5,6 +5,7 @@ import { varConstants } from 'src/app/core/helpers/variable.constants';
 import { CommonFunctions } from "../../../core/helpers/common.functions";
 import { CommonService } from "../../../core/services/common.service";
 import { MainService } from "../../../core/services/main.service";
+import { SharedService } from "../../../core/services/shared.service";
 
 @Component({
 	selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
+		public shared_service : SharedService
 	) { }
 
 	ngOnInit() {
@@ -36,22 +38,34 @@ export class LoginComponent implements OnInit {
 		if (isValid) {
 			this.show_loader = true;
 			this.service.check_login(this.email_address, this.user_password).subscribe(response => {
-				console.log("response ", response);
+				
 				if (response['data'].length > 0) {
+					let user_account = response['data'];
 					sessionStorage.setItem("is_logged_in", '1');
-					sessionStorage.setItem("user_id", response['data'][0]['user_account_id']);
-					sessionStorage.setItem("user_details", JSON.stringify(response['data'][0]));
+					sessionStorage.setItem("user_id", user_account[0]['user_account_id']);
+					sessionStorage.setItem("user_details", JSON.stringify(user_account[0]));
+					sessionStorage.setItem("account_type", user_account[0]['account_type']);
+					
 					this.show_loader = false;
 					// this.common_service.show_toast('s', "Redirecting to dashboard.", "");
 					this.common_service.PrintLogs(varConstants.INFO, this.className, this.ngOnInit.name, "Redirecting to dashboard");
 					setTimeout(() => {
 
-						let new_page_id = (parseInt(response['data'][0]['profile_completed']) + 1);
-						console.log("new_page_id ", new_page_id);
-						let profile_page = this.common_params.profile_settings_list.filter((obj) => {
+						let new_page_id = (parseInt(user_account[0]['profile_completed']) + 1);
+						
+						let setting_list = [];
+						if(sessionStorage.account_type == 'Company'){
+							setting_list = this.common_params.company_profile_settings_list;
+						} else if(sessionStorage.account_type == 'Student'){
+							setting_list = this.common_params.profile_settings_list;
+						}
+						let profile_page = setting_list.filter((obj) => {
 							return parseInt(obj.page_id) == new_page_id
 						});
-						console.log("profile_page ", profile_page);
+						
+						this.shared_service.loginValue(user_account);
+						
+						
 						if (profile_page.length > 0) {
 							this.common_service.change_route(profile_page[0]['link']);
 						} else {

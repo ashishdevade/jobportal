@@ -42,7 +42,7 @@
 	cursor: pointer !important;
 }
 
-.education_block{
+.education_block, .project_block , .license_cer_block, .employment_block {
   border-bottom: 1px solid #CCC;
 }
 
@@ -55,4 +55,12 @@ ng-select input {
     padding-bottom: 0px !important;
     margin-bottom: 0px !important;
     height: 35px !important;
+}
+
+
+.header_class_override{
+    visibility: visible !important; 
+    display: block !important; 
+    opacity: inherit !important; 
+    pointer-events: auto !important;
 }

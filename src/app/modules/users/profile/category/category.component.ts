@@ -28,20 +28,28 @@ export class CategoryComponent implements OnInit {
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
+		if(sessionStorage.account_type == 'Company'){
+			this.page_id = 2;
+		}
+		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		
-		this.show_loader = true;
 		this.form_data.category = "";
 		this.form_data.subcategory = "";
 
+		this.show_loader = true;
 		this.get_category_list(() => {
 			this.get_user_profile_settings((response) => {
 				if (response.status == 200) {
-					this.form_data.category = response.data[0]['category_id']
-					this.form_data.subcategory = response.data[0]['subcategory_id']
-					this.get_subcategory_list("");
-				}
+					if(response.data.length > 0){
+						this.form_data.category = response.data[0]['category_id']
+						this.form_data.subcategory = response.data[0]['subcategory_id']
+						this.get_subcategory_list('');
+					} else {
+						this.show_loader = false;
+					}
+				} 
 			});
 		});
 	}
@@ -96,14 +104,15 @@ export class CategoryComponent implements OnInit {
 			this.service.get_subcategory_list(this.form_data.category).subscribe(response => {
 				if (response.status == 200) {
 					this.sub_category_list = response['data'];
-					if (callback != "" && callback != undefined) {
-						callback()
-					} else {
-						this.show_loader = false;
-					}
 				} else {
 					this.show_loader = false;
 					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+				
+				if (callback != "" && callback != undefined) {
+					callback()
+				} else {
+					this.show_loader = false;
 				}
 			}, error => {
 				this.show_loader = false;

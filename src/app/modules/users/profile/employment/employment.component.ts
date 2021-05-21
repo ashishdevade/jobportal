@@ -42,7 +42,7 @@ export class EmploymentComponent implements OnInit {
 	
 	ngOnInit() {
 		this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();	
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.from_year  = "";
 		this.form_data.to_year = "";
@@ -236,14 +236,14 @@ export class EmploymentComponent implements OnInit {
 		let from_ts = new Date(this.form_data.from_month+this.form_data.from_year);
 		let to_ts = new Date(this.form_data.to_month+this.form_data.to_year);
 
-				if(from_ts && to_ts){
-					if(from_ts > to_ts){
-						this.common_service.show_toast('e', "Job Period From value can't be greater than To value", "");
-						return false;	
-					}else{
-						return true;
-					}
-
-				}
+		if(from_ts && to_ts){
+			if(from_ts > to_ts){
+				this.common_service.show_toast('e', "Job Period From value can't be greater than To value", "");
+				return false;	
+			}else{
+				return true;
 			}
+
+		}
+	}
 }

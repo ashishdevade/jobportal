@@ -6,21 +6,18 @@ import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
 
 @Component({
-	selector: 'app-expertise',
-	templateUrl: './expertise.component.html',
-	styleUrls: ['./expertise.component.scss']
+  selector: 'app-job-location-prefer',
+  templateUrl: './job-location-prefer.component.html',
+  styleUrls: ['./job-location-prefer.component.scss']
 })
-export class ExpertiseComponent implements OnInit {
-
-	public page_id = 2;
+export class JobLocationPreferComponent implements OnInit {
+	public page_id = 6;
 	public common_params = new CommonFunctions();
 	public show_loader = false;
 	public form_data: any = {};
 	public profile_side_menu = [];
-	public skills_list = [];
 	public links:any = {};
-	public name = 'SkillSet';
-	
+	public location_preference = [];
 
 	constructor(
 		private router: Router,
@@ -28,35 +25,38 @@ export class ExpertiseComponent implements OnInit {
 		public service: MainService,
 		) { }
 
-
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
-		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
-		
+		if(sessionStorage.account_type == 'Company'){
+			this.page_id = 6;
+		}
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
+		this.location_preference = this.common_params.location_preference;
+		this.form_data.location_preference = this.location_preference[0]['value'];
 		this.show_loader = true;
-		this.get_user_profile_settings((response_data) => {
-			this.form_data.skills = JSON.parse(response_data['data'][0]['skills']);
-			this.form_data.other = response_data['data'][0]['others'];
-
+		this.get_user_profile_settings((response) => {
 			this.show_loader = false;
-		});
-		
-		this.get_skills("");
+			if(response['status'] == 200){
+				if(response.data.length > 0){
+					this.form_data.location_preference = response['data'][0]['location_preference'];
+					this.form_data.prefered_location_name = response['data'][0]['location_preference_name'];
+				}
+			}
+		})
+	}
+
+	select_level(items_value) {
+		this.form_data.location_preference = items_value;
 	}
 
 	get_user_profile_settings(callback) {
 		setTimeout(() => {
-			this.service.get_user_profile_settings('expertise').subscribe(response => {
-				if (response.status == 200) {
-					if (callback != "" && callback != undefined) {
-						callback(response);
-					} else {
-						this.show_loader = false;
-					}
+			this.service.get_user_profile_settings('location-preference').subscribe(response => {
+				if (callback!= '' && callback!= undefined) {
+					callback(response);
 				} else {
 					this.show_loader = false;
-					//	this.common_service.show_toast('e', this.common_service.error_message, "");
 				}
 			}, error => {
 				this.show_loader = false;
@@ -65,27 +65,9 @@ export class ExpertiseComponent implements OnInit {
 			});
 		}, 50);
 	}
-	
-	get_skills(callback){
-		this.show_loader = true;
-		console.log(" in get_skills ");
-		this.service.get_skills(-1).subscribe(response=> {
-			if(response.status == 200){
-				this.skills_list = response.data;
-			} 
-			
-			if (callback != "" && callback != undefined) {
-				callback(response);
-			} else {
-				this.show_loader = false;
-			}
-		}, error => {
-			this.show_loader = false;
-			this.common_service.show_toast('e', this.common_service.error_message, "");
-		});
-	}
 
-	back_to_category() {
+	back_to_expertise() {
+		console.log("in here ");
 		this.common_service.change_route(this.links.previous_link);
 	}
 
@@ -94,11 +76,10 @@ export class ExpertiseComponent implements OnInit {
 		if (isValid) {
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
-			this.service.update_profile_expertise(dataset).subscribe(res => {
+			this.service.update_profile_job_location_preference(dataset).subscribe(res => {
 				if (res['status'] == 200) {
-					this.common_service.show_toast('s', "Expertise saved successfully.", "");
+					this.common_service.show_toast('s', "Job Location Preference saved successfully.", "");
 					this.show_loader = false;
-
 					setTimeout(() => {
 						this.common_service.change_route(this.links.next_link);
 					}, 200);
@@ -106,11 +87,9 @@ export class ExpertiseComponent implements OnInit {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
 					this.show_loader = false;
 				}
-
 			}, error => {
 				this.show_loader = false;
 				this.common_service.show_toast('e', this.common_service.error_message, "");
-
 			});
 		}
 	}

@@ -1,0 +1,1590 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row mb-5">
+		<div class="col-xl-12 col-lg-12 col-lg-12">
+			<h4><b>Review Your Profile </b></h4>
+		</div>
+		<div class="row">
+			<div class="col-xl-6 col-lg-6 col-lg-6">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="content p-3 padding-bottom-10">
+								<div class="row">
+									<div class="text-left col-md-4" *ngIf="this.account_access_type == 'Student'">
+										<div class="show-image" >
+											<img [src]="preview_profile_photo" />
+										<!-- <input class="update" type="button" value="Update" />
+											<input class="delete" type="button" value="Delete" /> -->
+											<button type="button"  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle edit_profile_pic"  data-tippy-placement="top" (click)="edit_profile_photo(profile_photo_template)"><i class="icon-feather-edit"></i></button>
+										</div>
+										
+									</div>
+									<div class="col-xl-8" *ngIf="this.user_account_data.length > 0">
+										<div class="float-right">
+											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_location_phone(location_template)"><i class="icon-feather-edit"></i></a>
+										</div>
+										<div>
+											<p class="mb-1"> <i class="icon-line-awesome-map-marker text-primary"></i> {{this.user_account_data[0]['street_address']}} </p>
+											<p class="mb-1 ml-3 pl-1">{{this.user_account_data[0]['city']}} - {{this.user_account_data[0]['zipcode']}}, {{this.user_account_data[0]['state']}}</p>
+											<p class="mb-1 ml-3 pl-1"> {{this.user_account_data[0]['country']}} </p>
+											<p class="mb-1" *ngIf="this.account_access_type == 'Student'"> <i class="icon-line-awesome-phone text-primary"></i> {{this.user_account_data[0]['country_calling_code']}}-{{this.user_account_data[0]['phone_number']}} </p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4"></div>
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Cateogry & Subcatetgory </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_category(category_template)"><i class="icon-feather-edit"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Category</th>
+											<th>Sub Category</th>
+										</tr>
+									</thead>
+									<tbody *ngFor="let Cat_sub of this.category_data; let i = index;">
+										<tr>
+											<td>{{Cat_sub.category_name}}</td>
+											<td>{{Cat_sub.subcategory_name}}</td>
+										</tr>
+									</tbody>
+									<tfoot *ngIf="this.category_data.length == 0">
+										<tr colspan="3" class="text-center">
+											<td><p>No Items to display</p></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4" *ngIf="this.account_access_type == 'Company'"></div>
+				<div class="row" *ngIf="this.account_access_type == 'Company'">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Job Location Preference </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_job_preference(job_preference_template)"><i class="icon-feather-edit"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Preference</th>
+											<th>Prefered Location</th>
+										</tr>
+									</thead>
+									<tbody *ngIf="this.user_account_data.length > 0">
+										<tr>
+											<td>{{this.user_account_data[0]['location_preference_label']}}</td>
+											<td>{{this.user_account_data[0]['location_preference_name']}}</td>
+											
+										</tr>
+									</tbody>
+									<tfoot *ngIf="this.user_account_data.length == 0">
+										<tr colspan="3" class="text-center">
+											<td><p>No Items to display</p></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4" *ngIf="this.account_access_type == 'Company'"></div>
+				<div class="row" *ngIf="this.account_access_type == 'Company'">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Timeline for Hiring </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_timeline_hiring(timeline_hiring_template)"><i class="icon-feather-edit"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Current Timeline</th>
+											<th>Within Weeks</th>
+										</tr>
+									</thead>
+									<tbody *ngIf="this.user_account_data.length > 0">
+										<tr>
+											<td>{{this.user_account_data[0]['timeline_hiring_label']}}</td>
+											<td>{{this.user_account_data[0]['timeline_hiring_weeks']}}</td>
+											
+										</tr>
+									</tbody>
+									<tfoot *ngIf="this.user_account_data.length == 0">
+										<tr colspan="3" class="text-center">
+											<td><p>No Items to display</p></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+				<div class="row" *ngIf="this.account_access_type == 'Student'">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Employement History </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<!-- <a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"><i class="icon-feather-edit"></i></a> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<div class="employment_list_section" *ngIf="this.experience_data.length > 0">
+									<div *ngFor="let employment of this.experience_data">
+										<div class="employment_block row pb-3 mb-3">
+											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+												<h5>{{employment.company_name}}</h5>
+												<span>{{employment.job_title}}</span> <br>
+												<span>{{employment.from_month}} {{employment.from_year}} -
+												{{employment.to_month}} {{employment.to_year}}</span>
+
+											</div>
+											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+												<button type="button" (click)="delete_employment(employment.student_experience_id)" class="btn btn-sm btn-danger rounded-circle float-right ml-2"><i class="icon-feather-trash"></i> </button>
+
+												<button type="button" (click)="edit_employment(employment_template, employment.student_experience_id)" class="btn btn-sm btn-primary  rounded-circle float-right ml-2"><i class="icon-line-awesome-pencil"></i> </button>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="employment_list_section" *ngIf="this.experience_data.length == 0">
+									<p>No Items to display</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+				<div class="row" *ngIf="this.account_access_type == 'Student'">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Education </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<!-- <a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"><i class="icon-feather-edit"></i></a> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<div class="education_list_section" *ngIf="this.education_data.length > 0">
+									<div *ngFor="let education of this.education_data">
+										<div class="education_block row pb-3 mb-3 ">
+											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+												<h5>{{education.school}}</h5>
+												<span>{{education.study}}</span> <br>
+												<span>{{education.from_year}} - {{education.to_year}}</span>
+											</div>
+											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+												<button type="button" (click)="delete_education(education.student_education_id)" class="btn btn-sm btn-danger rounded-circle float-right ml-2"><i class="icon-feather-trash"></i> </button>
+
+												<button type="button" (click)="edit_education(educationtemplate, education.student_education_id)" class="btn btn-sm btn-primary rounded-circle float-right ml-2"><i class="icon-line-awesome-pencil"></i> </button>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="education_list_section" *ngIf="this.education_data.length == 0">
+									<p>No Items to display</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+				<div class="row" *ngIf="this.account_access_type == 'Student'">
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Projects </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<!-- <a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"><i class="icon-feather-edit"></i></a> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content p-3 padding-bottom-10">
+								<div class="project_list_section" *ngIf="this.project_data.length > 0">
+									<div *ngFor="let project of this.project_data">
+										<div class="project_block row pb-3 mb-3">
+											<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+												<h5>{{project.title}}</h5>
+												<span>{{project.description}}</span> <br>
+												<span>{{project.link}}</span> <br>
+												<span>{{project.project_start_date  | date: 'dd/MM/yyyy'}} <span *ngIf="project.project_end_date!= null"> -</span> {{project.project_end_date  | date: 'dd/MM/yyyy'}}</span>
+
+											</div>
+											<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+												<button type="button" (click)="delete_project(project.student_project_id)" class="btn btn-sm btn-danger rounded-circle float-right ml-2"><i
+													class="icon-feather-trash"></i> </button>
+													<button type="button" (click)="edit_project(project_template, project.student_project_id)" class="btn btn-sm btn-primary rounded-circle float-right ml-2"><i class="icon-line-awesome-pencil"></i> </button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="project_list_section" *ngIf="this.project_data.length == 0">
+										<p>No Items to display</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-lg-6 content-left-offset">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="dashboard-box margin-top-0">
+								<div class="headline p-3">
+									<div class="row">
+										<div class="col-xl-6">
+											<h3><i class="icon-feather-folder-plus"></i> Title & Overview </h3>
+										</div>
+										<div class="col-xl-6">
+											<div class="float-right">
+												<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle" (click)="edit_title_overview(title_template)"  data-tippy-placement="top"><i class="icon-feather-edit"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
+									<div class="row" *ngIf="this.account_access_type == 'Company'">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field">
+												<h5><b>Company Name</b></h5>
+												<div>{{this.user_account_data[0]['company_name']}}</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field">
+												<h5 *ngIf="this.account_access_type == 'Student'"><b>Title</b></h5>
+												<h5 *ngIf="this.account_access_type == 'Company'"><b>Job Title</b></h5>
+												<div>{{this.user_account_data[0].job_title}}</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field">
+												<h5 *ngIf="this.account_access_type == 'Student'"><b>Professional Overview</b></h5>
+												<h5 *ngIf="this.account_access_type == 'Company'"><b>Job Description</b></h5>
+												
+												<div [innerHtml]="this.user_account_data[0].professional_overview"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length == 0">
+									<p>No Items to display</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+					<div class="row" *ngIf="this.account_access_type == 'Student'">
+						<div class="col-xl-12">
+							<div class="dashboard-box margin-top-0">
+								<div class="headline p-3">
+									<div class="row">
+										<div class="col-xl-6">
+											<h3><i class="icon-feather-folder-plus"></i> Expertise & Expertise Level </h3>
+										</div>
+										<div class="col-xl-6">
+											<div class="float-right">
+												<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_expertise(expertise_template)"><i class="icon-feather-edit"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content p-3 padding-bottom-10">
+									<div class="row" *ngIf="this.current_expertise != ''">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field" *ngIf="this.expertise_data.length > 0">
+												<h5>Expertise Level</h5>
+												<ng-container  >
+													<button type="button" class="button gray mr-2 mb-2" >{{this.current_expertise}}</button>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+											<div class="submit-field" *ngIf="this.expertise_data.length > 0">
+												<h5>Skill Set</h5>
+												<ng-container  *ngFor="let skills of this.expertise_data[0]['skills_arr']">
+													<button type="button" class="button gray mr-2 mb-2" >{{skills.name}}</button>
+												</ng-container>
+											</div>
+											<div class="submit-field" *ngIf="this.expertise_data.length > 0">
+												<h5>Other Skills</h5>
+												<button type="button" class="button gray mr-2 mb-2 text-left" >{{this.expertise_data[0]['others']}}</button>
+											</div>
+											<div *ngIf="this.expertise_data.length == 0">
+												<p>No Items to display</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+					<div class="row" *ngIf="this.account_access_type == 'Student'">
+						<div class="col-xl-12">
+							<div class="dashboard-box margin-top-0">
+								<div class="headline p-3">
+									<div class="row">
+										<div class="col-xl-6">
+											<h3><i class="icon-feather-folder-plus"></i> License & Certification </h3>
+										</div>
+										<div class="col-xl-6">
+											<div class="float-right">
+												<!-- <a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"><i class="icon-feather-edit"></i></a> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content p-3 padding-bottom-10">
+									<div class="license_cer_list_section" *ngIf="this.certificate_data.length > 0">
+										<div *ngFor="let license_cer of this.certificate_data">
+											<div class="license_cer_block row pb-3 mb-3">
+												<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+													<h5>{{license_cer.certificate_name}}</h5>
+													<span>{{license_cer.description}}</span> <br>
+													<span>{{license_cer.certificate_link}}</span> <br>
+													<span *ngIf="license_cer.type == 'certificate'">{{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
+													<span *ngIf="license_cer.type == 'license'"><b>Till</b> - {{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
+												</div>
+												<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+													<button type="button" (click)="delete_license_certificate(license_cer.student_certificate_id)" class="btn btn-sm btn-danger float-right rounded-circle ml-2"><i
+														class="icon-feather-trash"></i> </button>
+														<button type="button" (click)="edit_license_certificate(license_template, license_cer.student_certificate_id)" class="btn btn-sm btn-primary rounded-circle float-right ml-2"><i class="icon-line-awesome-pencil"></i> </button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="license_cer_list_section" *ngIf="this.certificate_data.length == 0">
+											<p>No Items to display</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
+						<div class="row" *ngIf="this.account_access_type == 'Student'">
+							<div class="col-xl-12">
+								<div class="dashboard-box margin-top-0">
+									<div class="headline p-3">
+										<div class="row">
+											<div class="col-xl-6">
+												<h3><i class="icon-feather-folder-plus"></i> Languages </h3>
+											</div>
+											<div class="col-xl-6">
+												<div class="float-right">
+													<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_language(language_template)"><i class="icon-feather-edit"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="content p-3 padding-bottom-10">
+										<table class="table">
+											<thead >
+												<tr>
+													<th>Language</th>
+													<th>Proficiency</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody *ngFor="let lanaguages of this.languages_data; let i = index;">
+												<tr>
+													<td>{{lanaguages.language_name}}</td>
+													<td>{{lanaguages.proficiency}}</td>
+													<td class="text-right"> 
+														<div *ngIf="lanaguages.language_name != 'English'">
+															<button type="button" (click)="card_delete_language(i)" class="btn btn-sm btn-danger rounded-circle ml-2" ><i class="icon-feather-trash"></i> </button> 														
+														</div>
+													</td>
+												</tr>
+											</tbody>
+											<tfoot *ngIf="this.languages_data.length == 0">
+												<tr colspan="3" class="text-center">
+													<td><p>No Items to display</p></td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4"></div>
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="dashboard-box margin-top-0" *ngIf="this.user_account_data.length > 0">
+									<div class="headline p-3">
+										<div class="row">
+											<div class="col-xl-6">
+												<h3 *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'"><i class="icon-feather-folder-plus"></i> Hourly Rate </h3>
+												<h3 *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'"><i class="icon-feather-folder-plus"></i> Salary Expectation </h3>
+											</div>
+											<div class="col-xl-6">
+												<div class="float-right">
+													<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"  (click)="edit_hourly_rate(hourly_template)"><i class="icon-feather-edit"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
+										<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'">
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="font-weight-bold">Hourly Rate</div>
+												<div class="text-muted">Total amount the client will see</div>
+											</div>
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+													<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['hourly_rate']" readonly />
+													<div class="input-group-append">
+														<span class="input-group-text">/hr</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'">
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="font-weight-bold">Salary Expectation</div>
+												<div class="text-muted" *ngIf="this.account_access_type == 'Student'"> Montly Salary you are expecting and the client will see</div>
+												<div class="text-muted" *ngIf="this.account_access_type == 'Company'"> Montly Salary your candidates will see</div>
+											</div>
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+													<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['salary_expectation']" readonly />
+													<div class="input-group-append">
+														<span class="input-group-text">/M</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div *ngIf="this.user_account_data[0]['hourly_date'] == '' || this.user_account_data[0]['salary_expectation'] == ''"><p>No Items to display</p></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<ng-template #educationtemplate>
+				<form method="post" id="expertise-form" name="educationform" #educationform="ngForm" (ngSubmit)="onEducationSubmit(educationform.valid)">
+					<div class="modal-header">
+						<h4 class="modal-title pull-left">{{education_popup_title}} </h4>
+						<button type="button" class="close pull-right" aria-label="Close" (click)="education_modalRef.hide()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5> School</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="school"
+									id="school" placeholder="For Ex. Northwestern university " required
+									[(ngModel)]="education_form_data.school" #schoolname="ngModel" />
+									<div *ngIf="schoolname.invalid && (schoolname.dirty || schoolname.touched)"
+									class="text-danger small">
+									School is required
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Area of Study</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="study" id="study"
+								placeholder="Ex. Computer Science" required [(ngModel)]="education_form_data.study"
+								#studyname="ngModel" />
+								<div *ngIf="studyname.invalid && (studyname.dirty || studyname.touched)"
+								class="text-danger small">
+								Area of Study is required
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<h5> Degree</h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="degree"
+							id="degree" placeholder="Enter Your degree" required [(ngModel)]="education_form_data.degree"
+							#degreeValue="ngModel" />
+							<div *ngIf="degreeValue.invalid && (degreeValue.dirty || degreeValue.touched)"
+							class="text-danger small">
+							Degree is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<h6>Dates Attended </h6>
+				</div>
+
+				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="submit-field">
+						<h5>From </h5>
+						<select class="form-control with-border" title="Select from" name="from" id="from"
+						[(ngModel)]="education_form_data.from_year" required #from_date="ngModel">
+						<option value="">Select From Year</option>
+						<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
+					</select>
+					<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)"
+					class="text-danger small">
+					From Date is required.
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+			<div class="submit-field">
+				<h5>To</h5>
+				<select class="form-control with-border" title="Select todate" name="todate" id="todate"
+				[(ngModel)]="education_form_data.to_year" required #to_date="ngModel">
+				<option value="">Select To Year (or Expected To Year)</option>
+				<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
+			</select>
+			<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small">
+				To Date is required.
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <fieldset> -->
+	<div class="row">
+		<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+			<div class="submit-field">
+				<h5> Description </h5>
+				<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description"
+				id="description" placeholder="Describe your studies, awards" required
+				[(ngModel)]="education_form_data.description" #skillset="ngModel"></textarea>
+				<div *ngIf="skillset.invalid && (skillset.dirty || skillset.touched)" class="text-danger small">
+					Description is required
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- </fieldset> -->
+</div>
+<div class="modal-footer">
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="float-left">
+				<button type="submit" class="button ripple-effect ml-2" [disabled]="educationform.invalid"><i class="icon-feather-check"></i> {{education_action_button_text}} </button>
+
+			</div>
+			<div class="float-right">
+				<button type="button" (click)="education_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</ng-template>
+
+<ng-template #employment_template>
+	<form method="post" id="employment-form" #employmentform="ngForm" (ngSubmit)="employment_onSubmit(employmentform.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{employmnent_popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="employement_modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Company</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="company"
+						id="company" placeholder="For ex. Google, IBM " required [(ngModel)]="employment_form_data.company"
+						#company="ngModel" />
+						<div *ngIf="company.invalid && (company.dirty || company.touched)" class="text-danger small">
+							Company is required
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Job Title</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="job_title"
+						id="job_title" placeholder="For ex. Software Developer" required
+						[(ngModel)]="employment_form_data.job_title" #jobtitlename="ngModel" />
+						<div *ngIf="jobtitlename.invalid && (jobtitlename.dirty || jobtitlename.touched)"
+						class="text-danger small">
+						Job title is required
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+				<div class="submit-field">
+					<h5> Location</h5>
+					<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="location"
+					id="location" placeholder="Enter Your location" required [(ngModel)]="employment_form_data.location"
+					#location="ngModel" />
+					<div *ngIf="location.invalid && (location.dirty || location.touched)" class="text-danger small">
+						Degree is required
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+				<div class="submit-field">
+					<h5>Country</h5>
+					<select class="form-control with-border" title="Select country" name="country" id="country"
+					[(ngModel)]="employment_form_data.country" required #countryobj="ngModel">
+					<option value="">Select a Country</option>
+					<option *ngFor="let item of this.country_list" [value]="item.id">{{item.country_name}}
+					</option>
+				</select>
+				<div *ngIf="countryobj.invalid && (countryobj.dirty || countryobj.touched)"
+				class="text-danger small">
+				Country is required.
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+		<h6>Job Period </h6>
+	</div>
+	<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+		<div class="submit-field">
+			<h5>From Month </h5>
+			<select class="form-control with-border" title="Select from" name="from" id="from"
+			[(ngModel)]="employment_form_data.from_month" required #from_Month="ngModel">
+			<option value="">Select From Month</option>
+			<option *ngFor="let year of this.month_arr" value="{{year.value}}">{{year.value}}</option>
+		</select>
+		<div *ngIf="from_Month.invalid && (from_Month.dirty || from_Month.touched)"
+		class="text-danger small">
+		From Month is required.
+	</div>
+</div>
+</div>
+<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+	<div class="submit-field">
+		<h5>From Year</h5>
+		<select class="form-control with-border" title="Select Year" name="Year" id="Year"
+		[(ngModel)]="employment_form_data.from_year" required #from_year="ngModel">
+		<option value="">Select From Year</option>
+		<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
+	</select>
+	<div *ngIf="from_year.invalid && (from_year.dirty || from_year.touched)"
+	class="text-danger small">
+	From Year is required.
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+	<div class="col-xl-12 col-12 col-sm-12 col-md-12 text-center pb-3">
+		<span class="text-muted">through</span>
+	</div>
+	<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+		<div class="submit-field">
+			<h5>To Month </h5>
+			<select class="form-control with-border" title="Select from" name="from" id="from"
+			[(ngModel)]="employment_form_data.to_month" required #from_date="ngModel">
+			<option value="">Select To Month</option>
+			<option *ngFor="let year of this.month_arr" value="{{year.value}}">{{year.value}}</option>
+		</select>
+		<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)"
+		class="text-danger small">
+		To Month is required.
+	</div>
+</div>
+</div>
+<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+	<div class="submit-field">
+		<h5>To Year</h5>
+		<select class="form-control with-border" title="Select To year" name="year" id="year"
+		[(ngModel)]="employment_form_data.to_year" required #to_year="ngModel">
+		<option value="">Select To Year</option>
+		<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
+	</select>
+	<div *ngIf="to_year.invalid && (to_year.dirty || to_year.touched)" class="text-danger small">
+		To Year is required.
+	</div>
+</div>
+</div>
+</div>
+<!-- <fieldset> -->
+	<div class="row">
+		<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+			<div class="submit-field">
+				<h5> Description </h5>
+				<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description"
+				id="description" placeholder="Describe your job" required
+				[(ngModel)]="employment_form_data.description" #desciptionSection="ngModel"></textarea>
+				<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)"
+				class="text-danger small">
+				Description is required
+			</div>
+		</div>
+	</div>
+</div>
+<!-- </fieldset> -->
+</div>
+<div class="modal-footer">
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="float-left">
+				<button type="submit" class="button ripple-effect ml-2" [disabled]="employmentform.invalid"><i
+					class="icon-feather-check"></i> {{employmnent_action_button_text}} </button>
+				</div>
+				<div class="float-right">
+					<button type="button" (click)="employement_modalRef.hide()" class="button gray ripple-effect ml-2"><i
+						class="icon-line-awesome-times"></i> Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-template>
+
+
+<ng-template #project_template>
+	<form method="post" id="project-form" #projectform="ngForm" (ngSubmit)="onProjectSubmit(projectform.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{project_popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="projects_modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Title</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="For ex. ERP, CRM, HRM" required
+						[(ngModel)]="this.project_form_data.title" #projtitle="ngModel" />
+						<div *ngIf="projtitle.invalid && (projtitle.dirty || projtitle.touched)" class="text-danger small"> Title is required </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Description </h5>
+						<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the project" required [(ngModel)]="this.project_form_data.description" #desciptionSection="ngModel"></textarea>
+						<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<h5> Reference Link </h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Sandbox Link, Live URL, GIT link, Bitbucket link" required [(ngModel)]="this.project_form_data.link" #projectlink="ngModel" />
+						<div *ngIf="projectlink.invalid && (projectlink.dirty || projectlink.touched)" class="text-danger small"> Description is required </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<h6>Project Start and End Date </h6>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<input type="text" placeholder="Daterangepicker" class="form-control" bsDaterangepicker name="project_duration" id="project_duration" required [(ngModel)]="this.project_form_data.project_duration" #projectDuration="ngModel"  [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MMM/YYYY', showWeekNumbers: false }" >
+					<div *ngIf="projectDuration.invalid && (projectDuration.dirty || projectDuration.touched)" class="text-danger small"> Project duration is required </div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="float-left">
+						<button type="submit" class="button ripple-effect ml-2" [disabled]="projectform.invalid"><i
+							class="icon-feather-check"></i> {{project_action_button_text}} </button>
+						</div>
+						<div class="float-right">
+							<button type="button" (click)="projects_modalRef.hide()" class="button gray ripple-effect ml-2"><i
+								class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+		
+		
+		<ng-template #license_template>
+			<form method="post" id="license-form" #license_cer_form="ngForm" (ngSubmit)="on_lic_cer_Submit(license_cer_form.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{lic_cer_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="license_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="section-headline margin-top-25 margin-bottom-12">
+								<h5>License or Certificate ?</h5>
+							</div>
+							<div class="radio">
+								<input id="radio-1" name="document_type" type="radio" value="license" [(ngModel)]="lic_cer_form_data.type" #docType="ngModel">
+								<label for="radio-1"><span class="radio-label"></span> License</label>
+							</div>
+							<div class="radio mb-3 ml-3" >
+								<input id="radio-2" name="document_type" type="radio" value="certificate" [(ngModel)]="lic_cer_form_data.type" #docType="ngModel">
+								<label for="radio-2"><span class="radio-label"></span> Certificate</label>
+							</div>						
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Name</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="" required [(ngModel)]="lic_cer_form_data.title" #projtitle="ngModel" />
+								<div *ngIf="projtitle.invalid && (projtitle.dirty || projtitle.touched)" class="text-danger small"> Title is required </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Description </h5>
+								<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the License or certificate" required [(ngModel)]="lic_cer_form_data.description" #desciptionSection="ngModel"></textarea>
+								<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Provider </h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="provider" id="provider" placeholder="License or Certificate Provider" required
+								[(ngModel)]="lic_cer_form_data.provider" #clprovider="ngModel" />
+								<div *ngIf="clprovider.invalid && (clprovider.dirty || clprovider.touched)" class="text-danger small"> Provider is required </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>Date Earned </h5>
+								<div class="">
+									<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="lic_cer_form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
+									<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>Date Expiry (Optional) </h5>
+								<div class="">
+									<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" required [(ngModel)]="lic_cer_form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> {{type}} Link </h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link" required [(ngModel)]="lic_cer_form_data.link" #license_cer_link="ngModel" />
+								<div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5>Upload Certificate  </h5>
+								<div class="">
+									<input type="file" (change)="fileChangeEvent($event)" />
+									<span class="text-muted">Uploading Certificate Increases credibility drastically, You can upload PDF file or Certificate Screenshot</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mb-5" *ngIf="this.lic_cer_form_data.uploaded_document!= ''">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<a download  [href]="this.lic_cer_form_data.uploaded_document" target="_blank" class="btn btn-success ml-2" ><i class="icon-feather-download"></i>Download Document</a>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="license_cer_form.invalid"><i class="icon-feather-check"></i> {{lic_cer_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="license_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+		
+		
+		<ng-template #title_template>
+			<form method="post" id="title-form" #title_overview_form="ngForm" (ngSubmit)="on_title_Submit(title_overview_form.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{title_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="title_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5 *ngIf="this.account_access_type == 'Student'"> Title</h5>
+								<h5 *ngIf="this.account_access_type == 'Company'"> Job Title</h5>
+								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Example: Writing " required [(ngModel)]="title_form_data.job_title" #titleobj="ngModel" />
+								<div *ngIf="titleobj.invalid && (titleobj.dirty || titleobj.touched)" class="text-danger small">
+									<span *ngIf="this.account_access_type == 'Student'">Title is required</span>
+									<span *ngIf="this.account_access_type == 'Company'">Job Title is required</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5 *ngIf="this.account_access_type == 'Student'"> Professional Overview </h5>
+								<h5 *ngIf="this.account_access_type == 'Company'"> Job Description </h5>
+								<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description"
+								placeholder="Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile."
+								required [(ngModel)]="title_form_data.professional_overview" #desciptionSection="ngModel" rows="10"></textarea>
+								<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small">
+									<span *ngIf="this.account_access_type == 'Student'">Professional Overview is required</span>
+									<span *ngIf="this.account_access_type == 'Company'">Job Description is required</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="title_overview_form.invalid"><i class="icon-feather-check"></i> {{title_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="title_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+
+		<ng-template #category_template>
+			<form method="post" id="category-form" #category_overview_form="ngForm" (ngSubmit)="on_category_Submit(category_overview_form.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{category_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="category_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5>Category</h5>
+								<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="category_form_data.category" (change)="get_sub_category()" required #categoryobj="ngModel">
+									<option value="">Select a category</option>
+									<option *ngFor="let item of this.category_list" [value]="item.category_id">
+									{{item.name}}</option>
+								</select>
+								<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)" class="text-danger small">
+									Category is required.
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 mb-2"> </div>
+					<fieldset [attr.disabled]="category_form_data.category == ''? 'true':null">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5> Subcategory</h5>
+									<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="category_form_data.subcategory" required #subcategoryobj="ngModel">
+										<option value=""> Select a Subcategory</option>
+										<option *ngFor="let item of this.subcategory_list" [value]="item.id"> {{item.subcategory_name}}</option>
+									</select>
+									<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)" class="text-danger small"> Subcategory is required. </div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+
+
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="category_overview_form.invalid"><i class="icon-feather-check"></i> {{category_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="category_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+
+
+		<ng-template #language_template>
+			<form method="post" id="language-form" #language_overview_form="ngForm" (ngSubmit)="on_language_Submit(language_overview_form.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{language_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="languages_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row" *ngFor="let lanaguages of language_form_data.languages; let i = index;">
+						<div class="col-xl-5 col-5 col-sm-5 col-md-5">
+							<div class="submit-field">
+								<h5 *ngIf="i == 0">Language</h5>
+								<select class="form-control with-border" title="Select Language" name="langauge_name_{{i}}" id="langauge_name_{{i}}" [(ngModel)]="lanaguages.names" required #langauge_name_="ngModel">
+									<option value="">Select a Language</option>
+									<option *ngFor="let item of this.language_list" [value]="item.name"> {{item.name}}</option>
+								</select>
+								<div *ngIf="langauge_name_.invalid && (langauge_name_.dirty || langauge_name_.touched)" class="text-danger small"> Language is required. </div>
+							</div>
+						</div>
+						<div class="col-xl-5 col-5 col-sm-5 col-md-5">
+							<div class="submit-field">
+								<h5 *ngIf="i == 0"> Proficiency</h5>
+								<select class="form-control with-border" name="proficiency_{{i}}" id="proficiency_{{i}}" title="Select Proficiency" [(ngModel)]="lanaguages.proficiency" required #proficiencyobj="ngModel">
+									<option value=""> Select a Proficiency</option>
+									<option *ngFor="let item of this.proficiency_list" [value]="item.name"> {{item.name}}</option>
+								</select>
+								<div *ngIf="proficiencyobj.invalid && (proficiencyobj.dirty || proficiencyobj.touched)" class="text-danger small"> Proficiency is required. </div>
+							</div>
+						</div>
+						<div class="col-xl-2 col-2 col-sm-2 col-md-2">
+							<div *ngIf="lanaguages.names != 'English'">
+								<button type="button" (click)="form_delete_language(i)"
+								class="btn btn-sm btn-secondary float-right ml-2" [ngClass]="{'mt-4': i ==0}"><i
+								class="icon-feather-trash"></i> </button>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="dashboard-box margin-top-0">
+								<div class="content with-padding padding-bottom-10">
+									<button type="button" class="btn btn-outline-primary" (click)="add_more_language()"> <i
+										class="icon-material-outline-add"></i> Add Language</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="float-left">
+									<button type="submit" class="button ripple-effect ml-2" [disabled]="language_overview_form.invalid"><i class="icon-feather-check"></i> {{language_action_button_text}} </button>
+								</div>
+								<div class="float-right">
+									<button type="button" (click)="languages_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</ng-template>
+			
+			<ng-template #hourly_template>
+				<form method="post" id="hourly-form" #hourly_overview_form="ngForm" (ngSubmit)="on_hourly_rate_submit(hourly_overview_form.valid)">
+					<div class="modal-header">
+						<h4 class="modal-title pull-left">{{hourly_popup_title}} </h4>
+						<button type="button" class="close pull-right" aria-label="Close" (click)="hourly_modalRef.hide()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						
+						<div class="row" *ngIf="this.hourly_form_data.job_type == '4' || this.hourly_form_data.job_type == '5'">
+							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+								<div class="font-weight-bold">Hourly Rate</div>
+								<div class="text-muted">Total amount the client will see</div>
+							</div>
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" required [(ngModel)]="this.hourly_form_data.hourly_date" #hourlyRate="ngModel" />
+									<div class="input-group-append">
+										<span class="input-group-text">/hr</span>
+									</div>
+								</div>
+								<div *ngIf="hourlyRate.invalid && (hourlyRate.dirty || hourlyRate.touched)" class="text-danger small">
+									hourly rate is required
+								</div>
+							</div>
+						</div>
+						<div class="row" *ngIf="this.hourly_form_data.job_type == '1' || this.hourly_form_data.job_type == '2' || this.hourly_form_data.job_type == '3'">
+							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+								<div class="font-weight-bold">Salary Expectation</div>
+								<div class="text-muted"> Montly Salary you are expecting and the client will see</div>
+							</div>
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" 
+									[(ngModel)]="this.hourly_form_data.salary_expectation" #hourlyRate="ngModel"  />
+									<div class="input-group-append">
+										<span class="input-group-text">/M</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="float-left">
+									<button type="submit" class="button ripple-effect ml-2" [disabled]="hourly_overview_form.invalid"><i class="icon-feather-check"></i> {{hourly_action_button_text}} </button>
+								</div>
+								<div class="float-right">
+									<button type="button" (click)="hourly_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</ng-template>
+			
+			
+			<ng-template #expertise_template>
+				<form method="post" id="employment-form" #expertise_overview_form="ngForm" (ngSubmit)="on_expertise_submit(expertise_overview_form.valid)">
+					<div class="modal-header">
+						<h4 class="modal-title pull-left">{{expertise_popup_title}} </h4>
+						<button type="button" class="close pull-right" aria-label="Close" (click)="expertise_modalRef.hide()">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5>Skill Set</h5>
+									<ng-container *ngIf="skills_list.length > 0">										
+										<ng-select [items]="skills_list"  bindLabel="name" placeholder="Select Skills" appendTo="body" [multiple]="true" name="skill_set" id="skill_set" [(ngModel)]="expertise_form_data.skills" class="input1text with-border  mb-0 pb-0" required #skillField="ngModel" > </ng-select>
+										<div *ngIf="skillField.invalid && (skillField.dirty || skillField.touched || skillField.submitted)" class="text-danger small"> Skill Set is required </div>
+									</ng-container>
+									
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5> Enter your any other skills</h5>
+									<input type="text" class="input-text with-border  mb-0 pb-0" name="other" id="other" placeholder="Enter Your other" [(ngModel)]="expertise_form_data.other" />
+									<div class="text-muted">Enter Comma (,) Seperated</div>
+									
+								</div>
+							</div>
+						</div>
+						<div class="row " *ngIf="expertise_level.length > 0">
+							<div class="submit-field col-xl-12 col-12 col-sm-12 col-md-12">
+								<h5>What is your level of experience in this field?</h5>
+							</div>
+							<br>
+							<ng-container *ngFor="let items of expertise_level">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="card cursor-pointer" (click)="select_level(items.value)">
+										<div class="card-body text-center"
+										[ngClass]="{'border border-primary': expertise_form_data.expertise_level == items.value}">
+										<div class="form-check">
+											<input class="form-check-input text-right float-right w-100"
+											type="radio" name="expertise_level" id="expertiseLevel"
+											[(ngModel)]="expertise_form_data.expertise_level" [value]="items.value">
+										</div>
+										<br>
+										<div class="text-center">{{items.heading}}</div>
+										<span class="text-muted text-center"> {{items.description}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+
+					
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="expertise_overview_form.invalid"><i class="icon-feather-check"></i> {{expertise_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="expertise_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+
+
+		<ng-template #profile_photo_template>
+			<form method="post" id="profile-form" #profilePhotoForm="ngForm" (ngSubmit)="on_profile_photo_submit(profilePhotoForm.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{profile_photo_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="profile_photo_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row" style="margin-top: 5%;">
+						<div class="text-center col-md-12">
+							<input type="file" (change)="fileChangeEvent($event)" />
+						</div>
+					</div>
+					<div class="row" style="margin-top: 5%;">
+						<div class="text-center col-md-8">
+							<h5>Crop Image</h5>
+							<!-- [imageFile]="imageChangedEvent"	 -->
+							<image-cropper 
+							[imageChangedEvent]="imageChangedEvent"
+							[maintainAspectRatio]="true" 
+							[aspectRatio]="4 / 4"
+							[resizeToWidth]="256" 
+							format="png" 
+							(imageCropped)="imageCropped($event)" 
+							(imageLoaded)="imageLoaded()"
+							(cropperReady)="cropperReady()" 
+							(loadImageFailed)="loadImageFailed()"></image-cropper>
+						</div>
+						<div class="text-center col-md-4">
+							<h5>Preview</h5>
+							<img [src]="croppedImage" />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="croppedImage == ''"><i class="icon-feather-check"></i> {{profile_photo_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="profile_photo_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+
+
+		<ng-template #location_template>
+			<form method="post" id="location-phone-form" #locationPhoneForm="ngForm" (ngSubmit)="on_location_submit(locationPhoneForm.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{location_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="location_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					
+					<div class="row">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>Country</h5>
+								<ng-container *ngIf="country_list.length > 0">										
+									<ng-select [items]="country_list"  bindLabel="name" placeholder="Select Country" appendTo="body" [multiple]="false" name="country_list" id="country_list" [(ngModel)]="location_form_data.country" class="input1text with-border  mb-0 pb-0" required #CountryField="ngModel" (change)="get_state($event)"> </ng-select>
+									<div *ngIf="CountryField.invalid && (CountryField.dirty || CountryField.touched || CountryField.submitted)" class="text-danger small"> Country is required </div>
+								</ng-container>
+							</div>
+						</div>
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>State</h5>
+								<ng-container *ngIf="state_list.length > 0">										
+									<ng-select [items]="state_list"  bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false" name="state_list" id="state_list" [(ngModel)]="location_form_data.state" class="input1text with-border  mb-0 pb-0" required #stateyField="ngModel" (change)="state_select($event)" > </ng-select>
+									<div *ngIf="stateyField.invalid && (stateyField.dirty || stateyField.touched || stateyField.submitted)" class="text-danger small"> State is required </div>
+								</ng-container>
+								
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="location_form_data.state != ''">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5> City</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="city" id="City" placeholder="" required [(ngModel)]=" location_form_data.city" #City="ngModel" />
+								<div *ngIf="City.invalid && (City.dirty || City.touched)" class="text-danger small">
+									City is required
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="location_form_data.city != ''">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5> Street Address</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="street_address" id="street_address" placeholder="" required
+								[(ngModel)]="location_form_data.street_address" #street_address="ngModel" />
+								<div *ngIf="street_address.invalid && (street_address.dirty || street_address.touched)" class="text-danger small">
+									Street Address is required
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5> ZIP/Postal code</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="zipcode" id="zipcode" placeholder="" [(ngModel)]=" location_form_data.zipcode" #zipcode="ngModel" />
+							</div>
+						</div>
+					</div>
+					
+					<hr class="mt-1 mb-3" *ngIf="this.account_access_type == 'Student'">
+					<div class="row" *ngIf="this.account_access_type == 'Student'">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>Calling Code</h5>
+								<select class="form-control with-border" title="Select country_calling_code" name="country_calling_code" id="country_calling_code" [(ngModel)]="location_form_data.country_calling_code" required #countryobj="ngModel">
+									<option value="">Select a Calling Code</option>
+									<option *ngFor="let item of this.calling_code_list" [value]="item.call_prefix"> {{item.calling_code}}</option>
+								</select>
+								<div *ngIf="countryobj.invalid && (countryobj.dirty || countryobj.touched)" class="text-danger small"> Calling Code is required. </div>
+							</div>
+						</div>
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5> Phone Number</h5>
+								<input type="text" class="form-control with-border  mb-0 pb-0 height-38" name="phone_number" id="phone_number" placeholder="" required maxlength="10"
+								[(ngModel)]="location_form_data.phone_number" #phone_numberobj="ngModel" pattern="\d{10}$" />
+								<div *ngIf="phone_numberobj?.invalid && (phone_numberobj?.dirty || phone_numberobj?.touched)" class="error">
+									<div class="text-danger small" *ngIf="phone_numberobj.errors.required"> Phone number is required </div>
+									<div class="text-danger small" *ngIf="phone_numberobj.errors.pattern"> Please enter a valid phone number </div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="float-left">
+								<button type="submit" class="button ripple-effect ml-2" [disabled]="locationPhoneForm.invalid"><i class="icon-feather-check"></i>   {{location_action_button_text}} </button>
+							</div>
+							<div class="float-right">
+								<button type="button" (click)="location_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+
+		<ng-template #job_preference_template>
+			<form method="post" id="job_preference-form" #job_preference_overview_form="ngForm" (ngSubmit)="on_job_preference_rate_submit(job_preference_overview_form.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{job_preference_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="job_preference_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ng-container *ngIf="location_preference.length > 0">
+						<div class="row">
+							<ng-container *ngFor="let items of location_preference">
+								<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+									<div class="card cursor-pointer" (click)="select_level(items.value)">
+										<div class="card-body text-center"
+										[ngClass]="{'border border-primary': job_preference_form_data.location_preference == items.value}">
+										<div class="form-check">
+											<input class="form-check-input text-right float-right w-100" type="radio" name="location_preference" id="expertiseLevel" [(ngModel)]="job_preference_form_data.location_preference" [value]="items.value">
+										</div>
+										<br>
+										<div class="text-center">{{items.heading}}</div>
+										<span class="text-muted text-center"> {{items.description}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+					<div class="row mt-4" *ngIf="job_preference_form_data.location_preference == '2'" >
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5> Prefered Location Name</h5>
+								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Denmark, New York, D.C." required [(ngModel)]="job_preference_form_data.prefered_location_name" #locationName="ngModel" />
+								<div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="text-danger small"> Name is required </div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="float-left">
+							<button type="submit" class="button ripple-effect ml-2" [disabled]="job_preference_overview_form.invalid"><i class="icon-feather-check"></i> {{job_preference_action_button_text}} </button>
+						</div>
+						<div class="float-right">
+							<button type="button" (click)="job_preference_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-template>
+	
+	
+	<ng-template #timeline_hiring_template>
+		<form method="post" id="timeline_hiring-form" #timeline_hiring_overview_form="ngForm" (ngSubmit)="on_timeline_hiring_rate_submit(timeline_hiring_overview_form.valid)">
+			<div class="modal-header">
+				<h4 class="modal-title pull-left">{{timeline_hiring_popup_title}} </h4>
+				<button type="button" class="close pull-right" aria-label="Close" (click)="timeline_hiring_modalRef.hide()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ng-container *ngIf="timeline_hiring.length > 0">
+					<div class="row">
+						<ng-container *ngFor="let items of timeline_hiring">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="card cursor-pointer" (click)="select_level(items.value)">
+									<div class="card-body text-center"
+									[ngClass]="{'border border-primary': timeline_hiring_form_data.timeline_hiring == items.value}">
+									<div class="form-check">
+										<input class="form-check-input text-right float-right w-100" type="radio" name="timeline_hiring" id="expertiseLevel" [(ngModel)]="timeline_hiring_form_data.timeline_hiring" [value]="items.value">
+									</div>
+									<br>
+									<div class="text-center">{{items.heading}}</div>
+									<span class="text-muted text-center"> {{items.description}}
+									</span>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+				</div>
+				<div class="row mt-4" *ngIf="timeline_hiring_form_data.timeline_hiring == '2'" >
+					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+						<div class="submit-field">
+							<h5>Within Weeks</h5>
+							<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="timeline_hiring_form_data.timeline_hiring_weeks" required #to_date="ngModel">
+								<option value="">Select weeks</option>
+								<option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option>
+							</select>
+							<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
+							<span class="text-muted text-secondary">The number of weeks within you can join us</span>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="float-left">
+						<button type="submit" class="button ripple-effect ml-2" [disabled]="timeline_hiring_overview_form.invalid"><i class="icon-feather-check"></i> {{timeline_hiring_action_button_text}} </button>
+					</div>
+					<div class="float-right">
+						<button type="button" (click)="timeline_hiring_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-template>

@@ -36,9 +36,10 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.LOGIN, data_object); // this.common_params.httpOptions
 	}
 
-	registration(firstname, lastname, email_address, re_enter_password, account_type): Observable<any> {
+	registration(firstname, lastname, email_address, re_enter_password, account_type, company_name): Observable<any> {
 
 		let data_object = {
+			company_name : company_name,
 			account_type: account_type,
 			firstname: firstname,
 			lastname: lastname,
@@ -402,5 +403,28 @@ export class MainService {
 		};
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_SKILLS, data_object); // this.common_params.httpOptions
 	}
+	
+	update_profile_job_location_preference(dataset): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			location_preference : dataset.location_preference,
+			prefered_location_name : dataset.prefered_location_name,
+			user_id: user_id
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_JOB_LOCATION_PREFERENCE, data_object); // this.common_params.httpOptions
+	}
+	
+	update_profile_job_timeline_hiring(dataset): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			timeline_hiring : dataset.timeline_hiring,
+			timeline_hiring_weeks : dataset.timeline_hiring_weeks,
+			user_id: user_id
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_TIMELINE_HIRING, data_object); // this.common_params.httpOptions
+	}
+	
 	
 }

@@ -35,7 +35,7 @@ export class LanguagesComponent implements OnInit {
 	
 	ngOnInit() {
 		this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();	
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.languages = [{
 			"names":this.common_params.default_language,

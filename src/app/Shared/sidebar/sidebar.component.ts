@@ -14,7 +14,12 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.profile_side_menu = this.common_params.profile_settings_list;
+    if(sessionStorage.account_type == 'Company'){
+      this.profile_side_menu = this.common_params.company_profile_settings_list;
+    } else if(sessionStorage.account_type == 'Student'){
+      this.profile_side_menu = this.common_params.profile_settings_list;
+    }
+    
     this.profile_side_menu.sort(function(a, b) {
       return a.order - b.order;
     });

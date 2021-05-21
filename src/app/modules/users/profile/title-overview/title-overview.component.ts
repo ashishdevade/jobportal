@@ -20,7 +20,17 @@ export class TitleOverviewComponent implements OnInit {
 	public form_data:any = {};
 	public profile_side_menu = [];
 	public links:any = {};
-	public success_message = "Title & Overview saved successfully.";
+	
+	public main_heading = "";
+	public sub_heading = "";
+	public sub_description = "";
+	public title_input = "";
+	public description_input = "";
+	public title_placeholder = "";
+	public desc_placeholder = "";
+	
+	public success_message = "";
+	
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -29,8 +39,37 @@ export class TitleOverviewComponent implements OnInit {
 	
 	ngOnInit() {
 		this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();	
+		
+		if(sessionStorage.account_type == 'Company'){
+			this.page_id = 8;
+			this.main_heading = "Job Title & Description";
+			this.sub_heading = "Add details about the job and suitable candidate requirements";
+			this.sub_description = "Write a great job description, add your requiremnts overview, mention candidate skillset and experience.";
+			this.title_input = "Job Title";
+			this.description_input = "Job Description";
+			this.title_placeholder = "Example: Writer";
+			this.desc_placeholder = "Highlight all the important requirement, experience and skillset. This is one of the first things candidate will see in the job posting.";
+			
+			this.success_message = "Job Title & Description saved successfully.";
+		} else {
+			this.main_heading = "Title & Overview";
+			this.sub_heading = "Add about your job role and responsibilities";
+			this.sub_description = "Write a great profile, add your professional overview, mention your skills, experience and interests .";
+			this.title_input = "Title";
+			this.description_input = "Professional Overview";
+			this.title_placeholder = "Example: Writing";
+			this.desc_placeholder = "Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile.";
+			
+			this.success_message = "Title & Overview saved successfully.";
+		}
+		
+		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
+		if(this.links.next_link== ""){
+			this.links.next_link = "user/profile/review";
+		}
+		
 		this.form_data.job_title = "";
 		this.form_data.professional_overview = "";
 		this.get_user_profile_settings((response)=>{

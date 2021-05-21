@@ -20,27 +20,31 @@ export class ExpertiseLevelComponent implements OnInit {
 	public profile_side_menu = [];
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
 	public links:any = {};
-	public expertise_level = [
-		{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
-		{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
-		{ value: 3, heading: 'Expert', description: "I have comprehensive and deep expertise in this field" },
-	];
+	public expertise_level = [];
 
 	constructor(
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
-	) { }
+		) { }
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;
-		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
+		if(sessionStorage.account_type == 'Company'){
+			this.page_id = 3;
+		}
+		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
+		this.expertise_level = this.common_params.expertise_level;
 		this.form_data.expertise_level = this.expertise_level[0]['value'];
 		this.show_loader = true;
 		this.get_user_profile_settings((response) => {
-			this.form_data.expertise_level = response['data'][0]['level'];
 			this.show_loader = false;
+			if(response['status'] == 200){
+				if(response.data.length > 0){
+					this.form_data.expertise_level = response['data'][0]['level'];
+				}
+			}
 		})
 	}
 
@@ -51,15 +55,10 @@ export class ExpertiseLevelComponent implements OnInit {
 	get_user_profile_settings(callback) {
 		setTimeout(() => {
 			this.service.get_user_profile_settings('expertise_level').subscribe(response => {
-				if (response.status == 200) {
-					if (callback != "" && callback != undefined) {
-						callback(response);
-					} else {
-						this.show_loader = false;
-					}
+				if (callback!= '' && callback!= undefined) {
+					callback(response);
 				} else {
 					this.show_loader = false;
-					//	this.common_service.show_toast('e', this.common_service.error_message, "");
 				}
 			}, error => {
 				this.show_loader = false;

@@ -1,0 +1,78 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="sidebar-container">
+
+				<!-- Expertise -->
+				<app-sidebar [page_id]="page_id"></app-sidebar>
+				<!-- Keywords -->
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+			<form method="post" id="expertise-form" #expertiselevelform="ngForm"
+			(ngSubmit)="onSubmit(expertiselevelform.valid)">
+			<app-card [cardMetaData]="{cardTitle: 'Timeline for Hiring'}">
+				<div class="content with-padding padding-bottom-10">
+					<h5>What is your current timeline?</h5>
+					<ng-container *ngIf="timeline_hiring.length > 0">
+						<div class="row">
+							<ng-container *ngFor="let items of timeline_hiring">
+								<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+									<div class="card cursor-pointer" (click)="select_level(items.value)">
+										<div class="card-body text-center"
+										[ngClass]="{'border border-primary': form_data.timeline_hiring == items.value}">
+										<div class="form-check">
+											<input class="form-check-input text-right float-right w-100" type="radio" name="timeline_hiring" id="expertiseLevel" [(ngModel)]="form_data.timeline_hiring" [value]="items.value">
+										</div>
+										<br>
+										<div class="text-center">{{items.heading}}</div>
+										<span class="text-muted text-center"> {{items.description}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+					<div class="row mt-4" *ngIf="form_data.timeline_hiring == '2'" >
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+							<div class="submit-field">
+								<h5>Within Weeks</h5>
+								<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.timeline_hiring_weeks" required #to_date="ngModel">
+									<option value="">Select weeks</option>
+									<option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option>
+								</select>
+								<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
+								<span class="text-muted text-secondary">The number of weeks within you can join us</span>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+			</div>
+		</app-card>
+		<div class="row">
+
+			<div class="col-xl-12">
+				<div class="row">
+					<div class="col-xl-6">
+						<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="expertiselevelform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+					</div>
+
+					<div class="col-xl-6">
+						<button type="button" (click)="back_to_expertise()"
+						class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i class="icon-feather-chevron-left"></i> Back</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+
+
+</div>
+</div>
+</div>

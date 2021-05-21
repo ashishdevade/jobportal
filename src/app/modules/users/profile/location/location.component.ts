@@ -23,6 +23,8 @@ export class LocationComponent implements OnInit {
 	public links:any = {};
 	public country_list = [];
 	public state_list = [];
+	public header_card_title = 'Location'; 
+	
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -31,13 +33,21 @@ export class LocationComponent implements OnInit {
 	
 	ngOnInit() {
 		this.common_service.check_session_on();
-		this.profile_side_menu = this.common_params.profile_settings_list;	
+		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();	
+		
+		if(sessionStorage.account_type == 'Company'){
+			this.header_card_title = "Company Location";
+			this.page_id = 1;
+		}
+		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.get_countries("");
 		this.form_data.country = [];
 		this.form_data.city = "";
 		this.form_data.street_address = "";
 		this.form_data.zipcode = "";
+		
+		
 		
 		this.get_user_profile_settings((response)=>{
 			if(response['data'].length > 0){
@@ -143,7 +153,7 @@ export class LocationComponent implements OnInit {
 	}
 	
 	back_to_title_overview(){
-		console.log("in here ");
+		console.log("in here ", this.links.previous_link);
 		this.common_service.change_route(this.links.previous_link);
 	}
 
