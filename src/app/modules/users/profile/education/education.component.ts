@@ -85,7 +85,6 @@ export class EducationComponent implements OnInit {
 	}
 
 	back_to_expertise_level() {
-		console.log("in here ");
 		this.common_service.change_route(this.links.previous_link);
 	}
 

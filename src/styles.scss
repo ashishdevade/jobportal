@@ -64,3 +64,7 @@ ng-select input {
     opacity: inherit !important; 
     pointer-events: auto !important;
 }
+
+button.button.ripple-effect.big.margin-top-30:disabled {
+    background-color: #6474e6;
+}

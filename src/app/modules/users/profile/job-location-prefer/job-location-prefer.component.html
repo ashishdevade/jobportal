@@ -43,7 +43,7 @@
 							<div class="submit-field">
 								<h5> Prefered Location Name</h5>
 								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Denmark, New York, D.C." required [(ngModel)]="form_data.prefered_location_name" #locationName="ngModel" />
-								<div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="text-danger small"> Name is required </div>
+								<div *ngIf="locationName.invalid && (locationName.touched || expertiselevelform.submitted)" class="text-danger small"> Name is required </div>
 							</div>
 						</div>
 					</div>

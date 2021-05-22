@@ -52,9 +52,10 @@ export class ProfilePhotoComponent implements OnInit {
 		
 		this.show_loader = true;
 		this.get_user_profile_settings('profile-photo', (response)=>{
-			this.preview_profile_photo = this.service_url + '/' + response['data'][0]['profile_photo'];
+			if(response['data'][0]['profile_photo']!= '' && response['data'][0]['profile_photo']!= null ){
+				this.preview_profile_photo = this.service_url + '/' + response['data'][0]['profile_photo'];
+			}
 			this.show_loader = false; 
-			
 		});
 	}
 	

@@ -49,6 +49,7 @@ export class ReviewComponent implements OnInit {
 	public location_preference = [];
 	public timeline_hiring = [];
 	public to_week_array = [];
+	public job_type = [];
 	
 	
 	public imageChangedEvent: any = '';
@@ -114,6 +115,10 @@ export class ReviewComponent implements OnInit {
 	public timeline_hiring_popup_title = "";
 	public timeline_hiring_action_button_text = "";
 	
+	public job_type_success_message = "";
+	public job_type_popup_title = "";
+	public job_type_action_button_text = "";
+	
 	public from_year_array = [];
 	public to_year_array = [];
 	public month_arr = [];
@@ -130,6 +135,7 @@ export class ReviewComponent implements OnInit {
 	public location_form_data:any = {};
 	public job_preference_form_data:any = {};
 	public timeline_hiring_form_data:any = {};
+	public job_type_form_data:any = {};
 	
 	education_modalRef: BsModalRef;
 	employement_modalRef: BsModalRef;
@@ -144,8 +150,7 @@ export class ReviewComponent implements OnInit {
 	location_modalRef: BsModalRef;
 	job_preference_modalRef: BsModalRef;
 	timeline_hiring_modalRef: BsModalRef;
-	
-	
+	job_type_modalRef: BsModalRef;
 	
 	constructor(
 		private router: Router,
@@ -165,6 +170,7 @@ export class ReviewComponent implements OnInit {
 		this.proficiency_list  = this.common_params.proficiency_list;
 		this.location_preference = this.common_params.location_preference;
 		this.timeline_hiring = this.common_params.timeline_hiring;
+		this.job_type = this.common_params.job_type;
 		
 		
 		let d = new Date();
@@ -196,7 +202,10 @@ export class ReviewComponent implements OnInit {
 			this.project_data = response['data']['project_data'];
 			
 			if(this.account_access_type == 'Student'){
-				this.preview_profile_photo = this.service_url + '/' + this.user_account_data[0]['profile_photo'];
+				if(this.user_account_data[0]['profile_photo']!='' && this.user_account_data[0]['profile_photo'] != null ){
+					this.preview_profile_photo = this.service_url + '/' + this.user_account_data[0]['profile_photo'];
+				}
+				
 				let filter_expertise = this.expertise_level.filter((res)=>{
 					return res.value == this.expertise_data[0]['level'];
 				})
@@ -205,26 +214,34 @@ export class ReviewComponent implements OnInit {
 				this.expertise_data[0]['skills_arr'] = JSON.parse(this.expertise_data[0]['skills']);
 				
 			} else {
-				let location_res = this.location_preference.filter((res)=>{
-					return res.value == this.user_account_data[0]['location_preference'];
-				});			
-				
-				this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
-				
-				let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
-					return res.value == this.user_account_data[0]['timeline_hiring'];
-				});			
-				
-				this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
-				
-				
-				console.log("this.user_account_data ", this.user_account_data);
+				this.additional_user_parameter();
 			}
 			
 			this.show_loader = false;
 			
 			this.get_countries("");
 		})
+	}
+	
+	additional_user_parameter(){
+		let location_res = this.location_preference.filter((res)=>{
+			return res.value == this.user_account_data[0]['location_preference'];
+		});			
+		
+		this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
+		
+		let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
+			return res.value == this.user_account_data[0]['timeline_hiring'];
+		});			
+		
+		this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
+		
+		
+		let job_type_res = this.job_type.filter((res)=>{
+			return res.value == this.user_account_data[0]['timeline_hiring'];
+		});			
+		
+		this.user_account_data[0]['job_type_label'] = job_type_res[0]['heading'];
 	}
 	
 	isYearValuesCorrect(called_from){
@@ -687,6 +704,7 @@ export class ReviewComponent implements OnInit {
 						this.show_loader = false; 
 						this.title_modalRef.hide();
 						this.shared_service.loginValue(this.user_account_data);
+						this.additional_user_parameter();
 					})
 					
 				} else {
@@ -934,6 +952,7 @@ export class ReviewComponent implements OnInit {
 						this.show_loader = false; 
 						this.hourly_modalRef.hide();
 						this.shared_service.loginValue(this.user_account_data);
+						this.additional_user_parameter();
 					})
 					
 				} else {
@@ -1134,6 +1153,7 @@ export class ReviewComponent implements OnInit {
 						setTimeout(()=>{
 							this.show_loader = false;
 							this.profile_photo_modalRef.hide();
+							this.additional_user_parameter();
 							
 						}, 200);
 					});
@@ -1253,6 +1273,7 @@ export class ReviewComponent implements OnInit {
 										this.location_modalRef.hide();
 									}
 									this.shared_service.loginValue(this.user_account_data);
+									this.additional_user_parameter();
 								})
 							} else {
 								this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -1275,6 +1296,7 @@ export class ReviewComponent implements OnInit {
 								this.location_modalRef.hide();
 							}
 							this.shared_service.loginValue(this.user_account_data);
+							this.additional_user_parameter();
 						})
 						
 					}
@@ -1290,6 +1312,10 @@ export class ReviewComponent implements OnInit {
 				
 			});
 		}
+	}
+	
+	select_level_job_preference(items_value) {
+		this.job_preference_form_data.location_preference = items_value;
 	}
 	
 	edit_job_preference(template: TemplateRef<any>){
@@ -1317,16 +1343,11 @@ export class ReviewComponent implements OnInit {
 			this.service.update_profile_job_location_preference(dataset).subscribe(res => {
 				if (res['status'] == 200) {
 					this.common_service.show_toast('s', this.job_preference_success_message, "");
-					this.show_loader = false;
 					this.get_user_profile_settings('user-account', (response)=>{
 						this.shared_service.loginValue(response['data']);
 						this.user_account_data = response['data'];
-						let location_res = this.location_preference.filter((res)=>{
-							return res.value == this.user_account_data[0]['location_preference'];
-						});			
 						
-						this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
-						
+						this.additional_user_parameter(); 	
 						setTimeout(()=>{
 							this.show_loader = false;
 							this.job_preference_modalRef.hide();
@@ -1342,6 +1363,10 @@ export class ReviewComponent implements OnInit {
 				this.common_service.show_toast('e', this.common_service.error_message, "");
 			});
 		}
+	}
+	
+	select_level_timeline_hiring(items_value) {
+		this.timeline_hiring_form_data.timeline_hiring = items_value;
 	}
 
 
@@ -1370,16 +1395,10 @@ export class ReviewComponent implements OnInit {
 			this.service.update_profile_job_timeline_hiring(dataset).subscribe(res => {
 				if (res['status'] == 200) {
 					this.common_service.show_toast('s', this.timeline_hiring_success_message, "");
-					this.show_loader = false;
 					this.get_user_profile_settings('user-account', (response)=>{
 						this.shared_service.loginValue(response['data']);
 						this.user_account_data = response['data'];
-						
-						let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
-							return res.value == this.user_account_data[0]['timeline_hiring'];
-						});			
-						
-						this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
+						this.additional_user_parameter(); 	
 						
 						setTimeout(()=>{
 							this.show_loader = false;
@@ -1394,6 +1413,58 @@ export class ReviewComponent implements OnInit {
 			}, error => {
 				this.show_loader = false;
 				this.common_service.show_toast('e', this.common_service.error_message, "");
+			});
+		}
+	}
+	
+	select_level_job_type(items_value) {
+		this.job_type_form_data.job_type = items_value;
+	}
+	
+	edit_job_type(template: TemplateRef<any>){
+		this.job_type_popup_title = "Edit Job Type";
+		this.job_type_action_button_text = "Update";
+		this.job_type_success_message = "Job Type saved successfully.";
+		this.show_loader = true;
+		
+		this.get_user_profile_settings("job_type", (response)=>{
+			if(response['data'].length > 0){
+				this.job_type_form_data.job_type = parseInt(response['data'][0]['job_type']);
+				this.show_loader = false;
+				this.job_type_modalRef = this.modalService.show( template, this.common_params.modal_config );
+			}
+		});
+	}
+	
+	on_job_type_rate_submit(isValid: Boolean) {
+		console.log("isValid ", isValid);
+		if (isValid) {
+			this.show_loader = true;
+			let dataset = JSON.parse(JSON.stringify(this.job_type_form_data));
+			this.service.update_profile_job_type(dataset).subscribe(res => {
+				if (res['status'] == 200) {
+					this.common_service.show_toast('s', "Job Type saved successfully.", "");
+					this.get_user_profile_settings('user-account', (response)=>{
+						this.shared_service.loginValue(response['data']);
+						this.user_account_data = response['data'];
+						this.additional_user_parameter(); 	
+						
+						setTimeout(()=>{
+							this.show_loader = false;
+							this.job_type_modalRef.hide();
+							
+						}, 200);
+					});
+					
+				} else {
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+					this.show_loader = false;
+				}
+
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+
 			});
 		}
 	}

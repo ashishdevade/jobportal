@@ -295,7 +295,9 @@
 								<div class="headline p-3">
 									<div class="row">
 										<div class="col-xl-6">
-											<h3><i class="icon-feather-folder-plus"></i> Title & Overview </h3>
+											
+											<h3 *ngIf="this.account_access_type == 'Student'"><i class="icon-feather-folder-plus"></i> Title & Overview </h3>
+											<h3 *ngIf="this.account_access_type == 'Company'"><i class="icon-feather-folder-plus"></i> Job Title & Description </h3>
 										</div>
 										<div class="col-xl-6">
 											<div class="float-right">
@@ -472,6 +474,57 @@
 												</tr>
 											</tfoot>
 										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4" *ngIf="this.account_access_type == 'Company'"></div>
+						<div class="row" *ngIf="this.account_access_type == 'Company'">
+							<div class="col-xl-12">
+								<div class="dashboard-box margin-top-0">
+									<div class="headline p-3">
+										<div class="row">
+											<div class="col-xl-6">
+												<h3><i class="icon-feather-folder-plus"></i> Job Type </h3>
+											</div>
+											<div class="col-xl-6">
+												<div class="float-right">
+													<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_job_type(job_type_template)"><i class="icon-feather-edit"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="content p-3 padding-bottom-10">
+										<div class="row" *ngIf="this.user_account_data.length > 0">
+											<div class="col-xl-6">
+												<b>Job Type</b>
+											</div>
+											<div class="col-xl-6">
+												{{this.user_account_data[0]['job_type_label']}}
+											</div>
+										</div>
+										<div class="row" *ngIf="this.user_account_data.length == 0">
+											<div class="col-xl-12">
+												<p>No Items to display</p>
+											</div>
+										</div>
+										<!-- <table class="table">
+											<thead>
+												<tr>
+													<th>Job Type</th>
+												</tr>
+											</thead>
+											<tbody *ngIf="this.user_account_data.length > 0">
+												<tr>
+													<td>{{this.user_account_data[0]['job_type_label']}}</td>
+												</tr>
+											</tbody>
+											<tfoot *ngIf="this.user_account_data.length == 0">
+												<tr colspan="3" class="text-center">
+													<td><p>No Items to display</p></td>
+												</tr>
+											</tfoot>
+										</table> -->
 									</div>
 								</div>
 							</div>
@@ -1489,7 +1542,7 @@
 						<div class="row">
 							<ng-container *ngFor="let items of location_preference">
 								<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-									<div class="card cursor-pointer" (click)="select_level(items.value)">
+									<div class="card cursor-pointer" (click)="select_level_job_preference(items.value)">
 										<div class="card-body text-center"
 										[ngClass]="{'border border-primary': job_preference_form_data.location_preference == items.value}">
 										<div class="form-check">
@@ -1544,7 +1597,7 @@
 					<div class="row">
 						<ng-container *ngFor="let items of timeline_hiring">
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-								<div class="card cursor-pointer" (click)="select_level(items.value)">
+								<div class="card cursor-pointer" (click)="select_level_timeline_hiring(items.value)">
 									<div class="card-body text-center"
 									[ngClass]="{'border border-primary': timeline_hiring_form_data.timeline_hiring == items.value}">
 									<div class="form-check">
@@ -1588,3 +1641,51 @@
 		</div>
 	</form>
 </ng-template>
+
+<ng-template #job_type_template>
+	<form method="post" id="job_type-form" #job_type_overview_form="ngForm" (ngSubmit)="on_job_type_rate_submit(job_type_overview_form.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{job_type_popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="job_type_modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<ng-container *ngIf="job_type.length > 0">
+				<div class="row">
+					<ng-container *ngFor="let items of job_type">
+						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+							<div class="card cursor-pointer" (click)="select_level_job_type(items.value)">
+								<div class="card-body text-center"
+								[ngClass]="{'border border-primary': job_type_form_data.job_type == items.value}">
+								<div class="form-check">
+									<input class="form-check-input text-right float-right w-100" type="radio" name="JobType" id="JobType" [(ngModel)]="job_type_form_data.job_type" [value]="items.value">
+											<!-- <label class="form-check-label" for="JobType">
+												Default radio
+											</label> -->
+										</div>
+										<br>
+										<div class="text-center">{{items.heading}}</div>
+										<span class="text-muted text-center"> {{items.description}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="float-left">
+							<button type="submit" class="button ripple-effect ml-2" [disabled]="job_type_overview_form.invalid"><i class="icon-feather-check"></i> {{job_type_action_button_text}} </button>
+						</div>
+						<div class="float-right">
+							<button type="button" (click)="job_type_modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-template>

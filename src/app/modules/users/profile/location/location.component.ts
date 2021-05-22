@@ -69,7 +69,6 @@ export class LocationComponent implements OnInit {
 	
 	get_countries(callback){
 		this.show_loader = true;
-		console.log(" in get_countries ");
 		this.service.get_countries(-1).subscribe(response=> {
 			if(response.status == 200){
 				this.country_list = response.data;
@@ -84,7 +83,6 @@ export class LocationComponent implements OnInit {
 	
 	get_states(country_id, callback){
 		this.show_loader = true;
-		console.log(" in get_states ");
 		this.service.get_states(country_id).subscribe(response=> {
 			if(response.status == 200){
 				this.state_list = response.data;
@@ -132,7 +130,6 @@ export class LocationComponent implements OnInit {
 		if (isValid){
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.form_data));
-			console.log("dataset ", dataset);
 			this.service.add_update_profile_location(dataset).subscribe(res=> {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.success_message, "");
@@ -153,7 +150,6 @@ export class LocationComponent implements OnInit {
 	}
 	
 	back_to_title_overview(){
-		console.log("in here ", this.links.previous_link);
 		this.common_service.change_route(this.links.previous_link);
 	}
 

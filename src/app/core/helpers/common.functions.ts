@@ -80,8 +80,16 @@ export class CommonFunctions {
 	]
 	
 	public timeline_hiring = [
-		{ value: 1, heading: 'Immediate', description: "Work from which ever locaiton you like" },
-		{ value: 2, heading: 'Within _____', description: "Move/ Shift to the actual work site" },
+		{ value: 1, heading: 'Immediate', description: "Work from which ever location you like" },
+		{ value: 2, heading: 'Within', description: "Move/ Shift to the actual work site" },
+	];
+	
+	public job_type = [
+		{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
+		{ value: 2, heading: 'Full Time', description: "I am looking for full time job" },
+		{ value: 3, heading: 'Intern', description: "Here to learn by work and while having fun in the process" },
+		{ value: 4, heading: 'Contract', description: "I am looking for some long term contracts" },
+		{ value: 5, heading: 'Freelance', description: "Anything to work on that fits my criteria as freelancer" },
 	];
 	
 	public modal_config = {

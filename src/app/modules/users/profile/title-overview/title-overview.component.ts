@@ -28,7 +28,7 @@ export class TitleOverviewComponent implements OnInit {
 	public description_input = "";
 	public title_placeholder = "";
 	public desc_placeholder = "";
-	
+	public access_type = "";
 	public success_message = "";
 	
 	constructor(
@@ -40,8 +40,8 @@ export class TitleOverviewComponent implements OnInit {
 	ngOnInit() {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();	
-		
-		if(sessionStorage.account_type == 'Company'){
+		this.access_type = sessionStorage.account_type;
+		if(this.access_type == 'Company'){
 			this.page_id = 8;
 			this.main_heading = "Job Title & Description";
 			this.sub_heading = "Add details about the job and suitable candidate requirements";

@@ -22,49 +22,57 @@
 								<div class="submit-field">
 									<h5>Category</h5>
 									<select class="form-control with-border" title="Select Category" name="category"
-										id="category" [(ngModel)]="form_data.category" (change)="get_sub_category()"
-										required #categoryobj="ngModel">
-										<option value="">Select a category</option>
-										<option *ngFor="let item of this.category_list" [value]="item.category_id">
-											{{item.name}}</option>
-									</select>
-									<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)"
-										class="text-danger small">
-										Category is required.
-									</div>
-								</div>
+									id="category" [(ngModel)]="form_data.category" (change)="get_sub_category()"
+									required #categoryobj="ngModel">
+									<option value="">Select a category</option>
+									<option *ngFor="let item of this.category_list" [value]="item.category_id">
+									{{item.name}}</option>
+								</select>
+								<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)"
+								class="text-danger small">
+								Category is required.
 							</div>
 						</div>
-						<div class="mt-2 mb-2"> </div>
-						<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
-							<div class="row">
-								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-									<div class="submit-field">
-										<h5> Subcategory</h5>
-										<select class="form-control with-border" name="subcategory" id="subcategory"
-											title="Select Category" [(ngModel)]="form_data.subcategory" required
-											#subcategoryobj="ngModel">
-											<option value=""> Select a Subcategory</option>
-											<option *ngFor="let item of this.sub_category_list" [value]="item.id">
-												{{item.subcategory_name}}</option>
-										</select>
-										<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)"
-											class="text-danger small">
-											Subcategory is required.
-										</div>
-									</div>
-								</div>
-							</div>
-						</fieldset>
-
 					</div>
-				</app-card>
-				<div class="col-xl-12">
-					<button type="submit" class="button ripple-effect big margin-top-30"
-						[disabled]="categoryform.invalid"><i class="icon-feather-check"></i> Save and
-						Proceed</button>
 				</div>
-			</form>
+				<div class="mt-2 mb-2"> </div>
+				<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Subcategory</h5>
+								<select class="form-control with-border" name="subcategory" id="subcategory"
+								title="Select Category" [(ngModel)]="form_data.subcategory" required
+								#subcategoryobj="ngModel">
+								<option value=""> Select a Subcategory</option>
+								<option *ngFor="let item of this.sub_category_list" [value]="item.id">
+								{{item.subcategory_name}}</option>
+							</select>
+							<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)"
+							class="text-danger small">
+							Subcategory is required.
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+	</div>
+</app-card>
+<div class="col-xl-12">
+	<div class="row">
+		<div class="col-xl-6">
+			<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="categoryform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+		</div>
+
+		<div class="col-xl-6">
+			<button type="button" (click)="back_to()" class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i class="icon-feather-chevron-left"></i> Back</button>
 		</div>
 	</div>
+</div>
+
+
+</form>
+</div>
+</div>
 </div>

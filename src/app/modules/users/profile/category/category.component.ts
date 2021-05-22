@@ -34,7 +34,6 @@ export class CategoryComponent implements OnInit {
 		}
 		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
-		
 		this.form_data.category = "";
 		this.form_data.subcategory = "";
 
@@ -156,5 +155,9 @@ export class CategoryComponent implements OnInit {
 
 			});
 		}
+	}
+	
+	back_to(){
+		this.common_service.change_route(this.links.previous_link);
 	}
 }

@@ -19,13 +19,7 @@ export class JobTypeComponent implements OnInit {
 	public profile_side_menu = [];
 	public links:any = {};
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
-	public job_type = [
-		{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
-		{ value: 2, heading: 'Full Time', description: "I am looking for full time job" },
-		{ value: 3, heading: 'Intern', description: "Here to learn by work and while having fun in the process" },
-		{ value: 4, heading: 'Contract', description: "I am looking for some long term contracts" },
-		{ value: 5, heading: 'Freelance', description: "Anything to work on that fits my criteria as freelancer" },
-	];
+	public job_type = [];
 
 	constructor(
 		private router: Router,
@@ -40,6 +34,7 @@ export class JobTypeComponent implements OnInit {
 			this.page_id = 4;
 		}
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
+		this.job_type = this.common_params.job_type;
 		this.form_data.job_type = this.job_type[0]['value'];
 		this.show_loader = true;
 		this.get_user_profile_settings((response) => {
