@@ -44,6 +44,32 @@
 							</div>
 						</div>
 					</div>
+					
+					<ng-container *ngIf="this.access_type == 'Company'">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5>Upload Job Description  </h5>
+									<div class="">
+										<input type="file" (change)="fileChangeEvent($event)" />
+										<span class="text-muted">Uploading JD file/pdf/word</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row mb-5" *ngIf="this.form_data.uploaded_jd!= '' && this.form_data.uploaded_jd!= null && this.form_data.uploaded_jd!= undefined">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<a download  [href]="this.form_data.uploaded_jd" target="_blank" class="btn btn-success ml-2" ><i class="icon-feather-download"></i>Download JD</a>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6" >
+								<div class="pull-right float-right">
+									<button type="button" class="btn btn-danger ml-2" (click)="remove_document()" ><i class="icon-material-outline-delete"></i>Remove Document</button>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					
 				</div>
 				<div class="content with-padding padding-bottom-5" *ngIf="this.access_type != 'Company'">
 					<a (click)="skip_steps()" class="btn btn-link"> Skip this step </a>

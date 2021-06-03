@@ -37,9 +37,11 @@ export class TimelineHiringComponent implements OnInit {
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
 		this.timeline_hiring = this.common_params.timeline_hiring;
 		
-		for (let i = 1; i <= 53; i++) {
+		/*for (let i = 1; i <= 52; i++) {
 			this.to_week_array.push(i);
-		}
+		}*/
+		
+		this.to_week_array = this.common_params.timeline_hiring_weekly_list;
 		
 		this.form_data.timeline_hiring = this.timeline_hiring[0]['value'];
 		this.form_data.timeline_hiring_weeks = "";

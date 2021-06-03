@@ -14,7 +14,13 @@ export class MainService {
 	public mod_id = 2;
 
 	constructor(private httpclient: HttpClient) {
-		this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
+		if(sessionStorage.getItem("system_config")){
+			this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
+		} else {
+			this.get_config((config_data) => {
+				this.config_file_data = JSON.parse(config_data);		
+			});		
+		}
 	}
 
 	async get_config(callback) {
@@ -254,7 +260,7 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_RATE, data_object); // this.common_params.httpOptions
 	}
 
-	add_update_profile_title_overview(dataset): Observable<any> {
+	/*add_update_profile_title_overview(dataset): Observable<any> {
 		this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
@@ -264,6 +270,10 @@ export class MainService {
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_TITLE, data_object); // this.common_params.httpOptions
+	}*/
+	
+	add_update_profile_title_overview(form_data): Observable<any> {
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_TITLE, form_data); // this.common_params.httpOptions
 	}
 
 	add_update_profile_location(dataset): Observable<any> {
@@ -406,9 +416,17 @@ export class MainService {
 	
 	update_profile_job_location_preference(dataset): Observable<any> {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		
 		let data_object = {
 			location_preference : dataset.location_preference,
 			prefered_location_name : dataset.prefered_location_name,
+			prefered_country_id : dataset.prefered_country_id,
+			prefered_country : dataset.prefered_country,
+			prefered_state_id : dataset.prefered_state_id,
+			prefered_state : dataset.prefered_state,
+			location_preference_name : dataset.location_preference_name,
+			/*prefered_street_address : dataset.prefered_street_address,
+			prefered_zipcode : dataset.prefered_zipcode,*/
 			user_id: user_id
 		};
 
@@ -424,6 +442,16 @@ export class MainService {
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_TIMELINE_HIRING, data_object); // this.common_params.httpOptions
+	}
+	
+	
+	remove_job_description(): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+		let data_object = {
+			user_id: user_id
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.REMOVE_JOB_DESCRIPTION, data_object); // this.common_params.httpOptions
 	}
 	
 	

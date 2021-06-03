@@ -76,7 +76,6 @@ export class LicenseCertificationComponent implements OnInit {
 				this.upload_file = event.target.result;
 			}
 		}
-		
 	}
 	
 	

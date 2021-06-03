@@ -34,14 +34,14 @@ export class CommonFunctions {
 	];
 	
 	public expertise_level = [
-		{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
-		{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
-		{ value: 3, heading: 'Expert', description: "I have comprehensive and deep expertise in this field" },
+	{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
+	{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
+	{ value: 3, heading: 'Expert', description: "I have comprehensive and deep expertise in this field" },
 	];
 	
 	public location_preference = [
-		{ value: 1, heading: 'Remote Job', description: "Work from which ever locaiton you like" },
-		{ value: 2, heading: 'On Site', description: "Move/ Shift to the actual work site" },
+	{ value: 1, heading: 'Remote Job', description: "Work from which ever locaiton you like" },
+	{ value: 2, heading: 'On Site', description: "Move/ Shift to the actual work site" },
 	];
 	
 	public proficiency_list  = [
@@ -80,16 +80,32 @@ export class CommonFunctions {
 	]
 	
 	public timeline_hiring = [
-		{ value: 1, heading: 'Immediate', description: "Work from which ever location you like" },
-		{ value: 2, heading: 'Within', description: "Move/ Shift to the actual work site" },
+	{ value: 1, heading: 'Immediate', description: "Work from which ever location you like" },
+	{ value: 2, heading: 'Within', description: "Move/ Shift to the actual work site" },
+	];
+	
+	public timeline_hiring_weekly_list = [
+	{ value: "1 - 4", heading: '1 - 4 weeks' },
+	{ value: "5 - 8", heading: '5 - 8 weeks' },
+	{ value: "9 - 12", heading: '9 - 12 weeks' },
+	{ value: "13 - 16", heading: '13 - 16 weeks' },
+	{ value: "17 - 20", heading: '17 - 20 weeks' },
+	{ value: "21 - 24", heading: '21 - 24 weeks' },
+	{ value: "25 - 28", heading: '25 - 28 weeks' },
+	{ value: "29 - 32", heading: '29 - 32 weeks' },
+	{ value: "33 - 36", heading: '33 - 36 weeks' },
+	{ value: "37 - 40", heading: '37 - 40 weeks' },
+	{ value: "41 - 44", heading: '41 - 44 weeks' },
+	{ value: "45 - 48", heading: '45 - 48 weeks' },
+	{ value: "49 - 52", heading: '49 - 52 weeks' },
 	];
 	
 	public job_type = [
-		{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
-		{ value: 2, heading: 'Full Time', description: "I am looking for full time job" },
-		{ value: 3, heading: 'Intern', description: "Here to learn by work and while having fun in the process" },
-		{ value: 4, heading: 'Contract', description: "I am looking for some long term contracts" },
-		{ value: 5, heading: 'Freelance', description: "Anything to work on that fits my criteria as freelancer" },
+	{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
+	{ value: 2, heading: 'Full Time', description: "I am looking for full time job" },
+	{ value: 3, heading: 'Intern', description: "Here to learn by work and while having fun in the process" },
+	{ value: 4, heading: 'Contract', description: "I am looking for some long term contracts" },
+	{ value: 5, heading: 'Freelance', description: "Anything to work on that fits my criteria as freelancer" },
 	];
 	
 	public modal_config = {

@@ -44,7 +44,8 @@
 								<h5>Within Weeks</h5>
 								<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.timeline_hiring_weeks" required #to_date="ngModel">
 									<option value="">Select weeks</option>
-									<option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option>
+									<!-- <option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option> -->
+									<option *ngFor="let week of this.to_week_array" value="{{week['value']}}">{{week['heading']}}</option>
 								</select>
 								<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
 								<span class="text-muted text-secondary">The number of weeks within you can join us</span>

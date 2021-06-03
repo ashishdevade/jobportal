@@ -50,6 +50,9 @@ export class ReviewComponent implements OnInit {
 	public timeline_hiring = [];
 	public to_week_array = [];
 	public job_type = [];
+	public jd_current_selected_file:any;
+	public jd_fileChangedEvent = '';
+	public jd_upload_file:any;
 	
 	
 	public imageChangedEvent: any = '';
@@ -182,9 +185,11 @@ export class ReviewComponent implements OnInit {
 			this.to_year_array.push(i);
 		}
 
-		for (let i = 1; i <= 53; i++) {
+		/*for (let i = 1; i <= 52; i++) {
 			this.to_week_array.push(i);
-		}
+		}*/
+		
+		this.to_week_array = this.common_params.timeline_hiring_weekly_list;
 		
 		this.month_arr = this.common_params.month_array;
 		
@@ -201,16 +206,16 @@ export class ReviewComponent implements OnInit {
 			this.experience_data = response['data']['experience_data'];
 			this.project_data = response['data']['project_data'];
 			
+			let filter_expertise = this.expertise_level.filter((res)=>{
+				return res.value == this.expertise_data[0]['level'];
+			})
+			this.current_expertise = filter_expertise[0]['heading'];
+			
 			if(this.account_access_type == 'Student'){
 				if(this.user_account_data[0]['profile_photo']!='' && this.user_account_data[0]['profile_photo'] != null ){
 					this.preview_profile_photo = this.service_url + '/' + this.user_account_data[0]['profile_photo'];
 				}
-				
-				let filter_expertise = this.expertise_level.filter((res)=>{
-					return res.value == this.expertise_data[0]['level'];
-				})
-				this.current_expertise = filter_expertise[0]['heading'];
-				
+			
 				this.expertise_data[0]['skills_arr'] = JSON.parse(this.expertise_data[0]['skills']);
 				
 			} else {
@@ -242,6 +247,16 @@ export class ReviewComponent implements OnInit {
 		});			
 		
 		this.user_account_data[0]['job_type_label'] = job_type_res[0]['heading'];
+		
+		let weekly_arr_res = this.to_week_array.filter((res)=>{
+			return res.value == this.user_account_data[0]['timeline_hiring_weeks'];
+		});		
+		
+		if(this.user_account_data[0]['uploaded_jd']!= '' && this.user_account_data[0]['uploaded_jd']!= null){
+			this.user_account_data[0]['uploaded_jd'] =  this.service_url + '/' + this.user_account_data[0]['uploaded_jd'];;
+		}	
+		
+		this.user_account_data[0]['timeline_hiring_week_label'] = weekly_arr_res[0]['heading'];
 	}
 	
 	isYearValuesCorrect(called_from){
@@ -281,7 +296,12 @@ export class ReviewComponent implements OnInit {
 			if(response.status == 200){
 				this.country_list = response.data;
 			} 
-			this.show_loader = false;
+			
+			if (callback!= '' && callback!= undefined) {
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
 		}, error => {
 			this.show_loader = false;
 			this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -671,16 +691,56 @@ export class ReviewComponent implements OnInit {
 		}
 	}
 	
+	jdfileChangeEvent(event: any): void {
+		this.jd_fileChangedEvent = event;
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			this.jd_current_selected_file = event.target.files[0];
+			reader.onload = (event) => { 
+				this.jd_upload_file = event.target.result;
+			}
+		}
+	}
+	
+	remove_document(){
+		if(confirm('Are you sure you want to delete this job description file ?')){
+			this.show_loader = true; 
+			this.service.remove_job_description().subscribe(response=> {
+				if(response.status == 200){
+					this.show_loader = false;
+					this.get_user_profile_settings("user-account", (response)=>{
+						this.common_service.show_toast('s', "Job Description deleted successfully", "");
+						this.user_account_data = response['data'];
+						this.show_loader = false; 
+						this.additional_user_parameter();
+					})
+					
+				} else {
+					this.show_loader = false;
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+				
+			});
+		}
+	}	
+	
 	edit_title_overview(template: TemplateRef<any>){
 		this.title_popup_title = "Edit Title & overview";
 		this.title_action_button_text = "Update";
 		this.title_success_message = "Title & overview updaed successfully.";
 		this.show_loader = true;
+		this.title_form_data.uploaded_jd = "";
 		
 		this.get_user_profile_settings("title-overview", (response)=>{
 			if(response['data'].length > 0){
 				this.title_form_data.job_title = response['data'][0]['job_title'];
 				this.title_form_data.professional_overview = response['data'][0]['professional_overview'];
+				if(response['data'][0]['uploaded_jd']!= null && response['data'][0]['uploaded_jd']!= ''){
+					this.title_form_data.uploaded_jd = this.service_url + '/' + response['data'][0]['uploaded_jd'];;
+				}
 				this.show_loader = false;
 				this.title_modalRef = this.modalService.show( template, this.common_params.modal_config );
 			} else {
@@ -696,11 +756,26 @@ export class ReviewComponent implements OnInit {
 		if (isValid){
 			this.show_loader = true;
 			let dataset = JSON.parse(JSON.stringify(this.title_form_data));
-			this.service.add_update_profile_title_overview(dataset).subscribe(res=> {
+			let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
+			
+			var form_obj = new FormData();
+			form_obj.append('user_id', user_id);
+			if(this.jd_current_selected_file!= undefined && this.jd_current_selected_file!= ""){
+				form_obj.append('uploaded_jd', this.jd_current_selected_file, this.jd_current_selected_file.name);
+			}
+			
+			form_obj.append('job_title', this.title_form_data.job_title);
+			form_obj.append('professional_overview', this.title_form_data.professional_overview);
+			
+			this.service.add_update_profile_title_overview(form_obj).subscribe(res=> {
 				if(res['status'] == 200){
 					this.common_service.show_toast('s', this.title_success_message, "");
 					this.get_user_profile_settings("user-account", (response)=>{
 						this.user_account_data = response['data'];
+						if(this.user_account_data[0]['uploaded_jd']!= null && this.user_account_data[0]['uploaded_jd']!= ''){
+							this.user_account_data[0].uploaded_jd = this.service_url + '/' + this.user_account_data[0]['uploaded_jd'];;
+						}
+						
 						this.show_loader = false; 
 						this.title_modalRef.hide();
 						this.shared_service.loginValue(this.user_account_data);
@@ -1202,6 +1277,18 @@ export class ReviewComponent implements OnInit {
 		this.location_form_data.state_id  =  $event.id;
 	}
 	
+	
+	get_prefered_state($event){
+		this.job_preference_form_data.country_name = $event.name;
+		this.job_preference_form_data.country_id = $event.id;
+		this.get_states($event.id, (res)=>{})
+	}
+	
+	prefered_state_select($event){
+		this.job_preference_form_data.state_name  =  $event.name;
+		this.job_preference_form_data.state_id  =  $event.id;
+	}
+	
 	get_calling_code(callback){
 		this.show_loader = true;
 		console.log(" in get_calling_code ");
@@ -1222,7 +1309,12 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	edit_location_phone(template: TemplateRef<any>){
-		this.location_popup_title = "Edit Location & Phone";
+		if(this.account_access_type == 'Student'){
+			this.location_popup_title = "Edit Location & Phone";
+		} else if(this.account_access_type == 'Company'){
+			this.location_popup_title = "Edit Company Location";
+			
+		}
 		this.location_action_button_text = "Update";
 		this.location_success_message = "Location & Phone updaed successfully.";
 		this.show_loader = true;
@@ -1326,8 +1418,21 @@ export class ReviewComponent implements OnInit {
 		
 		this.get_user_profile_settings("location-preference", (response)=>{
 			if(response['data'].length > 0){
+				/*this.job_preference_form_data.location_preference = response['data'][0]['location_preference'];
+				this.job_preference_form_data.prefered_location_name = response['data'][0]['location_preference_name'];*/
+				
 				this.job_preference_form_data.location_preference = response['data'][0]['location_preference'];
-				this.job_preference_form_data.prefered_location_name = response['data'][0]['location_preference_name'];
+				this.job_preference_form_data.prefered_country_id = response['data'][0]['prefered_country_id'];
+				this.job_preference_form_data.prefered_country = response['data'][0]['prefered_country'];
+				this.job_preference_form_data.prefered_state_id = response['data'][0]['prefered_state_id'];
+				this.job_preference_form_data.prefered_state = response['data'][0]['prefered_state'];
+				this.job_preference_form_data.location_preference_name = response['data'][0]['location_preference_name'];
+				
+				this.get_countries((country_response)=>{
+					this.get_states(this.job_preference_form_data.prefered_country_id, (res)=>{
+						this.show_loader = false;
+					})
+				});
 				
 				this.show_loader = false;
 				this.job_preference_modalRef = this.modalService.show( template, this.common_params.modal_config );
@@ -1467,6 +1572,10 @@ export class ReviewComponent implements OnInit {
 
 			});
 		}
+	}
+	
+	finish_review(){
+		this.common_service.change_route("/user/dashboard");
 	}
 
 }

@@ -2,7 +2,7 @@
 <div class="page_data_loader_popup" *ngIf="show_loader"></div>
 
 <div class="container">
-	<div class="row mb-5">
+	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-lg-12">
 			<h4><b>Review Your Profile </b></h4>
 		</div>
@@ -11,6 +11,18 @@
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="dashboard-box margin-top-0">
+							<div class="headline p-3" *ngIf="this.account_access_type == 'Company'">
+								<div class="row">
+									<div class="col-xl-6">
+										<h3><i class="icon-feather-folder-plus"></i> Company Location </h3>
+									</div>
+									<div class="col-xl-6">
+										<div class="float-right">
+											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_location_phone(location_template)"><i class="icon-feather-edit"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="content p-3 padding-bottom-10">
 								<div class="row">
 									<div class="text-left col-md-4" *ngIf="this.account_access_type == 'Student'">
@@ -23,7 +35,7 @@
 										
 									</div>
 									<div class="col-xl-8" *ngIf="this.user_account_data.length > 0">
-										<div class="float-right">
+										<div class="float-right" *ngIf="this.account_access_type == 'Student'">
 											<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_location_phone(location_template)"><i class="icon-feather-edit"></i></a>
 										</div>
 										<div>
@@ -94,8 +106,46 @@
 									</div>
 								</div>
 							</div>
-							<div class="content p-3 padding-bottom-10">
-								<table class="table">
+							<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
+								<div class="row">
+									<div class="col-sm-6 col-xl-6 col-md-6">
+										<b>Preference</b>
+									</div>
+									<div class="col-sm-6 col-xl-6 col-md-6">
+										{{this.user_account_data[0]['location_preference_label']}}
+									</div>
+								</div>
+								<ng-container *ngIf="this.user_account_data[0]['location_preference'] == '2'">
+									<hr class="mt-2 mb-2" >
+									<div class="row" >
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											<b>Prefered Country</b>
+										</div>
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											{{this.user_account_data[0]['prefered_country']}}
+										</div>
+									</div>
+									<hr class="mt-2 mb-2" >
+									<div class="row" >
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											<b>Prefered State</b>
+										</div>
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											{{this.user_account_data[0]['prefered_state']}}
+										</div>
+									</div>
+									<hr class="mt-2 mb-2" >
+									<div class="row" >
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											<b>Prefered City</b>
+										</div>
+										<div class="col-sm-6 col-xl-6 col-md-6">
+											{{this.user_account_data[0]['location_preference_name']}}
+										</div>
+									</div>
+								</ng-container>
+								
+								<!-- <table class="table">
 									<thead>
 										<tr>
 											<th>Preference</th>
@@ -114,7 +164,7 @@
 											<td><p>No Items to display</p></td>
 										</tr>
 									</tfoot>
-								</table>
+								</table> -->
 							</div>
 						</div>
 					</div>
@@ -146,8 +196,7 @@
 									<tbody *ngIf="this.user_account_data.length > 0">
 										<tr>
 											<td>{{this.user_account_data[0]['timeline_hiring_label']}}</td>
-											<td>{{this.user_account_data[0]['timeline_hiring_weeks']}}</td>
-											
+											<td>{{this.user_account_data[0]['timeline_hiring_week_label']}}</td>
 										</tr>
 									</tbody>
 									<tfoot *ngIf="this.user_account_data.length == 0">
@@ -335,6 +384,18 @@
 											</div>
 										</div>
 									</div>
+									<ng-container *ngIf="this.account_access_type == 'Company'">
+										<div class="row mb-5" *ngIf="this.user_account_data[0].uploaded_jd!= '' && this.user_account_data[0].uploaded_jd!= null && this.user_account_data[0].uploaded_jd!= undefined">
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<a download  [href]="this.user_account_data[0].uploaded_jd" target="_blank" class="btn btn-success ml-2" ><i class="icon-feather-download"></i>Download JD</a>
+											</div>
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6" >
+												<div class="pull-right float-right">
+													<button type="button" class="btn btn-danger ml-2" (click)="remove_document()" ><i class="icon-material-outline-delete"></i>Remove Document</button>
+												</div>
+											</div>
+										</div>
+									</ng-container>
 								</div>
 								<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length == 0">
 									<p>No Items to display</p>
@@ -342,14 +403,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="mt-4" *ngIf="this.account_access_type == 'Student'"></div>
-					<div class="row" *ngIf="this.account_access_type == 'Student'">
+					<div class="mt-4" ></div>
+					<div class="row">
 						<div class="col-xl-12">
 							<div class="dashboard-box margin-top-0">
 								<div class="headline p-3">
 									<div class="row">
 										<div class="col-xl-6">
-											<h3><i class="icon-feather-folder-plus"></i> Expertise & Expertise Level </h3>
+											<h3 *ngIf="this.account_access_type == 'Student'"><i class="icon-feather-folder-plus"></i> Expertise & Expertise Level </h3>
+											<h3 *ngIf="this.account_access_type == 'Company'"><i class="icon-feather-folder-plus"></i> Expertise Level </h3>
 										</div>
 										<div class="col-xl-6">
 											<div class="float-right">
@@ -369,7 +431,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row" *ngIf="this.account_access_type == 'Student'">
 										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 											<div class="submit-field" *ngIf="this.expertise_data.length > 0">
 												<h5>Skill Set</h5>
@@ -577,7 +639,7 @@
 													</div>
 													<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['salary_expectation']" readonly />
 													<div class="input-group-append">
-														<span class="input-group-text">/M</span>
+														<span class="input-group-text">/Yr.</span>
 													</div>
 												</div>
 											</div>
@@ -591,42 +653,43 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			<ng-template #educationtemplate>
-				<form method="post" id="expertise-form" name="educationform" #educationform="ngForm" (ngSubmit)="onEducationSubmit(educationform.valid)">
-					<div class="modal-header">
-						<h4 class="modal-title pull-left">{{education_popup_title}} </h4>
-						<button type="button" class="close pull-right" aria-label="Close" (click)="education_modalRef.hide()">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-								<div class="submit-field">
-									<h5> School</h5>
-									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="school"
-									id="school" placeholder="For Ex. Northwestern university " required
-									[(ngModel)]="education_form_data.school" #schoolname="ngModel" />
-									<div *ngIf="schoolname.invalid && (schoolname.dirty || schoolname.touched)"
-									class="text-danger small">
-									School is required
-								</div>
+			<div class="row">
+
+				<div class="col-xl-12">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="pull-right float-right">
+								<button type="button" class="button ripple-effect big margin-top-30" (click)="finish_review()" ><i class="icon-feather-check"></i> Finish</button>
 							</div>
+							
 						</div>
 					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		
+		
+		<ng-template #educationtemplate>
+			<form method="post" id="expertise-form" name="educationform" #educationform="ngForm" (ngSubmit)="onEducationSubmit(educationform.valid)">
+				<div class="modal-header">
+					<h4 class="modal-title pull-left">{{education_popup_title}} </h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="education_modalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
-								<h5> Area of Study</h5>
-								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="study" id="study"
-								placeholder="Ex. Computer Science" required [(ngModel)]="education_form_data.study"
-								#studyname="ngModel" />
-								<div *ngIf="studyname.invalid && (studyname.dirty || studyname.touched)"
+								<h5> School</h5>
+								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="school"
+								id="school" placeholder="For Ex. Northwestern university " required
+								[(ngModel)]="education_form_data.school" #schoolname="ngModel" />
+								<div *ngIf="schoolname.invalid && (schoolname.dirty || schoolname.touched)"
 								class="text-danger small">
-								Area of Study is required
+								School is required
 							</div>
 						</div>
 					</div>
@@ -634,49 +697,63 @@
 				<div class="row">
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
-							<h5> Degree</h5>
-							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="degree"
-							id="degree" placeholder="Enter Your degree" required [(ngModel)]="education_form_data.degree"
-							#degreeValue="ngModel" />
-							<div *ngIf="degreeValue.invalid && (degreeValue.dirty || degreeValue.touched)"
+							<h5> Area of Study</h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="study" id="study"
+							placeholder="Ex. Computer Science" required [(ngModel)]="education_form_data.study"
+							#studyname="ngModel" />
+							<div *ngIf="studyname.invalid && (studyname.dirty || studyname.touched)"
 							class="text-danger small">
-							Degree is required
+							Area of Study is required
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-					<h6>Dates Attended </h6>
-				</div>
-
-				<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 					<div class="submit-field">
-						<h5>From </h5>
-						<select class="form-control with-border" title="Select from" name="from" id="from"
-						[(ngModel)]="education_form_data.from_year" required #from_date="ngModel">
-						<option value="">Select From Year</option>
-						<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
-					</select>
-					<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)"
-					class="text-danger small">
-					From Date is required.
+						<h5> Degree</h5>
+						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="degree"
+						id="degree" placeholder="Enter Your degree" required [(ngModel)]="education_form_data.degree"
+						#degreeValue="ngModel" />
+						<div *ngIf="degreeValue.invalid && (degreeValue.dirty || degreeValue.touched)"
+						class="text-danger small">
+						Degree is required
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-			<div class="submit-field">
-				<h5>To</h5>
-				<select class="form-control with-border" title="Select todate" name="todate" id="todate"
-				[(ngModel)]="education_form_data.to_year" required #to_date="ngModel">
-				<option value="">Select To Year (or Expected To Year)</option>
-				<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
-			</select>
-			<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small">
-				To Date is required.
+		<div class="row">
+			<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+				<h6>Dates Attended </h6>
+			</div>
+
+			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+				<div class="submit-field">
+					<h5>From </h5>
+					<select class="form-control with-border" title="Select from" name="from" id="from"
+					[(ngModel)]="education_form_data.from_year" required #from_date="ngModel">
+					<option value="">Select From Year</option>
+					<option *ngFor="let year of this.from_year_array" value="{{year}}">{{year}}</option>
+				</select>
+				<div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)"
+				class="text-danger small">
+				From Date is required.
 			</div>
 		</div>
 	</div>
+	<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+		<div class="submit-field">
+			<h5>To</h5>
+			<select class="form-control with-border" title="Select todate" name="todate" id="todate"
+			[(ngModel)]="education_form_data.to_year" required #to_date="ngModel">
+			<option value="">Select To Year (or Expected To Year)</option>
+			<option *ngFor="let year of this.to_year_array" value="{{year}}">{{year}}</option>
+		</select>
+		<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small">
+			To Date is required.
+		</div>
+	</div>
+</div>
 </div>
 <!-- <fieldset> -->
 	<div class="row">
@@ -1097,6 +1174,31 @@
 						</div>
 					</div>
 					
+					<ng-container *ngIf="this.account_access_type == 'Company'">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5>Upload Job Description  </h5>
+									<div class="">
+										<input type="file" (change)="jdfileChangeEvent($event)" />
+										<span class="text-muted">Uploading JD file/pdf/word</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row mb-5" *ngIf="this.title_form_data.uploaded_jd!= '' && this.title_form_data.uploaded_jd!= null && this.title_form_data.uploaded_jd!= undefined">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<a download  [href]="this.title_form_data.uploaded_jd" target="_blank" class="btn btn-success ml-2" ><i class="icon-feather-download"></i>Download Document</a>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6" *ngIf="this.title_form_data.uploaded_jd!= '' && this.title_form_data.uploaded_jd!= null && this.title_form_data.uploaded_jd!= undefined">
+								<div class="pull-right float-right">
+									<button type="button" class="btn btn-danger ml-2" (click)="remove_document()" ><i class="icon-material-outline-delete"></i>Remove Document</button>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					
 				</div>
 				<div class="modal-footer">
 					<div class="row">
@@ -1279,7 +1381,7 @@
 									<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" pattern="^[0-9]+(.[0-9]{0,2})?$" placeholder="" 
 									[(ngModel)]="this.hourly_form_data.salary_expectation" #hourlyRate="ngModel"  />
 									<div class="input-group-append">
-										<span class="input-group-text">/M</span>
+										<span class="input-group-text">/Yr.</span>
 									</div>
 								</div>
 							</div>
@@ -1310,7 +1412,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="row">
+						<div class="row" *ngIf="this.account_access_type == 'Student'">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
 									<h5>Skill Set</h5>
@@ -1322,7 +1424,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" *ngIf="this.account_access_type == 'Student'">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
 									<h5> Enter your any other skills</h5>
@@ -1557,14 +1659,62 @@
 							</div>
 						</ng-container>
 					</div>
-					<div class="row mt-4" *ngIf="job_preference_form_data.location_preference == '2'" >
-						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class=" mt-4" *ngIf="job_preference_form_data.location_preference == '2'" >
+						
+						<!-- <div class="col-xl-6 col-6 col-sm-6 col-md-6">
 							<div class="submit-field">
 								<h5> Prefered Location Name</h5>
-								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Denmark, New York, D.C." required [(ngModel)]="job_preference_form_data.prefered_location_name" #locationName="ngModel" />
-								<div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="text-danger small"> Name is required </div>
+								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Denmark, New York, D.C." required [(ngModel)]="form_data.prefered_location_name" #locationName="ngModel" />
+								<div *ngIf="locationName.invalid && (locationName.touched || expertiselevelform.submitted)" class="text-danger small"> Name is required </div>
+							</div>
+						</div> -->
+						<div class="row">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5>Prefered Country</h5>
+									<ng-container *ngIf="country_list.length > 0">										
+										<ng-select [items]="country_list"  bindLabel="name" placeholder="Select Country" appendTo="body" [multiple]="false" name="country_list" id="country_list" [(ngModel)]="job_preference_form_data.prefered_country" class="input1text with-border  mb-0 pb-0" required #CountryField="ngModel" (change)="get_prefered_state($event)"> </ng-select>
+										<div *ngIf="CountryField.invalid && (CountryField.dirty || CountryField.touched || CountryField.submitted)" class="text-danger small"> Country is required </div>
+									</ng-container>
+								</div>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5>Prefered  State</h5>
+									<ng-container *ngIf="state_list.length > 0">										
+										<ng-select [items]="state_list"  bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false" name="state_list" id="state_list" [(ngModel)]="job_preference_form_data.prefered_state" class="input1text with-border  mb-0 pb-0" required #stateyField="ngModel" (change)="prefered_state_select($event)" > </ng-select>
+										<div *ngIf="stateyField.invalid && (stateyField.dirty || stateyField.touched || stateyField.submitted)" class="text-danger small"> State is required </div>
+									</ng-container>
+									
+								</div>
 							</div>
 						</div>
+						<div class="row" *ngIf="job_preference_form_data.state != ''">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> Prefered  City</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="location_preference_name" id="City" placeholder="" required [(ngModel)]="job_preference_form_data.location_preference_name" #location_preference_nameObj="ngModel" />
+									<div *ngIf="location_preference_nameObj.invalid && (location_preference_nameObj.dirty || location_preference_nameObj.touched)" class="text-danger small"> City is required </div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="row" *ngIf="job_preference_form_data.prefered_location_name != ''">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> Street Address</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="prefered_street_address" id="prefered_street_address" placeholder="" required
+									[(ngModel)]="job_preference_form_data.prefered_street_address" #prefered_street_addressobj="ngModel" />
+									<div *ngIf="prefered_street_addressobj.invalid && (prefered_street_addressobj.dirty || prefered_street_addressobj.touched)" class="text-danger small"> Street Address is required </div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> ZIP/Postal code</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="zipcode" id="zipcode" placeholder="" [(ngModel)]="job_preference_form_data.prefered_zipcode" #zipcode="ngModel" />
+								</div>
+							</div>
+						</div> -->
+						
 					</div>
 				</ng-container>
 			</div>
@@ -1618,7 +1768,8 @@
 							<h5>Within Weeks</h5>
 							<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="timeline_hiring_form_data.timeline_hiring_weeks" required #to_date="ngModel">
 								<option value="">Select weeks</option>
-								<option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option>
+								<!-- <option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option> -->
+								<option *ngFor="let week of this.to_week_array" value="{{week['value']}}">{{week['heading']}}</option>
 							</select>
 							<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
 							<span class="text-muted text-secondary">The number of weeks within you can join us</span>

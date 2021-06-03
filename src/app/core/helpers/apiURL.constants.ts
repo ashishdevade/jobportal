@@ -35,4 +35,5 @@ export const apiUrl = {
     ADD_UPDATE_LICENSE_CERTIFICATE: "/user/add_update_license_certificate",
     UPDATE_PROFILE_JOB_LOCATION_PREFERENCE: "/user/update_profile_job_location_preference",
     UPDATE_PROFILE_TIMELINE_HIRING: "/user/update_profile_timeline_hiring",
+    REMOVE_JOB_DESCRIPTION : "/user/remove_job_description"
 }

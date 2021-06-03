@@ -38,14 +38,60 @@
 							</div>
 						</ng-container>
 					</div>
-					<div class="row mt-4" *ngIf="form_data.location_preference == '2'" >
-						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="mt-4" *ngIf="form_data.location_preference == '2'" >
+						<!-- <div class="col-xl-6 col-6 col-sm-6 col-md-6">
 							<div class="submit-field">
 								<h5> Prefered Location Name</h5>
 								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Denmark, New York, D.C." required [(ngModel)]="form_data.prefered_location_name" #locationName="ngModel" />
 								<div *ngIf="locationName.invalid && (locationName.touched || expertiselevelform.submitted)" class="text-danger small"> Name is required </div>
 							</div>
+						</div> -->
+						<div class="row">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5>Prefered Country</h5>
+									<ng-container *ngIf="country_list.length > 0">										
+										<ng-select [items]="country_list"  bindLabel="name" placeholder="Select Country" appendTo="body" [multiple]="false" name="country_list" id="country_list" [(ngModel)]="form_data.prefered_country" class="input1text with-border  mb-0 pb-0" required #CountryField="ngModel" (change)="get_state($event)"> </ng-select>
+										<div *ngIf="CountryField.invalid && (CountryField.dirty || CountryField.touched || CountryField.submitted)" class="text-danger small"> Country is required </div>
+									</ng-container>
+								</div>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5>Prefered  State</h5>
+									<ng-container *ngIf="state_list.length > 0">										
+										<ng-select [items]="state_list"  bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false" name="state_list" id="state_list" [(ngModel)]="form_data.prefered_state" class="input1text with-border  mb-0 pb-0" required #stateyField="ngModel" (change)="state_select($event)" > </ng-select>
+										<div *ngIf="stateyField.invalid && (stateyField.dirty || stateyField.touched || stateyField.submitted)" class="text-danger small"> State is required </div>
+									</ng-container>
+									
+								</div>
+							</div>
 						</div>
+						<div class="row" *ngIf="form_data.state != ''">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> Prefered  City</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="location_preference_name" id="City" placeholder="" required [(ngModel)]="form_data.location_preference_name" #location_preference_nameObj="ngModel" />
+									<div *ngIf="location_preference_nameObj.invalid && (location_preference_nameObj.dirty || location_preference_nameObj.touched)" class="text-danger small"> City is required </div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="row" *ngIf="form_data.prefered_location_name != ''">
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> Street Address</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="prefered_street_address" id="prefered_street_address" placeholder="" required
+									[(ngModel)]="form_data.prefered_street_address" #prefered_street_addressobj="ngModel" />
+									<div *ngIf="prefered_street_addressobj.invalid && (prefered_street_addressobj.dirty || prefered_street_addressobj.touched)" class="text-danger small"> Street Address is required </div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<div class="submit-field">
+									<h5> ZIP/Postal code</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="zipcode" id="zipcode" placeholder="" [(ngModel)]="form_data.prefered_zipcode" #zipcode="ngModel" />
+								</div>
+							</div>
+						</div> -->
 					</div>
 				</ng-container>
 			</div>
