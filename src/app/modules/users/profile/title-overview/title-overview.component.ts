@@ -63,8 +63,8 @@ export class TitleOverviewComponent implements OnInit {
 			this.main_heading = "Title & Overview";
 			this.sub_heading = "Add about your job role and responsibilities";
 			this.sub_description = "Write a great profile, add your professional overview, mention your skills, experience and interests .";
-			this.title_input = "Title";
-			this.description_input = "Professional Overview";
+			this.title_input = "Profile Title";
+			this.description_input = "Professional Summary";
 			this.title_placeholder = "Example: Writing";
 			this.desc_placeholder = "Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile.";
 			

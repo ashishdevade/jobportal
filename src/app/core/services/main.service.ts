@@ -42,10 +42,11 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.LOGIN, data_object); // this.common_params.httpOptions
 	}
 
-	registration(firstname, lastname, email_address, re_enter_password, account_type, company_name): Observable<any> {
+	registration(firstname, lastname, email_address, re_enter_password, account_type, company_name, industry): Observable<any> {
 
 		let data_object = {
 			company_name : company_name,
+			industry : industry,
 			account_type: account_type,
 			firstname: firstname,
 			lastname: lastname,
@@ -86,7 +87,9 @@ export class MainService {
 		let data_object = {
 			category: dataset.category,
 			subcategory: dataset.subcategory,
-			user_id: user_id
+			industry_description: dataset.industry_description,
+			user_id: user_id,
+			access_type : sessionStorage.account_type,
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_PROFILE_CATEGORIES, data_object); // this.common_params.httpOptions
@@ -452,6 +455,40 @@ export class MainService {
 		};
 
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.REMOVE_JOB_DESCRIPTION, data_object); // this.common_params.httpOptions
+	}
+	
+	get_industry_list(industry_id, access_type): Observable<any> {
+		let data_object = {
+			industry_id: industry_id,
+			access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_INDUSTRIES, data_object); // this.common_params.httpOptions
+	}
+	
+	get_job_profile(job_profile_id): Observable<any> {
+		let data_object = {
+			job_profile_id: job_profile_id,
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_JOB_PROFILE, data_object); // this.common_params.httpOptions
+	}
+	
+	forgot_password(email_id): Observable<any> {
+		let data_object = {
+			email_id: email_id,
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.FORGOT_PASSWORD, data_object); // this.common_params.httpOptions
+	}
+	
+	change_password(user_otp, new_password, re_enter_password): Observable<any> {
+		let data_object = {
+			user_otp: user_otp,
+			new_password: new_password,
+			re_enter_password: re_enter_password,
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.CHANGE_PASSWORD, data_object); // this.common_params.httpOptions
 	}
 	
 	

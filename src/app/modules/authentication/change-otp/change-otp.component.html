@@ -1,0 +1,81 @@
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<!-- Titlebar
+	================================================== -->
+	<div id="titlebar" class="gradient">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<h2>Change Password</h2>
+
+					<!-- Breadcrumbs -->
+					<nav id="breadcrumbs" class="dark">
+						<ul>
+							<li><a>Home</a></li>
+							<li>Log In</li>
+						</ul>
+					</nav>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-5 offset-xl-3">
+
+
+				<div class="login-register-page">
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Choose a new password for your account </h3>
+						
+					</div>
+
+					<!-- Form -->
+					<form method="post" id="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.valid)">
+						<div class="input-with-icon-left mt-3">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border  mb-0 pb-0" name="userotp" id="userotp" placeholder="One time Password" required [(ngModel)]="user_otp" #userotpobj="ngModel" />
+							<div *ngIf="userotpobj.invalid && (userotpobj.dirty || userotpobj.touched)" class="text-danger small">
+								OTP is required
+							</div>
+						</div>
+						<div class="input-with-icon-left mt-3">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border  mb-0 pb-0" name="new_password" id="new_password" placeholder="New Password" required [(ngModel)]="new_password" #newpassword="ngModel" />
+							<div *ngIf="newpassword.invalid && (newpassword.dirty || newpassword.touched)" class="text-danger small">
+								New Password is required
+							</div>
+						</div>
+						<div class="input-with-icon-left mt-3">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border  mb-0 pb-0" name="re_enter_pass" id="re_enter_pass" placeholder="Re-enter Password" required [(ngModel)]="re_enter_password" #reenter_pass="ngModel" />
+							<div *ngIf="reenter_pass.invalid && (reenter_pass.dirty || reenter_pass.touched)" class="text-danger small">
+								Re-enter Password is required
+							</div>
+							<div *ngIf="re_enter_password!= new_password" class="text-danger small">
+								Password doesnt match
+							</div>
+						</div>
+						<div class=" mt-2 mb-3">
+							<a [routerLink]="['/auth/login']"  class="forgot-password mt-3">Login?</a>
+						</div>
+					</form>
+
+					<!-- Button -->
+					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" form="login-form" [disabled]="loginForm.invalid">Change Password and Proceed <i class="icon-material-outline-arrow-right-alt"></i></button>
+
+					<!-- Social Login -->
+					
+					
+				</div>
+
+			</div>
+		</div>
+	</div>

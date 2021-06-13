@@ -215,7 +215,7 @@ export class ReviewComponent implements OnInit {
 				if(this.user_account_data[0]['profile_photo']!='' && this.user_account_data[0]['profile_photo'] != null ){
 					this.preview_profile_photo = this.service_url + '/' + this.user_account_data[0]['profile_photo'];
 				}
-			
+				
 				this.expertise_data[0]['skills_arr'] = JSON.parse(this.expertise_data[0]['skills']);
 				
 			} else {
@@ -229,34 +229,37 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	additional_user_parameter(){
-		let location_res = this.location_preference.filter((res)=>{
-			return res.value == this.user_account_data[0]['location_preference'];
-		});			
-		
-		this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
-		
-		let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
-			return res.value == this.user_account_data[0]['timeline_hiring'];
-		});			
-		
-		this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
-		
+		if(this.account_access_type == 'Company'){
+			let location_res = this.location_preference.filter((res)=>{
+				return res.value == this.user_account_data[0]['location_preference'];
+			});			
+			
+			this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
+			
+			let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
+				return res.value == this.user_account_data[0]['timeline_hiring'];
+			});			
+			
+			this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
+			
+			let weekly_arr_res = this.to_week_array.filter((res)=>{
+				return res.value == this.user_account_data[0]['timeline_hiring_weeks'];
+			});
+			
+			this.user_account_data[0]['timeline_hiring_week_label'] = weekly_arr_res[0]['heading'];
+			
+		}
 		
 		let job_type_res = this.job_type.filter((res)=>{
-			return res.value == this.user_account_data[0]['timeline_hiring'];
+			return res.value == this.user_account_data[0]['job_type'];
 		});			
 		
 		this.user_account_data[0]['job_type_label'] = job_type_res[0]['heading'];
-		
-		let weekly_arr_res = this.to_week_array.filter((res)=>{
-			return res.value == this.user_account_data[0]['timeline_hiring_weeks'];
-		});		
 		
 		if(this.user_account_data[0]['uploaded_jd']!= '' && this.user_account_data[0]['uploaded_jd']!= null){
 			this.user_account_data[0]['uploaded_jd'] =  this.service_url + '/' + this.user_account_data[0]['uploaded_jd'];;
 		}	
 		
-		this.user_account_data[0]['timeline_hiring_week_label'] = weekly_arr_res[0]['heading'];
 	}
 	
 	isYearValuesCorrect(called_from){
@@ -796,16 +799,20 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	edit_category(template: TemplateRef<any>){
-		this.category_popup_title = "Edit Category & subcategory";
+		this.category_popup_title = "Edit Job Category & subcategory";
 		this.category_action_button_text = "Update";
-		this.category_success_message = "Category & subcategory updaed successfully.";
+		this.category_success_message = "Job Category & subcategory updaed successfully.";
 		this.show_loader = true;
 		
 		this.get_category_list(() => {
 			this.get_user_profile_settings('category', (response) => {
 				if (response.status == 200) {
 					this.category_form_data.category = response.data[0]['category_id']
-					this.category_form_data.subcategory = response.data[0]['subcategory_id']
+					if(this.account_access_type == 'Student'){
+						this.category_form_data.subcategory = response.data[0]['subcategory_id'];
+					}  else if(this.account_access_type == 'Company'){ 
+						this.category_form_data.subcategory = response.data[0]['team_department'];
+					}
 					this.get_subcategory_list(()=>{
 						this.show_loader = false;
 						this.category_modalRef = this.modalService.show( template, this.common_params.modal_config );

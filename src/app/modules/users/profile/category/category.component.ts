@@ -19,6 +19,11 @@ export class CategoryComponent implements OnInit {
 	public sub_category_list = [];
 	public form_data: any = {};
 	public links:any = {};
+	public lang = {};
+	public account_access_type = "";
+	public job_profile_list = [];
+	public industry_list = [];
+	public industry_label = "";
 
 	constructor(
 		private router: Router,
@@ -29,28 +34,89 @@ export class CategoryComponent implements OnInit {
 	ngOnInit() {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
-		if(sessionStorage.account_type == 'Company'){
+		this.account_access_type = sessionStorage.account_type;
+		if(this.account_access_type == 'Company'){
 			this.page_id = 2;
+			this.lang['category_title'] = "Job Profile";
+			this.lang['subcategory_title'] = "Which Team/Department this role comes under?";
+		} else {
+			this.lang['category_title'] = "Select a Job Profile you are interested in";
+			this.lang['subcategory_title'] = "Select the type of Industry you would like to work in";
 		}
 		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.category = "";
 		this.form_data.subcategory = "";
+		this.form_data.industry_description = "";
 
 		this.show_loader = true;
-		this.get_category_list(() => {
+		this.get_job_profile(() => {
 			this.get_user_profile_settings((response) => {
 				if (response.status == 200) {
 					if(response.data.length > 0){
-						this.form_data.category = response.data[0]['category_id']
-						this.form_data.subcategory = response.data[0]['subcategory_id']
-						this.get_subcategory_list('');
+						this.form_data.category = response.data[0]['category_id'];
+						if(this.account_access_type == 'Student'){
+							this.form_data.subcategory = response.data[0]['subcategory_id']
+							this.form_data.industry_description = response.data[0]['industry_description']
+						} else {
+							this.form_data.subcategory = response.data[0]['team_department']
+						}
+						//	this.get_subcategory_list('');
+						this.get_industry_list((res)=>{
+							this.show_loader = false;
+							if(this.account_access_type == 'Student'){
+								this.get_industry_label(this.form_data.subcategory)
+							}
+						});
 					} else {
 						this.show_loader = false;
 					}
 				} 
 			});
 		});
+	}
+	
+	get_job_profile(callback) {
+		setTimeout(() => {
+			this.service.get_job_profile('').subscribe(response => {
+				if (response.status == 200) {
+					this.job_profile_list = response['data'];
+					if (callback != "" && callback != undefined) {
+						callback()
+					} else {
+						this.show_loader = false;
+					}
+				} else {
+					this.show_loader = false;
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+			});
+		}, 50);
+	}
+	
+	get_industry_list(callback) {
+		setTimeout(() => {
+			this.service.get_industry_list('', 'Student').subscribe(response => {
+				if (response.status == 200) {
+					this.industry_list = response['data'];
+					
+					if (callback != "" && callback != undefined) {
+						callback()
+					} else {
+						this.show_loader = false;
+					}
+				} else {
+					this.show_loader = false;
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+			});
+		}, 50);
 	}
 
 	get_user_profile_settings(callback) {
@@ -74,7 +140,7 @@ export class CategoryComponent implements OnInit {
 		}, 50);
 	}
 
-	get_category_list(callback) {
+	/*get_category_list(callback) {
 		setTimeout(() => {
 			this.service.get_category_list('').subscribe(response => {
 				if (response.status == 200) {
@@ -123,13 +189,13 @@ export class CategoryComponent implements OnInit {
 			this.form_data.subcategory = "";
 		}
 
-	}
+	}*/
 
-	get_sub_category() {
+	/*get_sub_category() {
 		setTimeout(() => {
 			this.get_subcategory_list("");
 		}, 100)
-	}
+	}*/
 
 	onSubmit(isValid: Boolean) {
 		console.log("isValid ", isValid);
@@ -159,5 +225,17 @@ export class CategoryComponent implements OnInit {
 	
 	back_to(){
 		this.common_service.change_route(this.links.previous_link);
+	}
+	
+	get_industry_label(value){
+		if(value!= ''){
+			let filtered_index = this.industry_list.findIndex((res)=>{
+				return res['id'] == value
+			})
+			
+			if(filtered_index !== -1){
+				this.industry_label = this.industry_list[filtered_index]['name'];
+			}
+		} 
 	}
 }

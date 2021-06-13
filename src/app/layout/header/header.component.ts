@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
 		this.shared_service.loginValueData.subscribe((obj)=>{
 			this.header_open_toggle = false;
 			this.user_account_data = obj;
-			this.preview_image =  this.common_params.default_image;
+			console.log("this.common_params.application_path ", this.common_params.application_path);
+			this.preview_image =  this.common_params.application_path + this.common_params.default_image;
 			if(this.user_account_data.length > 0){
 				if(this.user_account_data[0]['profile_photo']!= '' && this.user_account_data[0]['profile_photo']!= null ){
 					this.preview_image = this.service_url + '/' + this.user_account_data[0]['profile_photo'];
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit() {
 		this.config_data = JSON.parse(sessionStorage.getItem('system_config'));
-		this.preview_image =  this.common_params.default_image;
+		this.preview_image =  this.common_params.application_path + this.common_params.default_image;
 		this.service.get_config((config_data) => {
 			this.config_data = JSON.parse(config_data);		
 			this.service_url = this.config_data['service_url'];

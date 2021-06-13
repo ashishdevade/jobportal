@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
 
 	public common_params = new CommonFunctions();
 	public company_name = "";
+	public industry = "";
 	public firstname = "";
 	public lastname = "";
 	public email_address = "";
@@ -21,6 +22,7 @@ export class RegistrationComponent implements OnInit {
 	public re_enter_password = "";
 	public account_type = "Student";
 	public show_loader = false;
+	public industry_list = [];
 	
 	constructor(
 		private router: Router,
@@ -29,6 +31,29 @@ export class RegistrationComponent implements OnInit {
 		) { }
 
 	ngOnInit() {
+		this.get_industry_list("");
+	}
+	
+	get_industry_list(callback) {
+		setTimeout(() => {
+			this.service.get_industry_list('', 'Company').subscribe(response => {
+				if (response.status == 200) {
+					this.industry_list = response['data'];
+					if (callback != "" && callback != undefined) {
+						callback()
+					} else {
+						this.show_loader = false;
+					}
+				} else {
+					this.show_loader = false;
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+
+			});
+		}, 50);
 	}
 	
 	
@@ -37,7 +62,7 @@ export class RegistrationComponent implements OnInit {
 			if(this.user_password == this.re_enter_password){
 				this.show_loader = true;
 				
-				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name).subscribe(response => {
+				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name, this.industry).subscribe(response => {
 					console.log("response ", response );
 					if(response['data'] != undefined){
 						sessionStorage.setItem("is_logged_in", '1');
@@ -58,7 +83,7 @@ export class RegistrationComponent implements OnInit {
 					this.common_service.show_toast('e', "There was some error, Please try again.", "");
 				});
 			} else {
-					this.common_service.show_toast('e', "Password Doesnt match.", "");
+				this.common_service.show_toast('e', "Password Doesnt match.", "");
 				
 			}
 		}

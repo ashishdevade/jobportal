@@ -3,8 +3,9 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xl-12 col-lg-12 col-lg-12">
-			<h4><b>Review Your Profile </b></h4>
+		<div class="col-xl-12 col-lg-12 col-lg-12" *ngIf="this.user_account_data.length > 0">
+			<h4 *ngIf="this.account_access_type == 'Student'"><b>Review {{this.user_account_data[0]['first_name']}}'s Profile </b></h4>
+			<h4 *ngIf="this.account_access_type == 'Company'"><b>Review {{this.user_account_data[0]['company_name']}} Profile </b></h4>
 		</div>
 		<div class="row">
 			<div class="col-xl-6 col-lg-6 col-lg-6">
@@ -57,7 +58,8 @@
 							<div class="headline p-3">
 								<div class="row">
 									<div class="col-xl-6">
-										<h3><i class="icon-feather-folder-plus"></i> Cateogry & Subcatetgory </h3>
+										<h3 *ngIf="this.account_access_type == 'Student'"><i class="icon-feather-folder-plus"></i> Job Profile </h3>
+										<h3 *ngIf="this.account_access_type == 'Company'"><i class="icon-feather-folder-plus"></i> Job Cateogry </h3>
 									</div>
 									<div class="col-xl-6">
 										<div class="float-right">
@@ -70,14 +72,35 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Category</th>
-											<th>Sub Category</th>
+											<th>
+												<span *ngIf="this.account_access_type == 'Student'">
+													Job Profile
+												</span>
+												<span *ngIf="this.account_access_type == 'Company'">
+													Job Category
+												</span>
+											</th>
+											<th>
+												<span *ngIf="this.account_access_type == 'Student'">
+													Type of Industry
+												</span>
+												<span *ngIf="this.account_access_type == 'Company'">
+													Team/ Department
+												</span>
+											</th>
 										</tr>
 									</thead>
 									<tbody *ngFor="let Cat_sub of this.category_data; let i = index;">
 										<tr>
 											<td>{{Cat_sub.category_name}}</td>
-											<td>{{Cat_sub.subcategory_name}}</td>
+											<td>
+												<span *ngIf="this.account_access_type == 'Student'">
+													{{Cat_sub.subcategory_name}}
+												</span>
+												<span *ngIf="this.account_access_type == 'Company'">
+													{{Cat_sub.team_department}}
+												</span>
+											</td>
 										</tr>
 									</tbody>
 									<tfoot *ngIf="this.category_data.length == 0">
@@ -367,7 +390,7 @@
 									<div class="row">
 										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 											<div class="submit-field">
-												<h5 *ngIf="this.account_access_type == 'Student'"><b>Title</b></h5>
+												<h5 *ngIf="this.account_access_type == 'Student'"><b>Profile Title</b></h5>
 												<h5 *ngIf="this.account_access_type == 'Company'"><b>Job Title</b></h5>
 												<div>{{this.user_account_data[0].job_title}}</div>
 											</div>
@@ -377,7 +400,7 @@
 									<div class="row">
 										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 											<div class="submit-field">
-												<h5 *ngIf="this.account_access_type == 'Student'"><b>Professional Overview</b></h5>
+												<h5 *ngIf="this.account_access_type == 'Student'"><b>Professional Summary</b></h5>
 												<h5 *ngIf="this.account_access_type == 'Company'"><b>Job Description</b></h5>
 												
 												<div [innerHtml]="this.user_account_data[0].professional_overview"></div>
@@ -540,8 +563,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="mt-4" *ngIf="this.account_access_type == 'Company'"></div>
-						<div class="row" *ngIf="this.account_access_type == 'Company'">
+						<div class="mt-4" *ngIf="this.account_access_type == 'Company' || this.account_access_type == 'Student'"></div>
+						<div class="row" *ngIf="this.account_access_type == 'Company' || this.account_access_type == 'Student'">
 							<div class="col-xl-12">
 								<div class="dashboard-box margin-top-0">
 									<div class="headline p-3">
@@ -629,8 +652,8 @@
 										<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'">
 											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 												<div class="font-weight-bold">Salary Expectation</div>
-												<div class="text-muted" *ngIf="this.account_access_type == 'Student'"> Montly Salary you are expecting and the client will see</div>
-												<div class="text-muted" *ngIf="this.account_access_type == 'Company'"> Montly Salary your candidates will see</div>
+												<div class="text-muted" *ngIf="this.account_access_type == 'Student'"> Yearly Salary you are expecting and the client will see</div>
+												<div class="text-muted" *ngIf="this.account_access_type == 'Company'"> Yearly Salary your candidates will see</div>
 											</div>
 											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 												<div class="input-group mb-3">
@@ -1147,11 +1170,11 @@
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
-								<h5 *ngIf="this.account_access_type == 'Student'"> Title</h5>
+								<h5 *ngIf="this.account_access_type == 'Student'"> Profile Title</h5>
 								<h5 *ngIf="this.account_access_type == 'Company'"> Job Title</h5>
 								<input type="text" class="input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="Example: Writing " required [(ngModel)]="title_form_data.job_title" #titleobj="ngModel" />
 								<div *ngIf="titleobj.invalid && (titleobj.dirty || titleobj.touched)" class="text-danger small">
-									<span *ngIf="this.account_access_type == 'Student'">Title is required</span>
+									<span *ngIf="this.account_access_type == 'Student'">Profile Title is required</span>
 									<span *ngIf="this.account_access_type == 'Company'">Job Title is required</span>
 								</div>
 							</div>
@@ -1161,13 +1184,13 @@
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
-								<h5 *ngIf="this.account_access_type == 'Student'"> Professional Overview </h5>
+								<h5 *ngIf="this.account_access_type == 'Student'"> Professional Summary </h5>
 								<h5 *ngIf="this.account_access_type == 'Company'"> Job Description </h5>
 								<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description"
 								placeholder="Highlight your top skills, experience, and interests. This is one of the first things clients will see on your profile."
 								required [(ngModel)]="title_form_data.professional_overview" #desciptionSection="ngModel" rows="10"></textarea>
 								<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small">
-									<span *ngIf="this.account_access_type == 'Student'">Professional Overview is required</span>
+									<span *ngIf="this.account_access_type == 'Student'">Professional Summary is required</span>
 									<span *ngIf="this.account_access_type == 'Company'">Job Description is required</span>
 								</div>
 							</div>
@@ -1227,14 +1250,15 @@
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
-								<h5>Category</h5>
+								<h5 *ngIf="this.account_access_type == 'Student'">Select a Job Profile you are interested in</h5>
+								<h5 *ngIf="this.account_access_type == 'Company'">Job Category</h5>
 								<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="category_form_data.category" (change)="get_sub_category()" required #categoryobj="ngModel">
 									<option value="">Select a category</option>
 									<option *ngFor="let item of this.category_list" [value]="item.category_id">
 									{{item.name}}</option>
 								</select>
 								<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)" class="text-danger small">
-									Category is required.
+									Job Profile is required.
 								</div>
 							</div>
 						</div>
@@ -1243,14 +1267,25 @@
 					<fieldset [attr.disabled]="category_form_data.category == ''? 'true':null">
 						<div class="row">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-								<div class="submit-field">
-									<h5> Subcategory</h5>
-									<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="category_form_data.subcategory" required #subcategoryobj="ngModel">
-										<option value=""> Select a Subcategory</option>
-										<option *ngFor="let item of this.subcategory_list" [value]="item.id"> {{item.subcategory_name}}</option>
-									</select>
-									<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)" class="text-danger small"> Subcategory is required. </div>
-								</div>
+								<ng-container *ngIf="this.account_access_type == 'Student'">
+									<div class="submit-field" >
+										<h5 > Select the type of Industry you would like to work in.</h5>
+										<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="category_form_data.subcategory" required #subcategoryobj="ngModel">
+											<option value=""> Select a Industry</option>
+											<option *ngFor="let item of this.subcategory_list" [value]="item.id"> {{item.subcategory_name}}</option>
+										</select>
+										<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)" class="text-danger small"> Industry is required. </div>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="this.account_access_type == 'Company'">
+									<div class="submit-field">
+										<h5> Team / Department</h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="subcategory" id="subcategory" placeholder="" required [(ngModel)]="category_form_data.subcategory" #subcategory="ngModel" />
+										<div *ngIf="subcategory.invalid && (subcategory.dirty || subcategory.touched)" class="text-danger small">
+											Team/Department  is required
+										</div>
+									</div>
+								</ng-container>
 							</div>
 						</div>
 					</fieldset>

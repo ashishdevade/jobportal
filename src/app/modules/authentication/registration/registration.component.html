@@ -59,7 +59,17 @@
 								Company Name is required. 
 							</div>
 						</div>
-						<div class="input-with-icon-left">
+						<div class="input-with-icon-left" *ngIf="account_type == 'Company'">
+							<i class="icon-material-outline-location-city"></i>
+							<select  class="with-border p-0"  title="Select Industry" name="industry" id="industry" [(ngModel)]="industry" required #industryobj="ngModel">
+								<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  Select a industry</option>
+								<option *ngFor="let item of this.industry_list" [value]="item.id"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; {{item.name}}</option>
+							</select>
+							<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small">
+								Industry is required. 
+							</div>
+						</div>
+						<div class="input-with-icon-left mt-3">
 							<i class="icon-material-outline-person-pin"></i>
 							<input type="text" class="input-text with-border"  name="firstname"  [(ngModel)]="firstname" id="firstname" placeholder="First Name" required  #userfirstname="ngModel"/>
 							<div *ngIf="userfirstname.invalid && (userfirstname.dirty || userfirstname.touched)" class="text-danger small">

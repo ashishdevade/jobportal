@@ -15,64 +15,73 @@
 		<div class="col-xl-9 col-lg-8 content-left-offset">
 			<form method="post" id="category-form" #categoryform="ngForm" (ngSubmit)="onSubmit(categoryform.valid)">
 				<!--Card-->
-				<app-card [cardMetaData]="{cardTitle: 'Category'}">
+				<app-card [cardMetaData]="{cardTitle: 'Job Category'}">
 					<div class="content with-padding padding-bottom-10">
 						<div class="row">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
-									<h5>Category</h5>
-									<select class="form-control with-border" title="Select Category" name="category"
-									id="category" [(ngModel)]="form_data.category" (change)="get_sub_category()"
-									required #categoryobj="ngModel">
-									<option value="">Select a category</option>
-									<option *ngFor="let item of this.category_list" [value]="item.category_id">
-									{{item.name}}</option>
-								</select>
-								<div *ngIf="categoryobj.invalid && (categoryobj.dirty || categoryobj.touched)"
-								class="text-danger small">
-								Category is required.
+									<h5>{{this.lang['category_title']}}</h5>
+									<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="form_data.category" required #jobprofile="ngModel"> <!-- (change)="get_sub_category()" -->
+										<option value="">Select a Job Profile</option>
+										<option *ngFor="let item of this.job_profile_list" [value]="item.id"> {{item.profile_name}}</option>
+									</select>
+									<div *ngIf="jobprofile.invalid && (jobprofile.dirty || jobprofile.touched)"
+									class="text-danger small">
+									Job Profile is required.
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="mt-2 mb-2"> </div>
-				<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
+					<div class="mt-2 mb-2"> </div>
+					<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<ng-container *ngIf="this.account_access_type == 'Student'">
+									<div class="submit-field">
+										<h5> {{this.lang['subcategory_title']}}</h5>
+										<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="form_data.subcategory" required #industryObj="ngModel" (change)="get_industry_label(industryObj.value)">
+											<option value=""> Select a industry</option>
+											<option *ngFor="let item of this.industry_list" [value]="item.id"> {{item.name}}</option>
+										</select>
+										<div *ngIf="industryObj.invalid && (industryObj.dirty || industryObj.touched)"
+										class="text-danger small">
+										Industry is required.
+									</div>
+								</div>
+							</ng-container>
+							<ng-container *ngIf="this.account_access_type == 'Company'">
+								<div class="submit-field">
+									<h5> {{this.lang['subcategory_title']}}</h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="subcategory" id="subcategory" placeholder=""  [(ngModel)]="form_data.subcategory" #subcategory="ngModel" /> <!-- required -->
+								</div>
+							</ng-container>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset *ngIf="form_data.subcategory != '' && this.account_access_type == 'Student'">
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
-								<h5> Subcategory</h5>
-								<select class="form-control with-border" name="subcategory" id="subcategory"
-								title="Select Category" [(ngModel)]="form_data.subcategory" required
-								#subcategoryobj="ngModel">
-								<option value=""> Select a Subcategory</option>
-								<option *ngFor="let item of this.sub_category_list" [value]="item.id">
-								{{item.subcategory_name}}</option>
-							</select>
-							<div *ngIf="subcategoryobj.invalid && (subcategoryobj.dirty || subcategoryobj.touched)"
-							class="text-danger small">
-							Subcategory is required.
+								<h5> Why <b>{{this.industry_label}}</b> Industry? (You can keep it short or take it as a chance to express your passion/interest towards specific industry) </h5>
+								<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="industry_description" id="industry_description" placeholder=""  [(ngModel)]="form_data.industry_description" #industry_description="ngModel" > </textarea>
+							</div>
 						</div>
 					</div>
+				</fieldset>
+			</div>
+		</app-card>
+		<div class="col-xl-12">
+			<div class="row">
+				<div class="col-xl-6">
+					<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="categoryform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
+				</div>
+
+				<div class="col-xl-6">
+					<button type="button" (click)="back_to()" class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i class="icon-feather-chevron-left"></i> Back</button>
 				</div>
 			</div>
-		</fieldset>
-
-	</div>
-</app-card>
-<div class="col-xl-12">
-	<div class="row">
-		<div class="col-xl-6">
-			<button type="submit" class="button ripple-effect big margin-top-30" [disabled]="categoryform.invalid"><i class="icon-feather-check"></i> Save and Proceed</button>
 		</div>
-
-		<div class="col-xl-6">
-			<button type="button" (click)="back_to()" class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i class="icon-feather-chevron-left"></i> Back</button>
-		</div>
-	</div>
-</div>
-
-
-</form>
+	</form>
 </div>
 </div>
 </div>
