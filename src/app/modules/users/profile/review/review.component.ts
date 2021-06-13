@@ -583,11 +583,11 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	isSelectedDatesCorrect(){
-		if((this.lic_cer_form_data.date_earned <= this.lic_cer_form_data.date_expirty) && this.lic_cer_form_data.date_expirty <= new Date()){
+		if((this.lic_cer_form_data.date_earned <= this.lic_cer_form_data.date_expirty)){
 			return true;
 		}
 		else{
-			this.common_service.show_toast('e', "Please enter a valid date selection", "");
+			this.common_service.show_toast('e', "Date Expiry can't be a lesser than Date Earned", "");
 			return false;
 		}
 	}
