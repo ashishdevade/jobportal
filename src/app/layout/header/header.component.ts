@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonFunctions } from "../../core/helpers/common.functions";
 import { MainService } from "../../core/services/main.service";
 import { CommonService } from "../../core/services/common.service";
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
 	public service_url = "";
 
 	constructor(
+		private router: Router,
 		public common_service:CommonService, 
 		public service:MainService,
 		public shared_service : SharedService

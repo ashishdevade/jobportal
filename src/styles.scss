@@ -68,3 +68,16 @@ ng-select input {
 button.button.ripple-effect.big.margin-top-30:disabled {
     background-color: #6474e6;
 }
+
+.header_footer_logo_text{
+    font-size: 30px;
+    color: #007bff;
+    font-weight: 650;
+    line-height: 80px;
+    text-decoration: none;
+}
+
+.header_footer_logo_text:active,.header_footer_logo_text:hover, .header_footer_logo_text:visited, {
+    color: #007bff;
+    text-decoration: none;
+}
