@@ -40,6 +40,7 @@
 
 .cursor-pointer{
 	cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
 .education_block, .project_block , .license_cer_block, .employment_block {
@@ -65,8 +66,8 @@ ng-select input {
     pointer-events: auto !important;
 }
 
-button.button.ripple-effect.big.margin-top-30:disabled {
-    background-color: #6474e6;
+button:disabled {
+    background-color: #6474e6 !important;
 }
 
 .header_footer_logo_text{
@@ -80,4 +81,40 @@ button.button.ripple-effect.big.margin-top-30:disabled {
 .header_footer_logo_text:active,.header_footer_logo_text:hover, .header_footer_logo_text:visited, {
     color: #007bff;
     text-decoration: none;
+}
+
+.font-20{
+    font-size:20px;   
+}
+
+.t-t-c{
+    text-transform: capitalize;
+}
+
+.form-control{
+    color: #000000 !important;
+}
+
+input, input[type=text], input[type=password], input[type=email], input[type=number], textarea, select{
+    color: #000000 !important;
+}
+
+body{
+    color: #000000 !important;
+    
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background-color: #f5faff;
+    color: #000000 !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+    color: #000000 !important;
+    
+}
+
+.submit-field h5, .content h5{
+    color: #000000 !important;
+    
 }

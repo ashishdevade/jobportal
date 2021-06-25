@@ -41,7 +41,7 @@
 					<div class="row mt-4" *ngIf="form_data.timeline_hiring == '2'" >
 						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 							<div class="submit-field">
-								<h5>Within Weeks</h5>
+								<h5>Within Weeks <span class="text-danger font-20">*</span></h5>
 								<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.timeline_hiring_weeks" required #to_date="ngModel">
 									<option value="">Select weeks</option>
 									<!-- <option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option> -->

@@ -63,7 +63,7 @@
 							<i class="icon-material-outline-location-city"></i>
 							<select  class="with-border p-0"  title="Select Industry" name="industry" id="industry" [(ngModel)]="industry" required #industryobj="ngModel">
 								<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  Select a industry</option>
-								<option *ngFor="let item of this.industry_list" [value]="item.id"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; {{item.name}}</option>
+								<option *ngFor="let item of this.industry_list" [value]="item.id" class="t-t-cap"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; {{item.name}}</option>
 							</select>
 							<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small">
 								Industry is required. 
@@ -93,7 +93,7 @@
 							</div>
 						</div>
 
-						<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+					<!-- 	<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
 							<i class="icon-line-awesome-key"></i>
 							<input type="password" class="input-text with-border" name="password" id="password" placeholder="Password" required  [(ngModel)]="user_password"  #userpassword="ngModel"/>
 							<div *ngIf="userpassword.invalid && (userpassword.dirty || userpassword.touched)" class="text-danger small">
@@ -107,7 +107,7 @@
 							<div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)" class="text-danger small">
 								Re Enter Password is required
 							</div>
-						</div>
+						</div> -->
 						<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" form="register-account-form">Register <i class="icon-material-outline-arrow-right-alt"></i></button>
 						
 						<!-- Button -->

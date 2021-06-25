@@ -59,18 +59,16 @@ export class RegistrationComponent implements OnInit {
 	
 	onSubmit(isValid: Boolean){
 		if (isValid){
-			if(this.user_password == this.re_enter_password){
+			// if(this.user_password == this.re_enter_password){
+				this.user_password = this.common_params.generate_random_pass(12);
+				this.re_enter_password = this.user_password;
 				this.show_loader = true;
-				
 				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name, this.industry).subscribe(response => {
 					console.log("response ", response );
 					if(response['data'] != undefined){
-						sessionStorage.setItem("is_logged_in", '1');
-						sessionStorage.setItem("user_id", response['data']['user_account_id']);
-						sessionStorage.setItem("user_details", JSON.stringify(response['data']));
 						this.show_loader = false;
-						this.common_service.show_toast('s', "Redirecting to dashboard.", "");
-						this.common_service.change_route(['/user/dashboard']);
+						this.common_service.show_toast('s', "Please check your entered email id, We have sent you password on your account, Use the same password to login.", "");
+						this.common_service.change_route(['/auth/login']);
 						this.show_loader = false;
 					} else {
 						this.user_password = '';
@@ -82,10 +80,10 @@ export class RegistrationComponent implements OnInit {
 					this.show_loader = false;
 					this.common_service.show_toast('e', "There was some error, Please try again.", "");
 				});
-			} else {
+			/*} else {
 				this.common_service.show_toast('e', "Password Doesnt match.", "");
 				
-			}
+			}*/
 		}
 	}
 

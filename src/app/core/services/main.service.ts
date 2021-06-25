@@ -215,8 +215,16 @@ export class MainService {
 		let data_object = {
 			company_name: dataset.company,
 			job_title: dataset.job_title,
+			
+			// location: dataset.location,
+			// country: dataset.country,
+			country_id: dataset.country_id,
+			country: dataset.country_name,
+			state_id: dataset.state_id,
+			state: dataset.state_name,
 			location: dataset.location,
-			country: dataset.country,
+			zipcode: dataset.zipcode,
+			
 			from_month: dataset.from_month,
 			from_year: dataset.from_year,
 			to_month: dataset.to_month,
@@ -473,22 +481,32 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_JOB_PROFILE, data_object); // this.common_params.httpOptions
 	}
 	
-	forgot_password(email_id): Observable<any> {
+	forgot_password(email_id, temp_password): Observable<any> {
 		let data_object = {
 			email_id: email_id,
+			temp_pass: temp_password,
 			// access_type: access_type,
 		};
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.FORGOT_PASSWORD, data_object); // this.common_params.httpOptions
 	}
 	
-	change_password(user_otp, new_password, re_enter_password): Observable<any> {
+	change_password(user_otp, re_enter_password): Observable<any> {
+		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
-			user_otp: user_otp,
-			new_password: new_password,
-			re_enter_password: re_enter_password,
+			old_pass: user_otp,
+			new_pass: re_enter_password,
+			user_id: user_id
 			// access_type: access_type,
 		};
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.CHANGE_PASSWORD, data_object); // this.common_params.httpOptions
+	}
+	
+	validate_password(temp_password): Observable<any> {
+		let data_object = {
+			temp_password: temp_password
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.VALIDATE_PASSWORD, data_object); // this.common_params.httpOptions
 	}
 	
 	

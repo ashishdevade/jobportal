@@ -20,7 +20,7 @@
 						<div class="row">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
-									<h5>{{this.lang['category_title']}}</h5>
+									<h5>{{this.lang['category_title']}} <span class="text-danger font-20">*</span></h5>
 									<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="form_data.category" required #jobprofile="ngModel"> <!-- (change)="get_sub_category()" -->
 										<option value="">Select a Job Profile</option>
 										<option *ngFor="let item of this.job_profile_list" [value]="item.id"> {{item.profile_name}}</option>
@@ -33,12 +33,12 @@
 						</div>
 					</div>
 					<div class="mt-2 mb-2"> </div>
-					<fieldset [attr.disabled]="form_data.category == ''? 'true':null">
+					<fieldset > <!-- [attr.disabled]="form_data.category == ''? 'true':null" -->
 						<div class="row">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<ng-container *ngIf="this.account_access_type == 'Student'">
 									<div class="submit-field">
-										<h5> {{this.lang['subcategory_title']}}</h5>
+										<h5> {{this.lang['subcategory_title']}} <span class="text-danger font-20">*</span></h5>
 										<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="form_data.subcategory" required #industryObj="ngModel" (change)="get_industry_label(industryObj.value)">
 											<option value=""> Select a industry</option>
 											<option *ngFor="let item of this.industry_list" [value]="item.id"> {{item.name}}</option>

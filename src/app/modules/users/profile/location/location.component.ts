@@ -37,7 +37,7 @@ export class LocationComponent implements OnInit {
 		
 		if(sessionStorage.account_type == 'Company'){
 			this.header_card_title = "Company Location";
-			this.page_id = 1;
+			this.page_id = 10;
 		}
 		
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)

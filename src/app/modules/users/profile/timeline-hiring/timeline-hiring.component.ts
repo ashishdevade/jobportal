@@ -13,7 +13,7 @@ import { MainService } from "../../../../core/services/main.service";
 })
 export class TimelineHiringComponent implements OnInit {
 	
-	public page_id = 7;
+	public page_id = 16;
 	public common_params = new CommonFunctions();
 	public show_loader = false;
 	public form_data: any = {};
@@ -32,7 +32,7 @@ export class TimelineHiringComponent implements OnInit {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		if(sessionStorage.account_type == 'Company'){
-			this.page_id = 7;
+			this.page_id = 16;
 		}
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
 		this.timeline_hiring = this.common_params.timeline_hiring;

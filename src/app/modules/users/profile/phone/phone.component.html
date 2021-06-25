@@ -24,7 +24,7 @@
 						<div class="row">
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 								<div class="submit-field">
-									<h5>Calling Code</h5>
+									<h5>Calling Code <span class="text-danger font-20">*</span></h5>
 									<select class="form-control with-border" title="Select country_calling_code"
 										name="country_calling_code" id="country_calling_code"
 										[(ngModel)]="form_data.country_calling_code" required #countryobj="ngModel">
@@ -40,7 +40,7 @@
 							</div>
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 								<div class="submit-field">
-									<h5> Phone Number</h5>
+									<h5> Phone Number <span class="text-danger font-20">*</span></h5>
 									<input type="text" class="form-control with-border  mb-0 pb-0 height-38"
 										name="phone_number" id="phone_number" placeholder="" required maxlength="10"
 										[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel"

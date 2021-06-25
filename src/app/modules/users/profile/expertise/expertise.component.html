@@ -18,7 +18,7 @@
 						<div class="row">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
-									<h5>Skill Set</h5>
+									<h5>Skill Set <span class="text-danger font-20">*</span></h5>
 									<ng-container *ngIf="skills_list.length > 0">										
 										<ng-select [items]="skills_list"  bindLabel="name" placeholder="Select Skills" appendTo="body" [multiple]="true" name="skill_set" id="skill_set" [(ngModel)]="form_data.skills" class="input1text with-border  mb-0 pb-0" required #skillField="ngModel" > </ng-select>
 										<div *ngIf="skillField.invalid && (skillField.dirty || skillField.touched || skillField.submitted)" class="text-danger small"> Skill Set is required </div>

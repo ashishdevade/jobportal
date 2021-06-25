@@ -22,7 +22,7 @@
 						<div class="row" *ngFor="let lanaguages of form_data.languages; let i = index;">
 							<div class="col-xl-5 col-5 col-sm-5 col-md-5">
 								<div class="submit-field">
-									<h5 *ngIf="i == 0">Language</h5>
+									<h5 *ngIf="i == 0">Language <span class="text-danger font-20">*</span></h5>
 									<select class="form-control with-border" title="Select Language"
 										name="langauge_name_{{i}}" id="langauge_name_{{i}}"
 										[(ngModel)]="lanaguages.names" required #langauge_name_="ngModel">
@@ -38,7 +38,7 @@
 							</div>
 							<div class="col-xl-5 col-5 col-sm-5 col-md-5">
 								<div class="submit-field">
-									<h5 *ngIf="i == 0"> Proficiency</h5>
+									<h5 *ngIf="i == 0"> Proficiency <span class="text-danger font-20">*</span></h5>
 									<select class="form-control with-border" name="proficiency_{{i}}"
 										id="proficiency_{{i}}" title="Select Proficiency"
 										[(ngModel)]="lanaguages.proficiency" required #proficiencyobj="ngModel">

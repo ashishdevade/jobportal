@@ -27,6 +27,7 @@ export class EmploymentComponent implements OnInit {
 	public success_message = "";
 	public employment_list = [];
 	public country_list = [];
+	public state_list = [];
 	public popup_title = "";
 	public links:any = {};
 	public action_button_text = "";
@@ -95,6 +96,36 @@ export class EmploymentComponent implements OnInit {
 			this.show_loader = false;
 			this.common_service.show_toast('e', this.common_service.error_message, "");
 		});
+	}
+	
+	get_states(country_id, callback){
+		this.show_loader = true;
+		this.service.get_states(country_id).subscribe(response=> {
+			if(response.status == 200){
+				this.state_list = response.data;
+			} 
+			this.show_loader = false;
+			
+			if(callback != "" && callback != undefined){
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
+	}
+	
+	get_state($event){
+		this.form_data.country_name = $event.name;
+		this.form_data.country_id = $event.id;
+		this.get_states($event.id, (res)=>{})
+	}
+	
+	state_select($event){
+		this.form_data.state_name  =  $event.name;
+		this.form_data.state_id  =  $event.id;
 	}
 	
 	back_to_education(){
@@ -188,16 +219,27 @@ export class EmploymentComponent implements OnInit {
 				let employment_details = response.data[0];
 				this.form_data.company = employment_details.company_name;
 				this.form_data.job_title = employment_details.job_title;
-				this.form_data.location = employment_details.location;
+				/* this.form_data.country = employment_details.country;*/
+				
 				this.form_data.country = employment_details.country;
+				this.form_data.country_id = employment_details.country_id;
+				this.form_data.country_name = employment_details.country;
+				this.form_data.state_id = employment_details.state_id;
+				this.form_data.state = employment_details.state;
+				this.form_data.state_name = employment_details.state;
+				
+				this.form_data.location = employment_details.location;
+				this.form_data.zipcode = employment_details.zipcode;
 				this.form_data.from_month = employment_details.from_month;
 				this.form_data.from_year = employment_details.from_year;
 				this.form_data.to_month = employment_details.to_month;
 				this.form_data.to_year = employment_details.to_year;
 				this.form_data.description = employment_details.job_description;
 				
-				this.show_loader = false;
-				this.modalRef = this.modalService.show( template, this.common_params.modal_config );
+				this.get_states(employment_details.country_id, (res)=>{
+					this.show_loader = false;
+					this.modalRef = this.modalService.show( template, this.common_params.modal_config );
+				})
 			} else {
 				this.show_loader = false;
 				//	this.common_service.show_toast('e', this.common_service.error_message, "");

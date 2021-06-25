@@ -25,7 +25,7 @@
 
 <!-- Page Content
 	================================================== -->
-	<div class="container">
+	<div class="container" *ngIf="this.user_details.length > 0">
 		<div class="row">
 			<div class="col-xl-5 offset-xl-3">
 
@@ -38,14 +38,19 @@
 					</div>
 
 					<!-- Form -->
-					<form method="post" id="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.valid)">
+					<form method="post" id="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.valid)" >
 						<div class="input-with-icon-left mt-3">
+							<i class="icon-material-outline-lock"></i>
+							<input type="text" class="input-text with-border  mb-0 pb-0" name="user_email" id="user_email" placeholder="Email Address" required [(ngModel)]="this.user_details[0]['email_id']" disabled />
+							
+						</div>
+						<!-- <div class="input-with-icon-left mt-3">
 							<i class="icon-material-outline-lock"></i>
 							<input type="password" class="input-text with-border  mb-0 pb-0" name="userotp" id="userotp" placeholder="One time Password" required [(ngModel)]="user_otp" #userotpobj="ngModel" />
 							<div *ngIf="userotpobj.invalid && (userotpobj.dirty || userotpobj.touched)" class="text-danger small">
 								OTP is required
 							</div>
-						</div>
+						</div> -->
 						<div class="input-with-icon-left mt-3">
 							<i class="icon-material-outline-lock"></i>
 							<input type="password" class="input-text with-border  mb-0 pb-0" name="new_password" id="new_password" placeholder="New Password" required [(ngModel)]="new_password" #newpassword="ngModel" />

@@ -31,7 +31,7 @@ export class JobTypeComponent implements OnInit {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		if(sessionStorage.account_type == 'Company'){
-			this.page_id = 4;
+			this.page_id = 14;
 		}
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.job_type = this.common_params.job_type;

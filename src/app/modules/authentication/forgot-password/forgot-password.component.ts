@@ -37,7 +37,9 @@ export class ForgotPasswordComponent implements OnInit {
     console.log("isValid ", isValid);
     if (isValid) {
       this.show_loader = true;
-      this.service.forgot_password(this.email_address).subscribe(response => {
+      let temp_pass = this.common_params.generate_random_pass(12);
+
+      this.service.forgot_password(this.email_address, temp_pass).subscribe(response => {
         
         if (response['data'].length > 0) {
           let user_account = response['data'];

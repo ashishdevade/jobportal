@@ -36,7 +36,7 @@ export class HourlyRateComponent implements OnInit {
 		this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		if(sessionStorage.account_type == 'Company'){
-			this.page_id = 5;
+			this.page_id = 7;
 		}	
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.default_rate = this.common_params.default_service_rate_per;

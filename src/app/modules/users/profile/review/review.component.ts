@@ -50,8 +50,11 @@ export class ReviewComponent implements OnInit {
 	public timeline_hiring = [];
 	public to_week_array = [];
 	public job_type = [];
+	public job_profile_list = [];
+	public industry_list = [];
 	public jd_current_selected_file:any;
 	public jd_fileChangedEvent = '';
+	public industry_label = '';
 	public jd_upload_file:any;
 	
 	
@@ -457,15 +460,25 @@ export class ReviewComponent implements OnInit {
 				this.employment_form_data.company = employment_details.company_name;
 				this.employment_form_data.job_title = employment_details.job_title;
 				this.employment_form_data.location = employment_details.location;
+				/* this.form_data.country = employment_details.country;*/
+				
 				this.employment_form_data.country = employment_details.country;
+				this.employment_form_data.country_id = employment_details.country_id;
+				this.employment_form_data.country_name = employment_details.country;
+				this.employment_form_data.state_id = employment_details.state_id;
+				this.employment_form_data.state = employment_details.state;
+				this.employment_form_data.state_name = employment_details.state;
+				
 				this.employment_form_data.from_month = employment_details.from_month;
 				this.employment_form_data.from_year = employment_details.from_year;
 				this.employment_form_data.to_month = employment_details.to_month;
 				this.employment_form_data.to_year = employment_details.to_year;
 				this.employment_form_data.description = employment_details.job_description;
 				
-				this.show_loader = false;
-				this.employement_modalRef = this.modalService.show( template, this.common_params.modal_config );
+				this.get_states(employment_details.country_id, (res)=>{
+					this.show_loader = false;
+					this.employement_modalRef = this.modalService.show( template, this.common_params.modal_config );
+				})
 			} else {
 				this.show_loader = false;
 				//	this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -798,23 +811,39 @@ export class ReviewComponent implements OnInit {
 		}
 	}
 	
+	get_industry_label(value){
+		if(value!= ''){
+			let filtered_index = this.industry_list.findIndex((res)=>{
+				return res['id'] == value
+			})
+			
+			if(filtered_index !== -1){
+				this.industry_label = this.industry_list[filtered_index]['name'];
+			}
+		} 
+	}
+	
 	edit_category(template: TemplateRef<any>){
-		this.category_popup_title = "Edit Job Category & subcategory";
+		this.category_popup_title = "Edit Job profile & industry";
 		this.category_action_button_text = "Update";
-		this.category_success_message = "Job Category & subcategory updaed successfully.";
+		this.category_success_message = "Job profile & industry updaed successfully.";
 		this.show_loader = true;
 		
-		this.get_category_list(() => {
+		this.get_job_profile(() => {
 			this.get_user_profile_settings('category', (response) => {
 				if (response.status == 200) {
 					this.category_form_data.category = response.data[0]['category_id']
 					if(this.account_access_type == 'Student'){
 						this.category_form_data.subcategory = response.data[0]['subcategory_id'];
+						this.category_form_data.industry_description = response.data[0]['industry_description']
 					}  else if(this.account_access_type == 'Company'){ 
 						this.category_form_data.subcategory = response.data[0]['team_department'];
 					}
-					this.get_subcategory_list(()=>{
+					this.get_industry_list(()=>{
 						this.show_loader = false;
+						if(this.account_access_type == 'Student'){
+							this.get_industry_label(this.category_form_data.subcategory)
+						}
 						this.category_modalRef = this.modalService.show( template, this.common_params.modal_config );
 					});
 				}
@@ -822,7 +851,50 @@ export class ReviewComponent implements OnInit {
 		});
 	}
 	
-	get_category_list(callback) {
+	get_job_profile(callback) {
+		setTimeout(() => {
+			this.service.get_job_profile('').subscribe(response => {
+				if (response.status == 200) {
+					this.job_profile_list = response['data'];
+					if (callback != "" && callback != undefined) {
+						callback()
+					} else {
+						this.show_loader = false;
+					}
+				} else {
+					this.show_loader = false;
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+			});
+		}, 50);
+	}
+	
+	get_industry_list(callback) {
+		setTimeout(() => {
+			this.service.get_industry_list('', 'Student').subscribe(response => {
+				if (response.status == 200) {
+					this.industry_list = response['data'];
+					
+					if (callback != "" && callback != undefined) {
+						callback()
+					} else {
+						this.show_loader = false;
+					}
+				} else {
+					this.show_loader = false;
+					this.common_service.show_toast('e', this.common_service.error_message, "");
+				}
+			}, error => {
+				this.show_loader = false;
+				this.common_service.show_toast('e', this.common_service.error_message, "");
+			});
+		}, 50);
+	}
+	
+	/*get_category_list(callback) {
 		setTimeout(() => {
 			this.service.get_category_list('').subscribe(response => {
 				if (response.status == 200) {
@@ -875,7 +947,7 @@ export class ReviewComponent implements OnInit {
 		setTimeout(() => {
 			this.get_subcategory_list("");
 		}, 100)
-	}
+	}*/
 	
 	on_category_Submit(isValid: Boolean) {
 		console.log("isValid ", isValid);
@@ -1276,7 +1348,9 @@ export class ReviewComponent implements OnInit {
 	get_state($event){
 		this.location_form_data.country_name = $event.name;
 		this.location_form_data.country_id = $event.id;
-		this.get_states($event.id, (res)=>{})
+		this.get_states($event.id, (res)=>{
+			this.show_loader = false;
+		})
 	}
 	
 	state_select($event){
@@ -1288,12 +1362,27 @@ export class ReviewComponent implements OnInit {
 	get_prefered_state($event){
 		this.job_preference_form_data.country_name = $event.name;
 		this.job_preference_form_data.country_id = $event.id;
-		this.get_states($event.id, (res)=>{})
+		this.get_states($event.id, (res)=>{
+			this.show_loader = false;
+		})
 	}
 	
 	prefered_state_select($event){
 		this.job_preference_form_data.state_name  =  $event.name;
 		this.job_preference_form_data.state_id  =  $event.id;
+	}
+	
+	get_employment_state($event){
+		this.employment_form_data.country_name = $event.name;
+		this.employment_form_data.country_id = $event.id;
+		this.get_states($event.id, (res)=>{
+			this.show_loader = false;
+		})
+	}
+	
+	employment_state_select($event){
+		this.employment_form_data.state_name  =  $event.name;
+		this.employment_form_data.state_id  =  $event.id;
 	}
 	
 	get_calling_code(callback){

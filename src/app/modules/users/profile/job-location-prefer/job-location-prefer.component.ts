@@ -11,7 +11,7 @@ import { MainService } from "../../../../core/services/main.service";
 	styleUrls: ['./job-location-prefer.component.scss']
 })
 export class JobLocationPreferComponent implements OnInit {
-	public page_id = 6;
+	public page_id = 15;
 	public common_params = new CommonFunctions();
 	public show_loader = false;
 	public form_data: any = {};
@@ -31,7 +31,7 @@ export class JobLocationPreferComponent implements OnInit {
 		// this.common_service.check_session_on();
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		if(sessionStorage.account_type == 'Company'){
-			this.page_id = 6;
+			this.page_id = 15;
 		}
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
 		this.location_preference = this.common_params.location_preference;

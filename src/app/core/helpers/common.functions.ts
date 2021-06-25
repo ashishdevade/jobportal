@@ -59,7 +59,7 @@ export class CommonFunctions {
 	{"page_id" :"4", "name" : "Education", "link":"user/profile/education", "order" : "5", "previous_page" : "3", "next_page" : "5" },
 	{"page_id" :"5", "name" : "Employment", "link":"user/profile/employment", "order" : "6", "previous_page" : "4", "next_page" : "12" },
 	{"page_id" : "12", "name" : "Projects", "link":"user/profile/projects", "order" : "7", "previous_page" : "5", "next_page" : "13" },
-	{"page_id" : "13", "name" : "License & Certification", "link":"user/profile/license-certification", "order" : "8", "previous_page" : "12", "next_page" : "6" },
+	{"page_id" : "13", "name" : "License & Certification", "link":"user/profile/license-certification", "order" : "8", "previous_page" : "12", "next_page" : "8" },
 	{"page_id" :"8", "name" : "Title & Overview", "link":"user/profile/title-overview", "order" : "9", "previous_page" : "13", "next_page" : "7" },
 	{"page_id" :"7", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "10", "previous_page" : "8", "next_page" : "6" },
 	{"page_id" :"6", "name" : "Languages", "link":"user/profile/languages", "order" : "11", "previous_page" : "7", "next_page" : "10" },
@@ -69,14 +69,14 @@ export class CommonFunctions {
 	]
 	
 	public company_profile_settings_list = [
-	{"page_id" : "1", "name" : "Company Location", "link":"user/profile/location", "order" : "1", "previous_page" : "0", "next_page" : "2" },
-	{"page_id" :"2", "name" : "Job Category ", "link":"user/profile/category", "order" : "2", "previous_page" : "1", "next_page" : "3" },
-	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "3", "previous_page" : "2", "next_page" : "4" },
-	{"page_id" : "4", "name" : "Job Type", "link":"user/profile/job-type", "order" : "4", "previous_page" : "3", "next_page" : "5" },
-	{"page_id" :"5", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "5", "previous_page" : "4", "next_page" : "6" },
-	{"page_id" : "6", "name" : "Job Location Preference", "link":"user/profile/job-location-preference", "order" : "6", "previous_page" : "5", "next_page" : "7" },
-	{"page_id" : "7", "name" : "Timeline For Hiring", "link":"user/profile/timeline-hiring", "order" : "7", "previous_page" : "6", "next_page" : "8" },
-	{"page_id" :"8", "name" : "Job Title & Description", "link":"user/profile/title-overview", "order" : "8", "previous_page" : "7", "next_page" : "0" },
+	{"page_id" : "10", "name" : "Company Location", "link":"user/profile/location", "order" : "1", "previous_page" : "0", "next_page" : "1" },
+	{"page_id" :"1", "name" : "Job Category ", "link":"user/profile/category", "order" : "2", "previous_page" : "10", "next_page" : "3" },
+	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "3", "previous_page" : "1", "next_page" : "14" },
+	{"page_id" : "14", "name" : "Job Type", "link":"user/profile/job-type", "order" : "4", "previous_page" : "3", "next_page" : "7" },
+	{"page_id" :"7", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "5", "previous_page" : "14", "next_page" : "15" },
+	{"page_id" : "15", "name" : "Job Location Preference", "link":"user/profile/job-location-preference", "order" : "6", "previous_page" : "7", "next_page" : "16" },
+	{"page_id" : "16", "name" : "Timeline For Hiring", "link":"user/profile/timeline-hiring", "order" : "7", "previous_page" : "15", "next_page" : "8" },
+	{"page_id" :"8", "name" : "Job Title & Description", "link":"user/profile/title-overview", "order" : "8", "previous_page" : "16", "next_page" : "0" },
 	]
 	
 	public timeline_hiring = [
@@ -248,4 +248,15 @@ export class CommonFunctions {
 		} 
 		return data;
 	}
+	
+	public generate_random_pass(length) {
+		var result           = '';
+		var characters       = '@ABCDEFGHIJ@KLMNOPQRS@TUVWXYZ0123456789@abcdefghij@klmnopqrs@tuvwxyz@0123456789@';
+		var charactersLength = characters.length;
+		for ( var i = 0; i < length; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() *  charactersLength));
+		}
+		return result;
+	}
+
 }

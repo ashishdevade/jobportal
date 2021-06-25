@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'change-otp', component: ChangeOtpComponent },
+  { path: 'change-otp/:one', component: ChangeOtpComponent },
 ];
 
 @NgModule({

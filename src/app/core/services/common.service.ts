@@ -13,7 +13,7 @@ import { varConstants } from '../helpers/variable.constants';
 
 export class CommonService {
 	public common_params = new CommonFunctions();
-	public default_toast_time = 3500;
+	public default_toast_time = 5000;
 	public default_loading_time = 2000;
 	public error_message = "We have encountered a technical problem, Please try again later or contact us for assistance.";
 	isSystemLogEnabled: boolean = false;

@@ -100,7 +100,7 @@
 				<div class="row">
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
-							<h5> Name</h5>
+							<h5> Name <span class="text-danger font-20">*</span></h5>
 							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="" required [(ngModel)]="form_data.title" #projtitle="ngModel" />
 							<div *ngIf="projtitle.invalid && (projtitle.dirty || projtitle.touched)" class="text-danger small"> Title is required </div>
 						</div>
@@ -110,15 +110,15 @@
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
 							<h5> Description </h5>
-							<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the License or certificate" required [(ngModel)]="form_data.description" #desciptionSection="ngModel"></textarea>
-							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div>
+							<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the License or certificate" [(ngModel)]="form_data.description" #desciptionSection="ngModel"></textarea>
+							<!-- <div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div> -->
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
-							<h5> Provider </h5>
+							<h5> Provider <span class="text-danger font-20">*</span></h5>
 							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="provider" id="provider" placeholder="License or Certificate Provider" required
 							[(ngModel)]="form_data.provider" #clprovider="ngModel" />
 							<div *ngIf="clprovider.invalid && (clprovider.dirty || clprovider.touched)" class="text-danger small"> Provider is required </div>
@@ -128,7 +128,7 @@
 				<div class="row">
 					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 						<div class="submit-field">
-							<h5>Date Earned </h5>
+							<h5>Date Earned <span class="text-danger font-20">*</span></h5>
 							<div class="">
 								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
 								<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
@@ -140,7 +140,7 @@
 						<div class="submit-field">
 							<h5>Date Expiry (Optional) </h5>
 							<div class="">
-								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" required [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
 							</div>
 						</div>
 					</div>
@@ -148,7 +148,7 @@
 				<div class="row">
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
-							<h5> {{type}} Link </h5>
+							<h5> {{type}} Link <span class="text-danger font-20">*</span></h5>
 							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link" required [(ngModel)]="form_data.link" #license_cer_link="ngModel" />
 							<div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div>
 						</div>

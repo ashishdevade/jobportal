@@ -40,5 +40,6 @@ export const apiUrl = {
     ALL_JOB_PROFILE: "/user/get_job_profile",
     FORGOT_PASSWORD : "/user/forgot_password",
     CHANGE_PASSWORD : "/user/change_password",
+    VALIDATE_PASSWORD : "/user/validate_temp_password",
     
 }

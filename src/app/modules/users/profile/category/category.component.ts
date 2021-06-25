@@ -36,7 +36,7 @@ export class CategoryComponent implements OnInit {
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		this.account_access_type = sessionStorage.account_type;
 		if(this.account_access_type == 'Company'){
-			this.page_id = 2;
+			this.page_id = 1;
 			this.lang['category_title'] = "Job Profile";
 			this.lang['subcategory_title'] = "Which Team/Department this role comes under?";
 		} else {
@@ -69,6 +69,12 @@ export class CategoryComponent implements OnInit {
 							}
 						});
 					} else {
+						this.get_industry_list((res)=>{
+							this.show_loader = false;
+							if(this.account_access_type == 'Student'){
+								this.get_industry_label(this.form_data.subcategory)
+							}
+						});
 						this.show_loader = false;
 					}
 				} 

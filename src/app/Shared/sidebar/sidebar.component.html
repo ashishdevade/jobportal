@@ -12,11 +12,8 @@
         </ng-container> -->
         <ng-container *ngFor="let items of this.profile_side_menu; let i= index">
             <a href="javascript:;" class="list-group-item d-flex justify-content-between align-items-center"
-                [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id}">
-                {{items.name}}
-                <span class="badge badge-pill"
-                    [ngClass]="{'badge-primary': page_index > i, 'bade-success': page_index < i}"><i
-                        class="icon-material-outline-check"></i></span>
+                [ngClass]="{'active': page_id == items.page_id, 'disabled': page_id != items.page_id, 'cursor-pointer': this.completed_page_order > i}" (click)="navigate_sections(items, i, items.link)"> {{items.name}}
+                <span class="badge badge-pill" [ngClass]="{'badge-primary': page_index > i, 'bade-success': page_index < i}"><i class="icon-material-outline-check"></i></span>
             </a>
         </ng-container>
     </div>

@@ -87,7 +87,7 @@
 			<div class="row">
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 					<div class="submit-field">
-						<h5> Title</h5>
+						<h5> Title <span class="text-danger font-20">*</span></h5>
 						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="title" id="title" placeholder="For ex. ERP, CRM, HRM" required
 						[(ngModel)]="form_data.title" #projtitle="ngModel" />
 						<div *ngIf="projtitle.invalid && (projtitle.dirty || projtitle.touched)" class="text-danger small"> Title is required </div>
@@ -98,15 +98,15 @@
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 					<div class="submit-field">
 						<h5> Description </h5>
-						<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the project" required [(ngModel)]="form_data.description" #desciptionSection="ngModel"></textarea>
-						<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div>
+						<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" placeholder="Describe the project"  [(ngModel)]="form_data.description" #desciptionSection="ngModel"></textarea>
+						<!-- <div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched)" class="text-danger small"> Description is required </div> -->
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 					<div class="submit-field">
-						<h5> Reference Link </h5>
+						<h5> Reference Link <span class="text-danger font-20">*</span> </h5>
 						<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Sandbox Link, Live URL, GIT link, Bitbucket link" required [(ngModel)]="form_data.link" #projectlink="ngModel" />
 						<div *ngIf="projectlink.invalid && (projectlink.dirty || projectlink.touched)" class="text-danger small"> Description is required </div>
 					</div>
@@ -114,7 +114,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-					<h6>Project Start and End Date </h6>
+					<h6>Project Start and End Date <span class="text-danger font-20">*</span></h6>
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
