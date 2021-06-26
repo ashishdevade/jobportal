@@ -39,7 +39,7 @@
 								<ng-container *ngIf="this.account_access_type == 'Student'">
 									<div class="submit-field">
 										<h5> {{this.lang['subcategory_title']}} <span class="text-danger font-20">*</span></h5>
-										<select class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="form_data.subcategory" required #industryObj="ngModel" (change)="get_industry_label(industryObj.value)">
+										<select (change)="onSelectSubCat(form_data.subcategory,template)" class="form-control with-border" name="subcategory" id="subcategory" title="Select Category" [(ngModel)]="form_data.subcategory" required #industryObj="ngModel" (change)="get_industry_label(industryObj.value)">
 											<option value=""> Select a industry</option>
 											<option *ngFor="let item of this.industry_list" [value]="item.id"> {{item.name}}</option>
 										</select>
@@ -58,7 +58,7 @@
 						</div>
 					</div>
 				</fieldset>
-				<fieldset *ngIf="form_data.subcategory != '' && this.account_access_type == 'Student'">
+				<!-- <fieldset *ngIf="form_data.subcategory != '' && this.account_access_type == 'Student'">
 					<div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
@@ -67,7 +67,18 @@
 							</div>
 						</div>
 					</div>
+				</fieldset> -->
+				<fieldset *ngIf="form_data.subcategory != '' && this.account_access_type == 'Student' && form_data.industry_description">
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> Why <b>{{this.industry_label}}</b> Industry? (You can keep it short or take it as a chance to express your passion/interest towards specific industry) </h5>
+								<p>{{form_data.industry_description}}</p>
+							</div>
+						</div>
+					</div>
 				</fieldset>
+				
 			</div>
 		</app-card>
 		<div class="col-xl-12">
@@ -85,3 +96,39 @@
 </div>
 </div>
 </div>
+
+<ng-template #template>
+		<div class="modal-header">
+			<div class="col-md-1">
+				<h2><i class="icon-line-awesome-question-circle"></i></h2>
+			</div>
+			<div class="col-md-11">
+				<h5>Why <b>{{this.industry_label}}</b> Industry? (You can keep it short or take it as a chance to express your passion/interest towards specific industry) </h5>
+			</div>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form #industrySelectionForm="ngForm" id="industrySelectionForm" name="industrySelectionForm" autocomplete="off">
+				<div class="row">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<div class="submit-field">
+							<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="industry_description" 
+							id="industry_description" placeholder="" [(ngModel)]="form_data.industry_description" #industry_description="ngModel" > </textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="float-right">
+						<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i
+								class="icon-line-awesome-times"></i> Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+</ng-template>
