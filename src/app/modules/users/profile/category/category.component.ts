@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonFunctions } from "../../../../core/helpers/common.functions";
 import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
 	selector: 'app-category',
@@ -24,11 +25,12 @@ export class CategoryComponent implements OnInit {
 	public job_profile_list = [];
 	public industry_list = [];
 	public industry_label = "";
-
+	modalRef: BsModalRef;
 	constructor(
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
+		private modalService: BsModalService
 		) { }
 
 	ngOnInit() {
@@ -243,5 +245,12 @@ export class CategoryComponent implements OnInit {
 				this.industry_label = this.industry_list[filtered_index]['name'];
 			}
 		} 
+	}
+
+	onSelectSubCat(param:any,template: TemplateRef<any>){
+		this.get_industry_label(param)
+		console.log(this.industry_label)
+		this.form_data.industry_description = ""
+		this.modalRef = this.modalService.show(template,this.common_params.modal_config );
 	}
 }
