@@ -48,14 +48,24 @@
 }
 
 .height-38{
-    
     height: 38px !important;
 }
+
+.ng-select .ng-select-container{
+    min-height: 38px !important;
+    border: 1px solid #e0e0e0 !important;
+    
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 38px !important;
+}
+
 
 ng-select input {
     padding-bottom: 0px !important;
     margin-bottom: 0px !important;
-    height: 35px !important;
+    height: 38px !important;
 }
 
 
@@ -97,6 +107,7 @@ button:disabled {
 
 input, input[type=text], input[type=password], input[type=email], input[type=number], textarea, select{
     color: #000000 !important;
+    padding: 0 11px !important;
 }
 
 body{
@@ -111,10 +122,10 @@ body{
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
     color: #000000 !important;
-    
 }
 
 .submit-field h5, .content h5{
     color: #000000 !important;
-    
 }
+
+
