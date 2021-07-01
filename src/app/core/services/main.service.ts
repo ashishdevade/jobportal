@@ -201,6 +201,13 @@ export class MainService {
 		};
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_STATES, data_object); // this.common_params.httpOptions
 	}
+	
+	get_cities(state_id): Observable<any> {
+		let data_object = {
+			state_id: state_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_CITIES, data_object); // this.common_params.httpOptions
+	}
 
 	get_calling_code(country_id): Observable<any> {
 		let data_object = {
@@ -223,6 +230,7 @@ export class MainService {
 			state_id: dataset.state_id,
 			state: dataset.state_name,
 			location: dataset.location,
+			location_id: dataset.location_id,
 			zipcode: dataset.zipcode,
 			
 			from_month: dataset.from_month,
@@ -231,6 +239,7 @@ export class MainService {
 			to_year: dataset.to_year,
 			job_description: dataset.description,
 			experience_id: experience_id,
+			currently: dataset.currently,
 			user_id: user_id
 		};
 
@@ -295,7 +304,8 @@ export class MainService {
 			country: dataset.country_name,
 			state_id: dataset.state_id,
 			state: dataset.state_name,
-			city: dataset.city,
+			city_id: dataset.city_id,
+			city: dataset.city_name,
 			street_address: dataset.street_address,
 			zipcode: dataset.zipcode,
 			user_id: user_id
@@ -309,6 +319,7 @@ export class MainService {
 		let user_id = JSON.parse(sessionStorage.user_details)['user_account_id'];
 		let data_object = {
 			country_calling_code: dataset.country_calling_code,
+			country_calling_id: dataset.country_calling_id,
 			phone_number: dataset.phone_number,
 			user_id: user_id
 		};
@@ -436,6 +447,7 @@ export class MainService {
 			prefered_state_id : dataset.prefered_state_id,
 			prefered_state : dataset.prefered_state,
 			location_preference_name : dataset.location_preference_name,
+			location_preference_id : dataset.location_preference_id,
 			/*prefered_street_address : dataset.prefered_street_address,
 			prefered_zipcode : dataset.prefered_zipcode,*/
 			user_id: user_id

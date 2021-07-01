@@ -25,7 +25,14 @@
 									<h5>{{employment.company_name}}</h5>
 									<span>{{employment.job_title}}</span> <br>
 									<span>{{employment.from_month}} {{employment.from_year}} -
-									{{employment.to_month}} {{employment.to_year}}</span>
+										<span *ngIf="employment.currently == 'true'">
+											Till Date
+										</span>
+										<span *ngIf="employment.currently == 'false'">
+											{{employment.to_month}} {{employment.to_year}}	
+										</span>
+										
+									</span>
 
 								</div>
 								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
@@ -130,7 +137,7 @@
 			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 				<div class="submit-field">
 					<h5>State <span class="text-danger font-20">*</span></h5>
-					<ng-container *ngIf="state_list.length > 0">										
+					<ng-container ><!-- *ngIf="state_list.length > 0" -->
 						<ng-select [items]="state_list"  bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false" name="state_list" id="state_list" [(ngModel)]="form_data.state" class="input1text with-border  mb-0 pb-0" required #stateyField="ngModel" (change)="state_select($event)" > </ng-select>
 						<div *ngIf="stateyField.invalid && (stateyField.dirty || stateyField.touched || stateyField.submitted)" class="text-danger small"> State is required </div>
 					</ng-container>
@@ -140,13 +147,21 @@
 		</div>
 		<div class="row">
 			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-				<div class="submit-field">
+				<!-- <div class="submit-field">
 					<h5> City <span class="text-danger font-20">*</span></h5>
 					<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="location" id="location" placeholder="Enter Your location" required [(ngModel)]="form_data.location"
 					#location="ngModel" />
 					<div *ngIf="location.invalid && (location.dirty || location.touched)" class="text-danger small">
 						City is required
 					</div>
+				</div> -->
+				<div class="submit-field">
+					<h5>City <span class="text-danger font-20">*</span></h5>
+					<ng-container ><!-- *ngIf="city_list.length > 0" -->
+						<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="form_data.location" class="input1text with-border  mb-0 pb-0" required #cityField="ngModel" (change)="city_select($event)" > </ng-select>
+						<div *ngIf="cityField.invalid && (cityField.dirty || cityField.touched || cityField.submitted)" class="text-danger small"> City is required </div>
+					</ng-container>
+					
 				</div>
 			</div>
 			<div class="col-xl-6 col-6 col-sm-6 col-md-6">
@@ -180,22 +195,29 @@
 	<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 		<div class="submit-field">
 			<h5>From Year <span class="text-danger font-20">*</span></h5>
-			<select class="form-control with-border" title="Select Year" name="Year" id="Year"
-			[(ngModel)]="form_data.from_year" required #from_year="ngModel">
-			<option value="">Select From Year</option>
-			<option *ngFor="let year of this.year_array" value="{{year}}">{{year}}</option>
-		</select>
-		<div *ngIf="from_year.invalid && (from_year.dirty || from_year.touched)"
-		class="text-danger small">
-		From Year is required.
+			<select class="form-control with-border" title="Select Year" name="Year" id="Year" [(ngModel)]="form_data.from_year" required #from_year="ngModel">
+				<option value="">Select From Year</option>
+				<option *ngFor="let year of this.year_array" value="{{year}}">{{year}}</option>
+			</select>
+			<div *ngIf="from_year.invalid && (from_year.dirty || from_year.touched)"
+			class="text-danger small">
+			From Year is required.
+		</div>
 	</div>
-</div>
 </div>
 </div>
 <div class="row">
-	<div class="col-xl-12 col-12 col-sm-12 col-md-12 text-center pb-3">
-		<span class="text-muted">through</span>
+	<div class="col-xl-12 col-12 col-sm-12 col-md-12 pb-3">
+		<div class="checkbox">
+			<input type="checkbox" title="Currently Working" name="currently_working" [value]="true" id="currently_working" [(ngModel)]="form_data.currently">
+			<label for="currently_working"><span class="checkbox-icon"></span> Currently Working</label>
+		</div>
 	</div>
+</div>
+<div class="row" *ngIf="form_data.currently == false">
+	<!-- <div class="col-xl-12 col-12 col-sm-12 col-md-12 text-center pb-3">
+		<span class="text-muted">through</span>
+	</div> -->
 	<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 		<div class="submit-field">
 			<h5>To Month <span class="text-danger font-20">*</span></h5>

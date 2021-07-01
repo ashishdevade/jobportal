@@ -20,6 +20,7 @@ export class JobLocationPreferComponent implements OnInit {
 	public location_preference = [];
 	public country_list = [];
 	public state_list = [];
+	public city_list = [];
 
 	constructor(
 		private router: Router,
@@ -48,11 +49,14 @@ export class JobLocationPreferComponent implements OnInit {
 					this.form_data.prefered_state_id = response['data'][0]['prefered_state_id'];
 					this.form_data.prefered_state = response['data'][0]['prefered_state'];
 					this.form_data.location_preference_name = response['data'][0]['location_preference_name'];
+					this.form_data.location_preference_id = response['data'][0]['location_preference_id'];
 					/*this.form_data.prefered_street_address = response['data'][0]['prefered_street_address'];
 					this.form_data.prefered_zipcode = response['data'][0]['prefered_zipcode'];*/
 					this.get_countries((country_response)=>{
 						this.get_states(this.form_data.prefered_country_id, (res)=>{
-							this.show_loader = false;
+							this.get_cities(this.form_data.prefered_state_id, (res)=>{
+								this.show_loader = false;
+							})
 						})
 					});
 				}
@@ -127,6 +131,27 @@ export class JobLocationPreferComponent implements OnInit {
 	state_select($event){
 		this.form_data.prefered_state  =  $event.name;
 		this.form_data.prefered_state_id  =  $event.id;
+		this.get_cities($event.id, (res)=>{
+			this.show_loader = false
+		})
+	}
+	
+	get_cities(state_id, callback){
+		this.show_loader = true;
+		this.service.get_cities(state_id).subscribe(response=> {
+			if(response.status == 200){
+				this.city_list = response.data;
+			} 
+			this.show_loader = false;
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
+	}
+	
+	city_select($event){
+		this.form_data.location_preference_name  =  $event.name;
+		this.form_data.location_preference_id  =  $event.id;
 	}
 
 	back_to_expertise() {

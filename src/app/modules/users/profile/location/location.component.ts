@@ -23,6 +23,7 @@ export class LocationComponent implements OnInit {
 	public links:any = {};
 	public country_list = [];
 	public state_list = [];
+	public city_list = [];
 	public header_card_title = 'Location'; 
 	
 	constructor(
@@ -54,15 +55,23 @@ export class LocationComponent implements OnInit {
 				this.form_data.country = response['data'][0]['country'];
 				this.form_data.country_id = response['data'][0]['country_id'];
 				this.form_data.country_name = response['data'][0]['country'];
+				
 				this.form_data.state_id = response['data'][0]['state_id'];
 				this.form_data.state = response['data'][0]['state'];
 				this.form_data.state_name = response['data'][0]['state'];
 				
+				this.form_data.city_id = response['data'][0]['city_id'];
 				this.form_data.city = response['data'][0]['city'];
+				this.form_data.city_name = response['data'][0]['city'];
+				
 				this.form_data.street_address = response['data'][0]['street_address'];
 				this.form_data.zipcode = response['data'][0]['zipcode'];
 				
-				this.get_states(response['data'][0]['country_id'], (res)=>{})
+				this.get_states(this.form_data.country_id, (res)=>{
+					this.get_cities(this.form_data.state_id, (res)=>{
+						this.show_loader = false;
+					})
+				})
 			}
 		});
 	}
@@ -72,8 +81,13 @@ export class LocationComponent implements OnInit {
 		this.service.get_countries(-1).subscribe(response=> {
 			if(response.status == 200){
 				this.country_list = response.data;
-			} 
-			this.show_loader = false;
+			}
+			
+			if(callback != "" && callback != undefined){
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
 		}, error => {
 			this.show_loader = false;
 			this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -87,6 +101,41 @@ export class LocationComponent implements OnInit {
 			if(response.status == 200){
 				this.state_list = response.data;
 			} 
+			
+			if(callback != "" && callback != undefined){
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
+	}
+	
+	
+	get_state($event){
+		this.form_data.country_name = $event.name;
+		this.form_data.country_id = $event.id;
+		this.get_states($event.id, (res)=>{
+			this.show_loader = false
+		})
+	}
+	
+	state_select($event){
+		this.form_data.state_name  =  $event.name;
+		this.form_data.state_id  =  $event.id;
+		this.get_cities($event.id, (res)=>{
+			this.show_loader = false
+		})
+	}
+	
+	get_cities(state_id, callback){
+		this.show_loader = true;
+		this.service.get_cities(state_id).subscribe(response=> {
+			if(response.status == 200){
+				this.city_list = response.data;
+			} 
 			this.show_loader = false;
 		}, error => {
 			this.show_loader = false;
@@ -94,15 +143,9 @@ export class LocationComponent implements OnInit {
 		});
 	}
 	
-	get_state($event){
-		this.form_data.country_name = $event.name;
-		this.form_data.country_id = $event.id;
-		this.get_states($event.id, (res)=>{})
-	}
-	
-	state_select($event){
-		this.form_data.state_name  =  $event.name;
-		this.form_data.state_id  =  $event.id;
+	city_select($event){
+		this.form_data.city_name  =  $event.name;
+		this.form_data.city_id  =  $event.id;
 	}
 	
 	get_user_profile_settings(callback){

@@ -98,37 +98,39 @@
 </div>
 
 <ng-template #template>
-		<div class="modal-header">
-			<div class="col-md-1">
-				<h2><i class="icon-line-awesome-question-circle"></i></h2>
-			</div>
-			<div class="col-md-11">
-				<h5>Why <b>{{this.industry_label}}</b> Industry? (You can keep it short or take it as a chance to express your passion/interest towards specific industry) </h5>
-			</div>
-			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-				<span aria-hidden="true">&times;</span>
-			</button>
+	<div class="modal-header">
+		<div class="col-md-1">
+			<h2><i class="icon-line-awesome-question-circle"></i></h2>
 		</div>
-		<div class="modal-body">
-			<form #industrySelectionForm="ngForm" id="industrySelectionForm" name="industrySelectionForm" autocomplete="off">
-				<div class="row">
-					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-						<div class="submit-field">
-							<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="industry_description" 
-							id="industry_description" placeholder="" [(ngModel)]="form_data.industry_description" #industry_description="ngModel" > </textarea>
-						</div>
-					</div>
-				</div>
-			</form>
+		<div class="col-md-10 pl-1">
+			<h5>Why <b>{{this.industry_label}}</b> Industry? (You can keep it short or take it as a chance to express your passion/interest towards specific industry) </h5>
 		</div>
-		<div class="modal-footer">
+		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<form #industrySelectionForm="ngForm" id="industrySelectionForm" name="industrySelectionForm" autocomplete="off">
 			<div class="row">
-				<div class="col-xl-12">
-					<div class="float-right">
-						<button type="button" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i
-								class="icon-line-awesome-times"></i> Ok</button>
+				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+					<div class="submit-field">
+						<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="industry_description" 
+						id="industry_description" placeholder="" [(ngModel)]="form_data.industry_description" #industry_description="ngModel" > </textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="float-left">
+					<button *ngIf="form_data.industry_description!=''" type="button" class="button ripple-effect ml-2" (click)="modalRef.hide()" ><i class="icon-feather-check"></i> Done </button>
+				</div>
+				<div class="float-right">
+					<button type="button"  *ngIf="form_data.industry_description==''" (click)="modalRef.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
-</ng-template>
+	</ng-template>

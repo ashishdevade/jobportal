@@ -15,7 +15,7 @@
 			<form method="post" id="hourlyrate_form" #hourlyRateForm="ngForm"
 			(ngSubmit)="onSubmit(hourlyRateForm.valid)">
 			<app-card [cardMetaData]="{cardTitle: 'Hourly Rate'}">
-				<div class="content with-padding padding-bottom-10" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
+				<!-- <div class="content with-padding padding-bottom-10" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
 					<ng-container >
 						
 						<div class="text-muted">Clients will see this rate on your profile and in search results
@@ -23,7 +23,7 @@
 						proposal.</div>
 					</ng-container>
 					<br>
-				</div>
+				</div> -->
 				<div class="content with-padding padding-bottom-10">
 					<div class="row" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
 						<div class="col-xl-8 col-8 col-sm-8 col-md-8">

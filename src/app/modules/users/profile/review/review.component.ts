@@ -38,6 +38,7 @@ export class ReviewComponent implements OnInit {
 	public current_expertise = "";
 	public country_list = [];
 	public state_list = [];
+	public city_list = [];
 	public service_url = '';
 	public lic_certi_current_selected_file:any;
 	public subcategory_list = [];
@@ -221,9 +222,8 @@ export class ReviewComponent implements OnInit {
 				
 				this.expertise_data[0]['skills_arr'] = JSON.parse(this.expertise_data[0]['skills']);
 				
-			} else {
-				this.additional_user_parameter();
-			}
+			} 
+			this.additional_user_parameter();
 			
 			this.show_loader = false;
 			
@@ -263,6 +263,7 @@ export class ReviewComponent implements OnInit {
 			this.user_account_data[0]['uploaded_jd'] =  this.service_url + '/' + this.user_account_data[0]['uploaded_jd'];;
 		}	
 		
+		console.log("this.user_account_data ", this.user_account_data[0]);
 	}
 	
 	isYearValuesCorrect(called_from){
@@ -460,6 +461,7 @@ export class ReviewComponent implements OnInit {
 				this.employment_form_data.company = employment_details.company_name;
 				this.employment_form_data.job_title = employment_details.job_title;
 				this.employment_form_data.location = employment_details.location;
+				this.employment_form_data.location_id = employment_details.location_id;
 				/* this.form_data.country = employment_details.country;*/
 				
 				this.employment_form_data.country = employment_details.country;
@@ -473,11 +475,14 @@ export class ReviewComponent implements OnInit {
 				this.employment_form_data.from_year = employment_details.from_year;
 				this.employment_form_data.to_month = employment_details.to_month;
 				this.employment_form_data.to_year = employment_details.to_year;
+				this.employment_form_data.currently = (employment_details.currently == 'true');
 				this.employment_form_data.description = employment_details.job_description;
 				
 				this.get_states(employment_details.country_id, (res)=>{
-					this.show_loader = false;
-					this.employement_modalRef = this.modalService.show( template, this.common_params.modal_config );
+					this.get_cities(employment_details.state_id, (res)=>{
+						this.show_loader = false;
+						this.employement_modalRef = this.modalService.show( template, this.common_params.modal_config );
+					})
 				})
 			} else {
 				this.show_loader = false;
@@ -1311,17 +1316,13 @@ export class ReviewComponent implements OnInit {
 							
 						}, 200);
 					});
-					
-					
 				} else {
 					this.common_service.show_toast('e', this.common_service.error_message, "");
 					this.show_loader = false;
 				}
-				
 			}, error => {
 				this.show_loader = false;
 				this.common_service.show_toast('e', this.common_service.error_message, "");
-				
 			});
 		}
 	}
@@ -1332,6 +1333,24 @@ export class ReviewComponent implements OnInit {
 		this.service.get_states(country_id).subscribe(response=> {
 			if(response.status == 200){
 				this.state_list = response.data;
+			} 
+			
+			if (callback != "" && callback != undefined) {
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
+	}
+	
+	get_cities(state_id, callback){
+		this.show_loader = true;
+		this.service.get_cities(state_id).subscribe(response=> {
+			if(response.status == 200){
+				this.city_list = response.data;
 			} 
 			
 			if (callback != "" && callback != undefined) {
@@ -1356,6 +1375,9 @@ export class ReviewComponent implements OnInit {
 	state_select($event){
 		this.location_form_data.state_name  =  $event.name;
 		this.location_form_data.state_id  =  $event.id;
+		this.get_cities($event.id, (res)=>{
+			this.show_loader = false
+		})
 	}
 	
 	
@@ -1385,6 +1407,16 @@ export class ReviewComponent implements OnInit {
 		this.employment_form_data.state_id  =  $event.id;
 	}
 	
+	city_select($event){
+		this.location_form_data.city_name  =  $event.name;
+		this.location_form_data.city_id  =  $event.id;
+	}
+	
+	preference_city_select($event){
+		this.job_preference_form_data.location_preference_name  =  $event.name;
+		this.job_preference_form_data.location_preference_id  =  $event.id;
+	}
+	
 	get_calling_code(callback){
 		this.show_loader = true;
 		console.log(" in get_calling_code ");
@@ -1404,6 +1436,11 @@ export class ReviewComponent implements OnInit {
 		});
 	}
 	
+	code_select($event){
+		this.location_form_data.country_calling_id  =  $event.id;
+		this.location_form_data.country_calling_code  =  $event.calling_code;
+	}
+	
 	edit_location_phone(template: TemplateRef<any>){
 		if(this.account_access_type == 'Student'){
 			this.location_popup_title = "Edit Location & Phone";
@@ -1420,22 +1457,29 @@ export class ReviewComponent implements OnInit {
 				this.location_form_data.country = response['data'][0]['country'];
 				this.location_form_data.country_id = response['data'][0]['country_id'];
 				this.location_form_data.country_name = response['data'][0]['country'];
+				
 				this.location_form_data.state_id = response['data'][0]['state_id'];
 				this.location_form_data.state = response['data'][0]['state'];
 				this.location_form_data.state_name = response['data'][0]['state'];
 				
+				this.location_form_data.city_id = response['data'][0]['city_id'];
 				this.location_form_data.city = response['data'][0]['city'];
+				
 				this.location_form_data.street_address = response['data'][0]['street_address'];
 				this.location_form_data.zipcode = response['data'][0]['zipcode'];
 				
 				this.location_form_data.country_calling_code = this.user_account_data[0]['country_calling_code'];
+				this.location_form_data.country_calling_id = this.user_account_data[0]['country_calling_id'];
 				this.location_form_data.phone_number = this.user_account_data[0]['phone_number'];
 				
-				this.get_states(response['data'][0]['country_id'], (res)=>{
-					this.get_calling_code(()=>{
-						this.show_loader = false;
-						this.location_modalRef = this.modalService.show( template, this.common_params.modal_config );
-					});
+				this.get_states(this.location_form_data.country_id, (res)=>{
+					this.get_cities(this.location_form_data.state_id, (res)=>{
+						this.get_calling_code(()=>{
+							this.show_loader = false;
+							this.location_modalRef = this.modalService.show( template, this.common_params.modal_config );
+						});
+					})
+					
 				})
 			}
 		}); 
@@ -1507,10 +1551,11 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	edit_job_preference(template: TemplateRef<any>){
-		this.job_preference_popup_title = "Edit Timeline for Hiring";
+		this.job_preference_popup_title = "Edit Job location preference";
 		this.job_preference_action_button_text = "Update";
 		this.job_preference_success_message = "job Location Preference saved successfully.";
 		this.show_loader = true;
+		this.city_list = [];
 		
 		this.get_user_profile_settings("location-preference", (response)=>{
 			if(response['data'].length > 0){
@@ -1523,10 +1568,13 @@ export class ReviewComponent implements OnInit {
 				this.job_preference_form_data.prefered_state_id = response['data'][0]['prefered_state_id'];
 				this.job_preference_form_data.prefered_state = response['data'][0]['prefered_state'];
 				this.job_preference_form_data.location_preference_name = response['data'][0]['location_preference_name'];
+				this.job_preference_form_data.location_preference_id = response['data'][0]['location_preference_id'];
 				
 				this.get_countries((country_response)=>{
 					this.get_states(this.job_preference_form_data.prefered_country_id, (res)=>{
-						this.show_loader = false;
+						this.get_cities(this.job_preference_form_data.prefered_state_id, (res)=>{
+							this.show_loader = false;
+						})
 					})
 				});
 				

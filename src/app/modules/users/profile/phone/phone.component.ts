@@ -21,6 +21,7 @@ export class PhoneComponent implements OnInit {
 	public calling_code_list= [];
 	public links:any = {};
 	public success_message = "Phone saved successfully.";
+	
 	constructor(
 		private router: Router,
 		public common_service : CommonService,
@@ -40,8 +41,8 @@ export class PhoneComponent implements OnInit {
 		this.get_user_profile_settings((response)=>{
 			if(response['data'].length > 0){
 				this.form_data.country_calling_code = response['data'][0]['country_calling_code'];
-				this.form_data.phone_number = response['data'][0]['phone_number'];
-				
+				this.form_data.country_calling_id = response['data'][0]['country_calling_id'];
+				this.form_data.phone_number = response['data'][0]['phone_number'];				
 			}
 		});
 	}
@@ -107,6 +108,11 @@ export class PhoneComponent implements OnInit {
 	back_to_location(){
 		console.log("in here ");
 		this.common_service.change_route(this.links.previous_link);
+	}
+	
+	code_select($event){
+		this.form_data.country_calling_id  =  $event.id;
+		this.form_data.country_calling_code  =  $event.calling_code;
 	}
 
 }

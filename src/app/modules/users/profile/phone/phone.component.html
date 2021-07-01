@@ -13,17 +13,17 @@
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
 			<form method="post" id="title_overview_form" #titleoverview="ngForm"
-				(ngSubmit)="onSubmit(titleoverview.valid)">
-				<app-card [cardMetaData]="{cardTitle: 'Phone number'}">
-					<div class="content with-padding padding-bottom-5">
-						<h5>Add your phone number.</h5>
+			(ngSubmit)="onSubmit(titleoverview.valid)">
+			<app-card [cardMetaData]="{cardTitle: 'Phone number'}">
+				<div class="content with-padding padding-bottom-5">
+					<h5>Add your phone number.</h5>
 
-						<br>
-					</div>
-					<div class="content with-padding padding-bottom-5">
-						<div class="row">
-							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-								<div class="submit-field">
+					<br>
+				</div>
+				<div class="content with-padding padding-bottom-5">
+					<div class="row">
+						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+								<!-- <div class="submit-field">
 									<h5>Calling Code <span class="text-danger font-20">*</span></h5>
 									<select class="form-control with-border" title="Select country_calling_code"
 										name="country_calling_code" id="country_calling_code"
@@ -36,56 +36,64 @@
 										class="text-danger small">
 										Calling Code is required.
 									</div>
+								</div> -->
+								<div class="submit-field">
+									<h5>Calling Code <span class="text-danger font-20">*</span></h5>
+									<ng-container *ngIf="calling_code_list.length > 0">										
+										<ng-select [items]="calling_code_list"  bindLabel="calling_code" placeholder="Select Calling Code" appendTo="body" [multiple]="false" name="calling_code_list" id="calling_code_list" [(ngModel)]="form_data.country_calling_code" class="input1text with-border  mb-0 pb-0" required #countryobj="ngModel" (change)="code_select($event)" > </ng-select>
+										<div *ngIf="countryobj.invalid && (countryobj.dirty || countryobj.touched || countryobj.submitted)" class="text-danger small"> Calling Code is required. </div>
+									</ng-container>
+									
 								</div>
 							</div>
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 								<div class="submit-field">
 									<h5> Phone Number <span class="text-danger font-20">*</span></h5>
 									<input type="text" class="form-control with-border  mb-0 pb-0 height-38"
-										name="phone_number" id="phone_number" placeholder="" required maxlength="10"
-										[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel"
-										pattern="\d{10}$" />
+									name="phone_number" id="phone_number" placeholder="" required maxlength="10"
+									[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel"
+									pattern="\d{10}$" />
 									<div *ngIf="phone_numberobj?.invalid && (phone_numberobj?.dirty || phone_numberobj?.touched)"
-										class="error">
-										<div class="text-danger small" *ngIf="phone_numberobj.errors.required">
-											Phone number is required
-										</div>
+									class="error">
+									<div class="text-danger small" *ngIf="phone_numberobj.errors.required">
+										Phone number is required
+									</div>
 										<!-- <div class="text-danger small" *ngIf="phone_numberobj.errors.maxlength">
 							  Phone Minimum Length is {{lastname.errors.maxlength?.requiredLength}}
 							</div> -->
-										<div class="text-danger small" *ngIf="phone_numberobj.errors.pattern">
-											Please enter a valid phone number
-										</div>
-									</div>
-
-								</div>
+							<div class="text-danger small" *ngIf="phone_numberobj.errors.pattern">
+								Please enter a valid phone number
 							</div>
 						</div>
-					</div>
-					<div class="content with-padding padding-bottom-5">
-						<span class="text-muted">Your phone number will not be shared with clients.</span>
-					</div>
-				</app-card>
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="row">
-							<div class="col-xl-6">
-								<button type="submit" class="button ripple-effect big margin-top-30"><i
-										class="icon-feather-check"></i> Submit and Review</button>
-							</div>
 
-							<div class="col-xl-6">
-								<button type="button" (click)="back_to_location()"
-									class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i
-										class="icon-feather-chevron-left"></i> Back</button>
-							</div>
-						</div>
 					</div>
-
 				</div>
-			</form>
+			</div>
+		</div>
+		<div class="content with-padding padding-bottom-5">
+			<span class="text-muted">Your phone number will not be shared with clients.</span>
+		</div>
+	</app-card>
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="row">
+				<div class="col-xl-6">
+					<button type="submit" class="button ripple-effect big margin-top-30"><i
+						class="icon-feather-check"></i> Submit and Review</button>
+					</div>
 
+					<div class="col-xl-6">
+						<button type="button" (click)="back_to_location()"
+						class="button gray ripple-effect big margin-top-30 float-right" *ngIf="this.links.previous_link!=''"><i
+						class="icon-feather-chevron-left"></i> Back</button>
+					</div>
+				</div>
+			</div>
 
 		</div>
-	</div>
+	</form>
+
+
+</div>
+</div>
 </div>

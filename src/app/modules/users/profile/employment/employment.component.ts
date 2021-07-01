@@ -28,6 +28,7 @@ export class EmploymentComponent implements OnInit {
 	public employment_list = [];
 	public country_list = [];
 	public state_list = [];
+	public city_list = [];
 	public popup_title = "";
 	public links:any = {};
 	public action_button_text = "";
@@ -47,6 +48,7 @@ export class EmploymentComponent implements OnInit {
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.form_data.from_year  = "";
 		this.form_data.to_year = "";
+		this.form_data.currently = false
 		let d = new Date();
 		for(let i = d.getFullYear(); i >= (d.getFullYear() - 50); i--){
 			this.year_array.push(i);
@@ -91,7 +93,13 @@ export class EmploymentComponent implements OnInit {
 			if(response.status == 200){
 				this.country_list = response.data;
 			} 
-			this.show_loader = false;
+			
+			if(callback != "" && callback != undefined){
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+			
 		}, error => {
 			this.show_loader = false;
 			this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -126,6 +134,32 @@ export class EmploymentComponent implements OnInit {
 	state_select($event){
 		this.form_data.state_name  =  $event.name;
 		this.form_data.state_id  =  $event.id;
+		this.get_cities($event.id, (res)=>{
+			this.show_loader = false
+		})
+	}
+	
+	get_cities(state_id, callback){
+		this.show_loader = true;
+		this.service.get_cities(state_id).subscribe(response=> {
+			if(response.status == 200){
+				this.city_list = response.data;
+			} 
+			
+			if(callback != "" && callback != undefined){
+				callback(response);
+			} else {
+				this.show_loader = false;
+			}
+		}, error => {
+			this.show_loader = false;
+			this.common_service.show_toast('e', this.common_service.error_message, "");
+		});
+	}
+	
+	city_select($event){
+		this.form_data.location  =  $event.name;
+		this.form_data.location_id  =  $event.id;
 	}
 	
 	back_to_education(){
@@ -139,8 +173,8 @@ export class EmploymentComponent implements OnInit {
 		} else {
 			this.common_service.change_route(this.links.next_link);
 		}
-		
 	}
+	
 	
 	skip_steps(){
 		this.show_loader = true; 
@@ -199,11 +233,15 @@ export class EmploymentComponent implements OnInit {
 		this.form_data.job_title = "";
 		this.form_data.location = "";
 		this.form_data.country = "";
+		this.form_data.state = "";
+		this.form_data.location = "";
 		this.form_data.from_month = "";
 		this.form_data.from_year = "";
 		this.form_data.to_month = "";
 		this.form_data.to_year = "";
 		this.form_data.description = "";
+		this.state_list = [];
+		this.city_list = [];
 		this.modalRef = this.modalService.show( template, this.common_params.modal_config );
 	}
 	
@@ -229,16 +267,21 @@ export class EmploymentComponent implements OnInit {
 				this.form_data.state_name = employment_details.state;
 				
 				this.form_data.location = employment_details.location;
+				this.form_data.location_id = employment_details.location_id;
 				this.form_data.zipcode = employment_details.zipcode;
 				this.form_data.from_month = employment_details.from_month;
 				this.form_data.from_year = employment_details.from_year;
 				this.form_data.to_month = employment_details.to_month;
 				this.form_data.to_year = employment_details.to_year;
+				this.form_data.currently = (employment_details.currently == 'true');
 				this.form_data.description = employment_details.job_description;
 				
 				this.get_states(employment_details.country_id, (res)=>{
-					this.show_loader = false;
-					this.modalRef = this.modalService.show( template, this.common_params.modal_config );
+					this.get_cities(this.form_data.state_id, (res)=>{
+						this.show_loader = false;
+						this.modalRef = this.modalService.show( template, this.common_params.modal_config );
+					})
+					
 				})
 			} else {
 				this.show_loader = false;

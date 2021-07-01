@@ -128,4 +128,15 @@ body{
     color: #000000 !important;
 }
 
+.input-with-icon-left input {
+    padding-left: 65px !important;
+}
 
+.job-desc-container{
+    max-height: 184px;
+    overflow: auto;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{
+        top: auto !important;
+}
