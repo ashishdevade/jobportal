@@ -14,7 +14,7 @@ export class RegistrationComponent implements OnInit {
 
 	public common_params = new CommonFunctions();
 	public company_name = "";
-	public industry = "";
+	public industry:any = 0;
 	public other_industry = "";
 	public firstname = "";
 	public lastname = "";
