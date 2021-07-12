@@ -14,7 +14,7 @@
 		<div class="col-xl-9 col-lg-8 content-left-offset">
 			<form method="post" id="hourlyrate_form" #hourlyRateForm="ngForm"
 			(ngSubmit)="onSubmit(hourlyRateForm.valid)">
-			<app-card [cardMetaData]="{cardTitle: 'Hourly Rate'}">
+			<app-card [cardMetaData]="{cardTitle: this.heading}">
 				<!-- <div class="content with-padding padding-bottom-10" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
 					<ng-container >
 						
@@ -27,7 +27,8 @@
 				<div class="content with-padding padding-bottom-10">
 					<div class="row" *ngIf="this.form_data.job_type == '4' || this.form_data.job_type == '5'">
 						<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-							<div class="font-weight-bold">Hourly Rate <span class="text-danger font-20">*</span></div>
+							<div class="font-weight-bold" *ngIf="this.account_access_type == 'Student'">Expected Salary <span class="text-danger font-20">*</span></div>
+							<div class="font-weight-bold" *ngIf="this.account_access_type == 'Company'">Your current offer <span class="text-danger font-20">*</span></div>
 							<!-- <div class="text-muted">Total amount the client will see</div> -->
 						</div>
 						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
@@ -41,14 +42,15 @@
 								</div>
 							</div>
 							<div *ngIf="hourlyRate.invalid && (hourlyRate.dirty || hourlyRate.touched)" class="text-danger small">
-								hourly rate is required
+								Expected Salary is required
 							</div>
 						</div>
 					</div>
 					<div class="row" *ngIf="this.form_data.job_type == '1' || this.form_data.job_type == '2' || this.form_data.job_type == '3'">
 						<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-							<div class="font-weight-bold">Salary Expectation</div>
-							<div class="text-muted"> Yearly Salary you are expecting and the client will see</div>
+							<div class="font-weight-bold" *ngIf="this.account_access_type == 'Student'">Expected Salary</div>
+							<div class="font-weight-bold"  *ngIf="this.account_access_type == 'Company'" > Your current offer</div>
+							
 						</div>
 						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
 							<div class="input-group mb-3">

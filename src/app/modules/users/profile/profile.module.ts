@@ -26,6 +26,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { JobLocationPreferComponent } from './job-location-prefer/job-location-prefer.component';
 import { TimelineHiringComponent } from './timeline-hiring/timeline-hiring.component';
 import { ReviewComponent } from './review/review.component';
+/*import { AngularEditorModule } from '@kolkov/angular-editor';*/
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
 	declarations: [CategoryComponent,
@@ -49,6 +51,8 @@ import { ReviewComponent } from './review/review.component';
 	TimelineHiringComponent],
 	imports: [
 	CommonModule,
+	/*	AngularEditorModule,*/
+	CKEditorModule,
 	ProfileRoutingModule,
 	SharedModules,
 	ModalModule.forRoot(),

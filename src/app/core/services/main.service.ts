@@ -21,6 +21,7 @@ export class MainService {
 				this.config_file_data = JSON.parse(config_data);		
 			});		
 		}
+		
 	}
 
 	async get_config(callback) {
@@ -42,11 +43,12 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.LOGIN, data_object); // this.common_params.httpOptions
 	}
 
-	registration(firstname, lastname, email_address, re_enter_password, account_type, company_name, industry): Observable<any> {
+	registration(firstname, lastname, email_address, re_enter_password, account_type, company_name, industry, other_industry): Observable<any> {
 
 		let data_object = {
 			company_name : company_name,
 			industry : industry,
+			other_industry : other_industry,
 			account_type: account_type,
 			firstname: firstname,
 			lastname: lastname,
@@ -514,6 +516,7 @@ export class MainService {
 	}
 	
 	validate_password(temp_password): Observable<any> {
+		this.config_file_data =  JSON.parse(sessionStorage.getItem('system_config'));
 		let data_object = {
 			temp_password: temp_password
 			// access_type: access_type,

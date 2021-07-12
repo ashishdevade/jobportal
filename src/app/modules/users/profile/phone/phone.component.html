@@ -50,7 +50,7 @@
 								<div class="submit-field">
 									<h5> Phone Number <span class="text-danger font-20">*</span></h5>
 									<input type="text" class="form-control with-border  mb-0 pb-0 height-38"
-									name="phone_number" id="phone_number" placeholder="" required maxlength="10"
+									name="phone_number" id="phone_number" placeholder="1234567890" required maxlength="10"
 									[(ngModel)]="form_data.phone_number" #phone_numberobj="ngModel"
 									pattern="\d{10}$" />
 									<div *ngIf="phone_numberobj?.invalid && (phone_numberobj?.dirty || phone_numberobj?.touched)"

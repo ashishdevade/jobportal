@@ -21,6 +21,7 @@ export class ExpertiseLevelComponent implements OnInit {
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
 	public links:any = {};
 	public expertise_level = [];
+	public account_access_type = '';
 
 	constructor(
 		private router: Router,
@@ -34,6 +35,7 @@ export class ExpertiseLevelComponent implements OnInit {
 		if(sessionStorage.account_type == 'Company'){
 			this.page_id = 3;
 		}
+		this.account_access_type = sessionStorage.account_type;
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
 		this.expertise_level = this.common_params.expertise_level;
 		this.form_data.expertise_level = this.expertise_level[0]['value'];

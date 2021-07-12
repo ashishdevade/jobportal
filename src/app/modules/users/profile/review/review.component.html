@@ -1,3 +1,4 @@
+
 <div class="margin-top-50"></div>
 <div class="page_data_loader_popup" *ngIf="show_loader"></div>
 
@@ -204,46 +205,49 @@
 								<div class="headline p-3">
 									<div class="row">
 										<div class="col-xl-6">
-											<h3 *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'"><i class="icon-feather-folder-plus"></i> Hourly Rate </h3>
-											<h3 *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'"><i class="icon-feather-folder-plus"></i> Salary Expectation </h3>
-										</div>
-										<div class="col-xl-6">
-											<div class="float-right">
-												<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"  (click)="edit_hourly_rate(hourly_template)"><i class="icon-feather-edit"></i></a>
+											<!-- <h3 *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'"><i class="icon-feather-folder-plus"></i> Salary Expectations </h3>
+												<h3 *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'"><i class="icon-feather-folder-plus"></i> Salary Expectations </h3> -->
+												
+												<h3 ><i class="icon-feather-folder-plus"></i> Proposed Salary </h3>
 											</div>
-										</div>
-									</div>
-								</div>
-								<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
-									<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'">
-										<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-											<div class="font-weight-bold mt-3">Hourly Rate</div>
-											<!-- <div class="text-muted">Total amount the client will see</div> -->
-										</div>
-										<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-											<div class="input-group mb-3">
-												<div class="input-group-prepend">
-													<span class="input-group-text">$</span>
-												</div>
-												<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['hourly_rate']" readonly />
-												<div class="input-group-append">
-													<span class="input-group-text">/hr</span>
+											<div class="col-xl-6">
+												<div class="float-right">
+													<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top"  (click)="edit_hourly_rate(hourly_template)"><i class="icon-feather-edit"></i></a>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'">
-										<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-											<div class="font-weight-bold mt-3">Salary Expectation</div>
-										</div>
-										<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-											<div class="input-group mb-3">
-												<div class="input-group-prepend">
-													<span class="input-group-text">$</span>
+									<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
+										<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'">
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="font-weight-bold mt-3">Your current offer</div>
+												<!-- <div class="text-muted">Total amount the client will see</div> -->
+											</div>
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+													<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['hourly_rate']" readonly />
+													<div class="input-group-append">
+														<span class="input-group-text">/hr</span>
+													</div>
 												</div>
-												<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['salary_expectation']" readonly />
-												<div class="input-group-append">
-													<span class="input-group-text">/Yr.</span>
+											</div>
+										</div>
+										<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'">
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="font-weight-bold mt-3">Your current offer</div>
+											</div>
+											<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+													<input type="text" class="form-control text-right" name="hourly_rate" id="hourly_rate" [(ngModel)]="this.user_account_data[0]['salary_expectation']" readonly />
+													<div class="input-group-append">
+														<span class="input-group-text">/Yr.</span>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -251,44 +255,43 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					
-					<div class="mt-4" *ngIf="this.account_access_type == 'Student'" ></div>
-					<div class="row" *ngIf="this.account_access_type == 'Student'">
-						<div class="col-xl-12">
-							<div class="dashboard-box margin-top-0">
-								<div class="headline p-3">
-									<div class="row">
-										<div class="col-xl-6">
-											<h3 *ngIf="this.account_access_type == 'Student'"><i class="icon-feather-folder-plus"></i> Expertise & Expertise Level </h3>
-											<h3 *ngIf="this.account_access_type == 'Company'"><i class="icon-feather-folder-plus"></i> Expertise Level </h3>
-										</div>
-										<div class="col-xl-6">
-											<div class="float-right">
-												<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_expertise(expertise_template)"><i class="icon-feather-edit"></i></a>
+						
+						<div class="mt-4" *ngIf="this.account_access_type == 'Student'" ></div>
+						<div class="row" *ngIf="this.account_access_type == 'Student'">
+							<div class="col-xl-12">
+								<div class="dashboard-box margin-top-0">
+									<div class="headline p-3">
+										<div class="row">
+											<div class="col-xl-6">
+												<h3 *ngIf="this.account_access_type == 'Student'"><i class="icon-feather-folder-plus"></i> Expertise & Expertise Level </h3>
+												<h3 *ngIf="this.account_access_type == 'Company'"><i class="icon-feather-folder-plus"></i> Expertise Level </h3>
+											</div>
+											<div class="col-xl-6">
+												<div class="float-right">
+													<a  class="btn btn-sm btn-primary ripple-effect ico text-white rounded-circle"  data-tippy-placement="top" (click)="edit_expertise(expertise_template)"><i class="icon-feather-edit"></i></a>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="content p-3 padding-bottom-10">
-									<div class="row" *ngIf="this.current_expertise != ''">
-										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-											<div class="submit-field mb-1 pb-1" *ngIf="this.expertise_data.length > 0">
-												<h5>Expertise Level</h5>
-												<ng-container  >
-													<button type="button" class="button gray mr-2 mb-2" >{{this.current_expertise}}</button>
-												</ng-container>
+									<div class="content p-3 padding-bottom-10">
+										<div class="row" *ngIf="this.current_expertise != ''">
+											<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+												<div class="submit-field mb-1 pb-1" *ngIf="this.expertise_data.length > 0">
+													<h5>Expertise Level</h5>
+													<ng-container  >
+														<button type="button" class="button gray mr-2 mb-2" >{{this.current_expertise}}</button>
+													</ng-container>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row mt-3" *ngIf="this.account_access_type == 'Student'">
-										<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-											<div class="submit-field mb-1 pd-1" *ngIf="this.expertise_data.length > 0">
-												<h5>Skill Set</h5>
-												<ng-container  *ngFor="let skills of this.expertise_data[0]['skills_arr']">
-													<button type="button" class="button gray mr-2 mb-2" >{{skills.name}}</button>
-												</ng-container>
-											</div>
+										<div class="row mt-3" *ngIf="this.account_access_type == 'Student'">
+											<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+												<div class="submit-field mb-1 pd-1" *ngIf="this.expertise_data.length > 0">
+													<h5>Skill Set</h5>
+													<ng-container  *ngFor="let skills of this.expertise_data[0]['skills_arr']">
+														<button type="button" class="button gray mr-2 mb-2" >{{skills.name}}</button>
+													</ng-container>
+												</div>
 											<!-- <div class="submit-field mb-1 pb-1" *ngIf="this.expertise_data.length > 0">
 												<h5>Other Skills</h5>
 												<button type="button" class="button gray mr-2 mb-2 text-left" >{{this.expertise_data[0]['others']}}</button>
@@ -368,7 +371,7 @@
 													<span>{{employment.job_title}}</span> <br>
 													<span>{{employment.from_month}} {{employment.from_year}} -
 														<span *ngIf="employment.currently == 'true'">
-															Till Date
+															Present
 														</span>
 														<span *ngIf="employment.currently == 'false'">
 															{{employment.to_month}} {{employment.to_year}}	
@@ -670,8 +673,8 @@
 							<div class="headline p-3">
 								<div class="row">
 									<div class="col-xl-6">
-										<h3 *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'"><i class="icon-feather-folder-plus"></i> Hourly Rate </h3>
-										<h3 *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'"><i class="icon-feather-folder-plus"></i> Salary Expectation </h3>
+										<h3 *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'"><i class="icon-feather-folder-plus"></i> Salary Expectations </h3>
+										<h3 *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'"><i class="icon-feather-folder-plus"></i> Salary Expectations </h3>
 									</div>
 									<div class="col-xl-6">
 										<div class="float-right">
@@ -683,7 +686,7 @@
 							<div class="content p-3 padding-bottom-10" *ngIf="this.user_account_data.length > 0">
 								<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '4' || this.user_account_data[0]['job_type'] == '5'">
 									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-										<div class="font-weight-bold mt-3">Hourly Rate</div>
+										<div class="font-weight-bold mt-3">Expected Salary</div>
 										<!-- <div class="text-muted">Total amount the client will see</div> -->
 									</div>
 									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
@@ -700,7 +703,7 @@
 								</div>
 								<div class="row" *ngIf="this.user_account_data[0]['job_type'] == '1' || this.user_account_data[0]['job_type'] == '2' || this.user_account_data[0]['job_type'] == '3'">
 									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-										<div class="font-weight-bold mt-3">Salary Expectation</div>
+										<div class="font-weight-bold mt-3">Expected Salary</div>
 												<!-- <div class="text-muted" *ngIf="this.account_access_type == 'Student'"> Yearly Salary you are expecting and the client will see</div>
 													<div class="text-muted" *ngIf="this.account_access_type == 'Company'"> Yearly Salary your candidates will see</div> -->
 												</div>
@@ -971,7 +974,7 @@
 				</div> -->
 				<div class="submit-field">
 					<h5>City <span class="text-danger font-20">*</span></h5>
-					<ng-container *ngIf="city_list.length > 0">										
+					<ng-container > <!-- *ngIf="city_list.length > 0" -->										
 						<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="employment_form_data.location" class="input1text with-border  mb-0 pb-0" required #cityField="ngModel" (change)="city_select($event)" > </ng-select>
 						<div *ngIf="cityField.invalid && (cityField.dirty || cityField.touched || cityField.submitted)" class="text-danger small"> City is required </div>
 					</ng-container>
@@ -1137,7 +1140,7 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-					<input type="text" placeholder="Daterangepicker" class="form-control" bsDaterangepicker name="project_duration" id="project_duration" required [(ngModel)]="this.project_form_data.project_duration" #projectDuration="ngModel"  [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MMM/YYYY', showWeekNumbers: false }" >
+					<input type="text" placeholder="Present" class="form-control" bsDaterangepicker name="project_duration" id="project_duration" required [(ngModel)]="this.project_form_data.project_duration" #projectDuration="ngModel"  [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MMM/YYYY', showWeekNumbers: false }" >
 					<div *ngIf="projectDuration.invalid && (projectDuration.dirty || projectDuration.touched)" class="text-danger small"> Project duration is required </div>
 				</div>
 			</div>
@@ -1218,7 +1221,7 @@
 							<div class="submit-field">
 								<h5>Date Earned <span class="text-danger font-20">*</span></h5>
 								<div class="">
-									<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="lic_cer_form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
+									<input type="text" placeholder="Date Earned" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="lic_cer_form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
 									<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
 								</div>
 							</div>
@@ -1228,7 +1231,7 @@
 							<div class="submit-field">
 								<h5>Date Expiry (Optional) </h5>
 								<div class="">
-									<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" [(ngModel)]="lic_cer_form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+									<input type="text" placeholder="Date Expiry" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" [(ngModel)]="lic_cer_form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
 								</div>
 							</div>
 						</div>
@@ -1301,7 +1304,7 @@
 						</div>
 					</div>
 
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
 								<h5 *ngIf="this.account_access_type == 'Student'"> Professional Summary <span class="text-danger font-20">*</span></h5>
@@ -1315,10 +1318,23 @@
 								</div>
 							</div>
 						</div>
+					</div> -->
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5 *ngIf="this.account_access_type == 'Student'"> Professional Summary <span class="text-danger font-20">*</span></h5>
+								<h5 *ngIf="this.account_access_type == 'Company'"> Job Description <span class="text-danger font-20">*</span></h5>
+							</div>
+							<ckeditor #emailBody [editor]="Editor"  name="job_description" id="job_description" [(ngModel)]="title_form_data.professional_overview"  data="{{title_form_data.professional_overview}}" #desciptionSection="ngModel"></ckeditor>
+							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched || titleoverview.submitted)" class="text-danger small">
+								<span *ngIf="this.account_access_type == 'Student'">Professional Summary is required</span>
+								<span *ngIf="this.account_access_type == 'Company'">Job Description is required</span>
+							</div>
+						</div>
 					</div>
 					
 					<ng-container *ngIf="this.account_access_type == 'Company'">
-						<div class="row">
+						<div class="row mt-5">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
 									<h5>Upload Job Description  </h5>
@@ -1513,7 +1529,8 @@
 						
 						<div class="row" *ngIf="this.hourly_form_data.job_type == '4' || this.hourly_form_data.job_type == '5'">
 							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-								<div class="font-weight-bold mt-2">Hourly Rate <span class="text-danger font-20">*</span></div>
+								<div class="font-weight-bold" *ngIf="this.account_access_type == 'Student'">Expected Salary <span class="text-danger font-20">*</span></div>
+								<div class="font-weight-bold" *ngIf="this.account_access_type == 'Company'">Your current offer <span class="text-danger font-20">*</span></div>
 								<!-- <div class="text-muted">Total amount the client will see</div> -->
 							</div>
 							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
@@ -1527,13 +1544,14 @@
 									</div>
 								</div>
 								<div *ngIf="hourlyRate.invalid && (hourlyRate.dirty || hourlyRate.touched)" class="text-danger small">
-									hourly rate is required
+									Expected Salary is required
 								</div>
 							</div>
 						</div>
 						<div class="row" *ngIf="this.hourly_form_data.job_type == '1' || this.hourly_form_data.job_type == '2' || this.hourly_form_data.job_type == '3'">
 							<div class="col-xl-8 col-8 col-sm-8 col-md-8">
-								<div class="font-weight-bold mt-2">Salary Expectation</div>
+								<div class="font-weight-bold" *ngIf="this.account_access_type == 'Student'">Expected Salary <span class="text-danger font-20">*</span></div>
+								<div class="font-weight-bold" *ngIf="this.account_access_type == 'Company'">Your current offer <span class="text-danger font-20">*</span></div>
 								<!-- <div class="text-muted"> Montly Salary you are expecting and the client will see</div> -->
 							</div>
 							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
@@ -1723,16 +1741,10 @@
 					</div>
 					<div class="row" *ngIf="location_form_data.state != ''">
 						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-							<!-- <div class="submit-field">
-								<h5> City <span class="text-danger font-20">*</span></h5>
-								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="city" id="City" placeholder="" required [(ngModel)]=" location_form_data.city" #City="ngModel" />
-								<div *ngIf="City.invalid && (City.dirty || City.touched)" class="text-danger small">
-									City is required
-								</div>
-							</div> -->
+							
 							<div class="submit-field">
 								<h5>City <span class="text-danger font-20">*</span></h5>
-								<ng-container *ngIf="city_list.length > 0">										
+								<ng-container > <!-- *ngIf="city_list.length > 0" -->
 									<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="location_form_data.city" class="input1text with-border  mb-0 pb-0" required #ccityField="ngModel" (change)="city_select($event)" > </ng-select>
 									<div *ngIf="ccityField.invalid && (ccityField.dirty || ccityField.touched || ccityField.submitted)" class="text-danger small"> City is required </div>
 								</ng-container>
@@ -1784,7 +1796,7 @@
 						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 							<div class="submit-field">
 								<h5> Phone Number <span class="text-danger font-20">*</span></h5>
-								<input type="text" class="form-control with-border  mb-0 pb-0 height-38" name="phone_number" id="phone_number" placeholder="" required maxlength="10"
+								<input type="text" class="form-control with-border  mb-0 pb-0 height-38" name="phone_number" id="phone_number" placeholder="1234567890" required maxlength="10"
 								[(ngModel)]="location_form_data.phone_number" #phone_numberobj="ngModel" pattern="\d{10}$" />
 								<div *ngIf="phone_numberobj?.invalid && (phone_numberobj?.dirty || phone_numberobj?.touched)" class="error">
 									<div class="text-danger small" *ngIf="phone_numberobj.errors.required"> Phone number is required </div>
@@ -1869,7 +1881,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row" *ngIf="job_preference_form_data.state != ''">
+						<div class="row" > <!-- *ngIf="job_preference_form_data.state != ''" -->
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 								<!-- <div class="submit-field">
 									<h5> Prefered  City <span class="text-danger font-20">*</span></h5>
@@ -1878,7 +1890,7 @@
 								</div> -->
 								<div class="submit-field">
 									<h5>City <span class="text-danger font-20">*</span></h5>
-									<ng-container *ngIf="city_list.length > 0">										
+									<ng-container > <!-- *ngIf="city_list.length > 0  -->
 										<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="job_preference_form_data.location_preference_name" class="input1text with-border  mb-0 pb-0" required #locacityField="ngModel" (change)="preference_city_select($event)" > </ng-select>
 										<div *ngIf="locacityField.invalid && (locacityField.dirty || locacityField.touched || locacityField.submitted)" class="text-danger small"> City is required </div>
 									</ng-container>
@@ -1935,33 +1947,34 @@
 						<ng-container *ngFor="let items of timeline_hiring">
 							<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 								<div class="card cursor-pointer" (click)="select_level_timeline_hiring(items.value)">
-									<div class="card-body text-center"
+									<div class="card-body text-center card_height pt-5"
 									[ngClass]="{'border border-primary': timeline_hiring_form_data.timeline_hiring == items.value}">
 									<div class="form-check">
 										<input class="form-check-input text-right float-right w-100" type="radio" name="timeline_hiring" id="expertiseLevel" [(ngModel)]="timeline_hiring_form_data.timeline_hiring" [value]="items.value">
 									</div>
 									<br>
 									<div class="text-center">{{items.heading}}</div>
-									<span class="text-muted text-center"> {{items.description}}
-									</span>
+									<!-- <span class="text-muted text-center"> {{items.description}} </span>--> 
 								</div>
 							</div>
 						</div>
 					</ng-container>
 				</div>
 				<div class="row mt-4" *ngIf="timeline_hiring_form_data.timeline_hiring == '2'" >
-					<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
 							<h5>Within Weeks</h5>
-							<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="timeline_hiring_form_data.timeline_hiring_weeks" required #to_date="ngModel">
+							<select class="form-control with-border col-xl-6 col-6 col-sm-6 col-md-6" title="Select todate" name="todate" id="todate" [(ngModel)]="timeline_hiring_form_data.timeline_hiring_weeks" required #to_date="ngModel">
 								<option value="">Select weeks</option>
 								<!-- <option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option> -->
 								<option *ngFor="let week of this.to_week_array" value="{{week['value']}}">{{week['heading']}}</option>
 							</select>
 							<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
-							<span class="text-muted text-secondary">The number of weeks within you can join us</span>
+							<span class="text-muted text-secondary">You would likely to hire a candidate within the selected time range</span>
+							
 						</div>
 					</div>
+					
 				</div>
 			</ng-container>
 		</div>
@@ -1992,9 +2005,9 @@
 			<ng-container *ngIf="job_type.length > 0">
 				<div class="row">
 					<ng-container *ngFor="let items of job_type">
-						<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+						<div class="col-xl-4 col-4 col-sm-4 col-md-4 mb-4">
 							<div class="card cursor-pointer" (click)="select_level_job_type(items.value)">
-								<div class="card-body text-center"
+								<div class="card-body text-center card_height pt-5"
 								[ngClass]="{'border border-primary': job_type_form_data.job_type == items.value}">
 								<div class="form-check">
 									<input class="form-check-input text-right float-right w-100" type="radio" name="JobType" id="JobType" [(ngModel)]="job_type_form_data.job_type" [value]="items.value">
@@ -2004,8 +2017,7 @@
 										</div>
 										<br>
 										<div class="text-center">{{items.heading}}</div>
-										<span class="text-muted text-center"> {{items.description}}
-										</span>
+										<!-- <span class="text-muted text-center"> {{items.description}} </span> -->
 									</div>
 								</div>
 							</div>

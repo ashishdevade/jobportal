@@ -26,7 +26,7 @@
 									<span>{{employment.job_title}}</span> <br>
 									<span>{{employment.from_month}} {{employment.from_year}} -
 										<span *ngIf="employment.currently == 'true'">
-											Till Date
+											Present
 										</span>
 										<span *ngIf="employment.currently == 'false'">
 											{{employment.to_month}} {{employment.to_year}}	

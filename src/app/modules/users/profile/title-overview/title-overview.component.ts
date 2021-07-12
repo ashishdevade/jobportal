@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { CommonFunctions } from "../../../../core/helpers/common.functions";
 import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
-
+/*import { AngularEditorConfig } from '@kolkov/angular-editor';*/
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
 	selector: 'app-title-overview',
@@ -34,6 +35,8 @@ export class TitleOverviewComponent implements OnInit {
 	public fileChangedEvent = '';
 	public upload_file:any;
 	public service_url = '';
+	/*public config = this.common_params.angular_editor_config*/
+	public Editor = ClassicEditor;
 	
 	constructor(
 		private router: Router,

@@ -17,7 +17,7 @@
 			<app-card [cardMetaData]="{cardTitle: this.header_card_title}">
 				<div class="content with-padding padding-bottom-5">
 					<h5>Verify your identity to create a trusted marketplace</h5>
-					<div class="text-muted">We use your street address and phone number to verify your identity, and your zip code to show relevant jobs. Only your city will be shown to clients.</div>
+					<!-- <div class="text-muted">We use your street address and phone number to verify your identity, and your zip code to show relevant jobs. Only your city will be shown to clients.</div> -->
 					<br>
 				</div>
 				<div class="content with-padding padding-bottom-5">
@@ -42,23 +42,13 @@
 							</div>
 						</div>
 					</div>
-					<div class="row" *ngIf="form_data.state != ''">
+					<div class="row" >
 						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
-							<!-- <div class="submit-field">
-								<h5> City <span class="text-danger font-20">*</span></h5>
-								<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="city"
-								id="City" placeholder="" required [(ngModel)]="form_data.city"
-								#City="ngModel" />
-								<div *ngIf="City.invalid && (City.dirty || City.touched)" class="text-danger small">
-									City is required
-								</div>
-							</div> -->
+							
 							<div class="submit-field">
 								<h5>City <span class="text-danger font-20">*</span></h5>
-								<ng-container *ngIf="city_list.length > 0">										
-									<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="form_data.city" class="input1text with-border  mb-0 pb-0" required #cityField="ngModel" (change)="city_select($event)" > </ng-select>
-									<div *ngIf="cityField.invalid && (cityField.dirty || cityField.touched || cityField.submitted)" class="text-danger small"> City is required </div>
-								</ng-container>
+								<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="form_data.city" class="input1text with-border  mb-0 pb-0" required #cityField="ngModel" (change)="city_select($event)" > </ng-select>
+								<div *ngIf="cityField.invalid && (cityField.dirty || cityField.touched || cityField.submitted)" class="text-danger small"> City is required </div>
 								
 							</div>
 						</div>

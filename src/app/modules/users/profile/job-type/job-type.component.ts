@@ -6,9 +6,9 @@ import { CommonService } from "../../../../core/services/common.service";
 import { MainService } from "../../../../core/services/main.service";
 
 @Component({
-  selector: 'app-job-type',
-  templateUrl: './job-type.component.html',
-  styleUrls: ['./job-type.component.scss']
+	selector: 'app-job-type',
+	templateUrl: './job-type.component.html',
+	styleUrls: ['./job-type.component.scss']
 })
 export class JobTypeComponent implements OnInit {
 
@@ -19,13 +19,14 @@ export class JobTypeComponent implements OnInit {
 	public profile_side_menu = [];
 	public links:any = {};
 	public autocompleteItems = ['Item1', 'item2', 'item3'];
+	public account_access_type = '';
 	public job_type = [];
 
 	constructor(
 		private router: Router,
 		public common_service: CommonService,
 		public service: MainService,
-	) { }
+		) { }
 
 	ngOnInit() {
 		// this.common_service.check_session_on();
@@ -33,12 +34,15 @@ export class JobTypeComponent implements OnInit {
 		if(sessionStorage.account_type == 'Company'){
 			this.page_id = 14;
 		}
+		this.account_access_type = sessionStorage.account_type;
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.job_type = this.common_params.job_type;
 		this.form_data.job_type = this.job_type[0]['value'];
 		this.show_loader = true;
 		this.get_user_profile_settings((response) => {
-			this.form_data.job_type = parseInt(response['data'][0]['job_type']);
+			if(response['data'][0]['job_type']!= '' && response['data'][0]['job_type']!= null){
+				this.form_data.job_type = parseInt(response['data'][0]['job_type']);
+			}
 			this.show_loader = false;
 		})
 	}

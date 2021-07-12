@@ -21,9 +21,11 @@ export class HourlyRateComponent implements OnInit {
 	public show_loader = false;
 	public form_data:any = {};
 	public profile_side_menu = [];
-	public success_message = "Hourly Rate saved successfully.";
+	public success_message = "Expected Salary saved successfully.";
 	public default_rate = "";
+	public account_access_type = "";
 	public links:any = {};
+	public heading:any = '';
 	
 	constructor(
 		private router: Router,
@@ -37,7 +39,18 @@ export class HourlyRateComponent implements OnInit {
 		this.profile_side_menu = this.common_params.get_profile_menu_accees_based();
 		if(sessionStorage.account_type == 'Company'){
 			this.page_id = 7;
-		}	
+		}
+		
+		this.account_access_type = sessionStorage.account_type;
+		
+		if(this.account_access_type == 'Student'){
+			this.heading = 'Salary Expectations';
+		} else if(this.account_access_type == 'Company'){
+			this.heading = 'Proposed Salary';
+			
+		}
+		
+			
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id)
 		this.default_rate = this.common_params.default_service_rate_per;
 		

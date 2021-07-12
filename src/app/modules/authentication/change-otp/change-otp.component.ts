@@ -34,10 +34,12 @@ export class ChangeOtpComponent implements OnInit {
   ngOnInit() {
     this.temp_password  =  this.ActivatedRoute.snapshot.paramMap.get('one');
     if(this.temp_password != null){
-      this.show_loader = true;
-      this.validate_password(this.temp_password, (response) => {
-        this.show_loader = false;
-      })
+        this.show_loader = true;
+      setTimeout(()=>{
+        this.validate_password(this.temp_password, (response) => {
+          this.show_loader = false;
+        })
+      }, 1000);
     } else {
       this.common_service.show_toast('w', "Access restricted", "");
       

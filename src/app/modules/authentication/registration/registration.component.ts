@@ -15,6 +15,7 @@ export class RegistrationComponent implements OnInit {
 	public common_params = new CommonFunctions();
 	public company_name = "";
 	public industry = "";
+	public other_industry = "";
 	public firstname = "";
 	public lastname = "";
 	public email_address = "";
@@ -63,11 +64,11 @@ export class RegistrationComponent implements OnInit {
 				this.user_password = this.common_params.generate_random_pass(12);
 				this.re_enter_password = this.user_password;
 				this.show_loader = true;
-				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name, this.industry).subscribe(response => {
+				this.service.registration(this.firstname,this.lastname, this.email_address, this.re_enter_password, this.account_type, this.company_name, this.industry, this.other_industry).subscribe(response => {
 					console.log("response ", response );
 					if(response['data'] != undefined){
 						this.show_loader = false;
-						this.common_service.show_toast('s', "Please check your entered email id, We have sent you password on your account, Use the same password to login.", "");
+						this.common_service.show_toast('s', "Thank you for your registration. We have sent a generate password link to your mentioned email id.", "");
 						this.common_service.change_route(['/auth/login']);
 						this.show_loader = false;
 					} else {
@@ -84,6 +85,12 @@ export class RegistrationComponent implements OnInit {
 				this.common_service.show_toast('e', "Password Doesnt match.", "");
 				
 			}*/
+		}
+	}
+	
+	select_industry(){
+		if(this.industry !+ -1){
+			this.other_industry = '';
 		}
 	}
 

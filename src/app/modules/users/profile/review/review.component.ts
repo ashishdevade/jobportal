@@ -10,6 +10,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgForm } from '@angular/forms';
 
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
 	selector: 'app-review',
@@ -158,6 +159,8 @@ export class ReviewComponent implements OnInit {
 	job_preference_modalRef: BsModalRef;
 	timeline_hiring_modalRef: BsModalRef;
 	job_type_modalRef: BsModalRef;
+	
+	public Editor = ClassicEditor;
 	
 	constructor(
 		private router: Router,
@@ -758,12 +761,16 @@ export class ReviewComponent implements OnInit {
 		this.get_user_profile_settings("title-overview", (response)=>{
 			if(response['data'].length > 0){
 				this.title_form_data.job_title = response['data'][0]['job_title'];
-				this.title_form_data.professional_overview = response['data'][0]['professional_overview'];
 				if(response['data'][0]['uploaded_jd']!= null && response['data'][0]['uploaded_jd']!= ''){
 					this.title_form_data.uploaded_jd = this.service_url + '/' + response['data'][0]['uploaded_jd'];;
 				}
-				this.show_loader = false;
 				this.title_modalRef = this.modalService.show( template, this.common_params.modal_config );
+				setTimeout(()=>{
+					this.Editor = ClassicEditor;
+					this.title_form_data.professional_overview = response['data'][0]['professional_overview']
+					console.log(this.title_form_data.professional_overview);
+				}, 250);
+				this.show_loader = false;
 			} else {
 				this.show_loader = false;
 				this.common_service.show_toast('e', this.common_service.error_message, "");
@@ -1079,9 +1086,13 @@ export class ReviewComponent implements OnInit {
 	}
 	
 	edit_hourly_rate(template: TemplateRef<any>){
-		this.hourly_popup_title = "Edit hourly rate";
+		if(this.account_access_type == 'Student'){
+			this.hourly_popup_title = "Edit Salary Expectations";
+		} else if(this.account_access_type == 'Company'){
+			this.hourly_popup_title = "Edit Proposed Salary";
+		}
 		this.hourly_action_button_text = "Update";
-		this.hourly_success_message = "hourly rate updaed successfully.";
+		this.hourly_success_message = "Expected Salary updaed successfully.";
 		this.show_loader = true;
 		
 		this.get_user_profile_settings("hourly-rate", (response)=>{

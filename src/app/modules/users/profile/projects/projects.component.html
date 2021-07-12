@@ -118,7 +118,7 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xl-12 col-12 col-sm-12 col-md-12">
-					<input type="text" placeholder="Daterangepicker" class="form-control" bsDaterangepicker name="project_duration" id="project_duration" required [(ngModel)]="form_data.project_duration" #projectDuration="ngModel"  [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MMM/YYYY', showWeekNumbers: false }" >
+					<input type="text" placeholder="Select Date Range" class="form-control" bsDaterangepicker name="project_duration" id="project_duration" required [(ngModel)]="form_data.project_duration" #projectDuration="ngModel"  [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MMM/YYYY', showWeekNumbers: false }" >
 					<div *ngIf="projectDuration.invalid && (projectDuration.dirty || projectDuration.touched)" class="text-danger small"> Project duration is required </div>
 				</div>
 			</div>

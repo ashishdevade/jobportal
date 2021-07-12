@@ -1,4 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
+/*import { AngularEditorConfig } from '@kolkov/angular-editor';*/
 
 export class CommonFunctions {
 	public login_paqge_link = '/auth/login';
@@ -34,9 +35,9 @@ export class CommonFunctions {
 	];
 	
 	public expertise_level = [
-	{ value: 1, heading: 'Entry level', description: "I am relatively new to this field" },
-	{ value: 2, heading: 'Intermediate', description: "I have substantial experience in this field" },
-	{ value: 3, heading: 'Expert', description: "I have comprehensive and deep expertise in this field" },
+	{ value: 1, heading: 'Entry level', description: "College Graduate (0-2 years of experience)" },
+	{ value: 2, heading: 'Intermediate', description: "3-5 years of experience" },
+	{ value: 3, heading: 'Expert', description: "Comprehensive experience in the field" },
 	];
 	
 	public location_preference = [
@@ -81,7 +82,7 @@ export class CommonFunctions {
 	
 	public timeline_hiring = [
 	{ value: 1, heading: 'Immediate', description: "Work from which ever location you like" },
-	{ value: 2, heading: 'Within', description: "Move/ Shift to the actual work site" },
+	{ value: 2, heading: 'Within a time range', description: "Move/ Shift to the actual work site" },
 	];
 	
 	public timeline_hiring_weekly_list = [
@@ -101,11 +102,11 @@ export class CommonFunctions {
 	];
 	
 	public job_type = [
-	{ value: 1, heading: 'Part Time', description: "I am looking for part time job" },
-	{ value: 2, heading: 'Full Time', description: "I am looking for full time job" },
-	{ value: 3, heading: 'Intern', description: "Here to learn by work and while having fun in the process" },
-	{ value: 4, heading: 'Contract', description: "I am looking for some long term contracts" },
-	{ value: 5, heading: 'Freelance', description: "Anything to work on that fits my criteria as freelancer" },
+	{ value: 1, heading: 'Part-Time', description: "I am looking for a part-time job" },
+	{ value: 2, heading: 'Full-Time', description: "I am looking for a full time job" },
+	{ value: 3, heading: 'Intern', description: "I am looking for an internship opportunity" },
+	{ value: 4, heading: 'Contract', description: "I am looking for a contract role" },
+	{ value: 5, heading: 'Freelance', description: "I am looking for a freelance project that fits my criteria" },
 	];
 	
 	public modal_config = {
@@ -258,5 +259,21 @@ export class CommonFunctions {
 		}
 		return result;
 	}
+	
+	/*public angular_editor_config: AngularEditorConfig = {
+		editable: true,
+		spellcheck: true,
+		sanitize: false,
+		height: 'auto',
+		minHeight: '0',
+		maxHeight: 'auto',
+		placeholder: 'Enter text here...',
+		translate: 'no',
+		defaultParagraphSeparator: 'p',
+		defaultFontName: 'Arial',
+		toolbarHiddenButtons: [
+		['bold']
+		],
+	};*/
 
 }

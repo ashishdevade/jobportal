@@ -25,7 +25,7 @@
 									<span>{{license_cer.description}}</span> <br>
 									<span>{{license_cer.certificate_link}}</span> <br>
 									<span *ngIf="license_cer.type == 'certificate'">{{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
-									<span *ngIf="license_cer.type == 'license'"><b>Till</b> - {{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span>
+									<!-- <span *ngIf="license_cer.type == 'license'"><b>Till</b> - {{license_cer.date_earned | date: 'dd/MM/yyyy'}}</span> -->
 								</div>
 								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
 									<button type="button" (click)="delete_license_certificate(license_cer.student_certificate_id)" class="btn btn-sm btn-secondary float-right ml-2"><i
@@ -130,7 +130,7 @@
 						<div class="submit-field">
 							<h5>Date Earned <span class="text-danger font-20">*</span></h5>
 							<div class="">
-								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
+								<input type="text" placeholder="Date Earned" class="form-control height-38 input-text with-border" bsDatepicker name="date_earned" id="date_earned" required [(ngModel)]="form_data.date_earned" #license_cer_Duration="ngModel"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date earned" >
 								<div *ngIf="license_cer_Duration.invalid && (license_cer_Duration.dirty || license_cer_Duration.touched)" class="text-danger small"> Earned duration is required </div>
 							</div>
 						</div>
@@ -140,7 +140,7 @@
 						<div class="submit-field">
 							<h5>Date Expiry (Optional) </h5>
 							<div class="">
-								<input type="text" placeholder="Daterangepicker" class="form-control" bsDatepicker name="date_expirty" id="date_expirty" [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
+								<input type="text" placeholder="Date Expiry" class="form-control height-38 input-text with-border" bsDatepicker name="date_expirty" id="date_expirty" [(ngModel)]="form_data.date_expirty"  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" placeholder="Date Expiry" >
 							</div>
 						</div>
 					</div>
@@ -148,9 +148,9 @@
 				<div class="row">
 					<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 						<div class="submit-field">
-							<h5> {{type}} Link <span class="text-danger font-20">*</span></h5>
-							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link" required [(ngModel)]="form_data.link" #license_cer_link="ngModel" />
-							<div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div>
+							<h5> {{type}} Link </h5>
+							<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="link" id="link" placeholder="Certifcate Link and License Link"  [(ngModel)]="form_data.link" #license_cer_link="ngModel" /> <!-- required -->
+							<!-- <div *ngIf="license_cer_link.invalid && (license_cer_link.dirty || license_cer_link.touched)" class="text-danger small"> Description is required </div> -->
 						</div>
 					</div>
 				</div>

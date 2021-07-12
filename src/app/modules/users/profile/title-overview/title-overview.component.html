@@ -34,7 +34,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+						<!-- <div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
 								<h5> {{this.description_input}} <span class="text-danger font-20">*</span></h5>
 								<textarea type="text" class="input-text with-border  mb-0 pb-0" name="description" id="description" [placeholder]="this.desc_placeholder" required [(ngModel)]="form_data.professional_overview" #desciptionSection="ngModel" rows="10"></textarea>
@@ -42,11 +42,31 @@
 									{{this.description_input}} is required
 								</div>
 							</div>
-						</div>
+						</div> -->
+						<!-- <div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> {{this.description_input}} <span class="text-danger font-20">*</span></h5>
+							</div>
+							<angular-editor  [ngModelOptions]="{standalone: true}"  name="job_description" id="job_description" [placeholder]="this.desc_placeholder" required [(ngModel)]="form_data.professional_overview" [config]="config"  #desciptionSection="ngModel" ></angular-editor>
+							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched || titleoverview.submitted)" class="text-danger small">
+								{{this.description_input}} is required
+							</div>
+						</div> -->
 					</div>
 					
+					<div class="row">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+							<div class="submit-field">
+								<h5> {{this.description_input}} <span class="text-danger font-20">*</span></h5>
+							</div>
+							<ckeditor #emailBody [editor]="Editor"  name="job_description" id="job_description" data="{{form_data.professional_overview}}" [(ngModel)]="form_data.professional_overview" #desciptionSection="ngModel"></ckeditor>
+							<div *ngIf="desciptionSection.invalid && (desciptionSection.dirty || desciptionSection.touched || titleoverview.submitted)" class="text-danger small">
+								{{this.description_input}} is required
+							</div>
+						</div>
+					</div>
 					<ng-container *ngIf="this.access_type == 'Company'">
-						<div class="row">
+						<div class="row mt-5">
 							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 								<div class="submit-field">
 									<h5>Upload Job Description  </h5>

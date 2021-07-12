@@ -42,7 +42,7 @@ export class CategoryComponent implements OnInit {
 			this.lang['category_title'] = "Job Profile";
 			this.lang['subcategory_title'] = "Which Team/Department this role comes under?";
 		} else {
-			this.lang['category_title'] = "Select a Job Profile you are interested in.";
+			this.lang['category_title'] = "Select a Job Profile you are interested in";
 			this.lang['subcategory_title'] = "Select the type of Industry you would like to work in";
 		}
 		

@@ -18,13 +18,14 @@
 				(ngSubmit)="onSubmit(expertiselevelform.valid)">
 				<app-card [cardMetaData]="{cardTitle: 'Expertise Level'}">
 					<div class="content with-padding padding-bottom-10">
-						<h5>What is your level of experience in this field?</h5>
+						<h5 *ngIf="this.account_access_type == 'Student'">What is your level of experience in this field?</h5>
+						<h5 *ngIf="this.account_access_type == 'Company'">What level of expertise are you looking for?</h5>
 						<ng-container *ngIf="expertise_level.length > 0">
 							<div class="row">
 								<ng-container *ngFor="let items of expertise_level">
-									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4 mb-4">
 										<div class="card cursor-pointer" (click)="select_level(items.value)">
-											<div class="card-body text-center"
+											<div class="card-body text-center card_height"
 												[ngClass]="{'border border-primary': form_data.expertise_level == items.value}">
 												<div class="form-check">
 													<input class="form-check-input text-right float-right w-100"

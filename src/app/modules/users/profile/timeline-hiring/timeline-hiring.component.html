@@ -18,37 +18,37 @@
 			(ngSubmit)="onSubmit(expertiselevelform.valid)">
 			<app-card [cardMetaData]="{cardTitle: 'Timeline for Hiring'}">
 				<div class="content with-padding padding-bottom-10">
-					<h5>What is your current timeline?</h5>
+					<h5>What is your current timeline for hiring?</h5>
 					<ng-container *ngIf="timeline_hiring.length > 0">
 						<div class="row">
 							<ng-container *ngFor="let items of timeline_hiring">
 								<div class="col-xl-6 col-6 col-sm-6 col-md-6">
 									<div class="card cursor-pointer" (click)="select_level(items.value)">
-										<div class="card-body text-center"
+										<div class="card-body text-center card_height pt-5"
 										[ngClass]="{'border border-primary': form_data.timeline_hiring == items.value}">
 										<div class="form-check">
 											<input class="form-check-input text-right float-right w-100" type="radio" name="timeline_hiring" id="expertiseLevel" [(ngModel)]="form_data.timeline_hiring" [value]="items.value">
 										</div>
 										<br>
 										<div class="text-center">{{items.heading}}</div>
-										<span class="text-muted text-center"> {{items.description}}
-										</span>
+										<!-- <span class="text-muted text-center"> {{items.description}} </span> -->
 									</div>
 								</div>
 							</div>
 						</ng-container>
 					</div>
 					<div class="row mt-4" *ngIf="form_data.timeline_hiring == '2'" >
-						<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+						<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 							<div class="submit-field">
 								<h5>Within Weeks <span class="text-danger font-20">*</span></h5>
-								<select class="form-control with-border" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.timeline_hiring_weeks" required #to_date="ngModel">
+								<select class="form-control with-border  col-xl-6 col-6 col-sm-6 col-md-6" title="Select todate" name="todate" id="todate" [(ngModel)]="form_data.timeline_hiring_weeks" required #to_date="ngModel">
 									<option value="">Select weeks</option>
 									<!-- <option *ngFor="let week of this.to_week_array" value="{{week}}">{{week}}</option> -->
 									<option *ngFor="let week of this.to_week_array" value="{{week['value']}}">{{week['heading']}}</option>
 								</select>
 								<div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="text-danger small"> Weeks is required. </div>
-								<span class="text-muted text-secondary">The number of weeks within you can join us</span>
+								<span class="text-muted text-secondary">You would likely to hire a candidate within the selected time range</span>
+								
 							</div>
 						</div>
 					</div>

@@ -256,12 +256,16 @@ export class LicenseCertificationComponent implements OnInit {
 	}
 
 	isSelectedDatesCorrect(){
-		if((this.form_data.date_earned <= this.form_data.date_expirty)){
-				return true;
-		}
-		else{
-			this.common_service.show_toast('e', "Date Expiry can't be a lesser than Date Earned", "");
-			return false;
+		if(this.form_data.date_expirty!= undefined && this.form_data.date_expirty!= '' ){
+			if((this.form_data.date_earned <= this.form_data.date_expirty)){
+					return true;
+			}
+			else{
+				this.common_service.show_toast('e', "Date Expiry can't be a lesser than Date Earned", "");
+				return false;
+			}
+		} else {
+			return true;
 		}
 	}
 
