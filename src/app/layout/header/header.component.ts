@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd  } from '@angular/router';
 import { CommonFunctions } from "../../core/helpers/common.functions";
 import { MainService } from "../../core/services/main.service";
 import { CommonService } from "../../core/services/common.service";
@@ -19,18 +19,29 @@ export class HeaderComponent implements OnInit {
 	public preview_image = "";
 	public user_account_data = [];
 	public service_url = "";
+	public hide_top_optios = false
 
 	constructor(
 		private router: Router,
+		private ActivatedRoute: ActivatedRoute,
 		public common_service:CommonService, 
 		public service:MainService,
 		public shared_service : SharedService
 		) {
+		this.router.events.subscribe((ev) => {
+			if (ev instanceof NavigationEnd) {
+				let href_var = (location.href.split('#')[1]);
+				if(href_var.indexOf('admin') !== -1){
+					this.hide_top_optios = false;
+				} else {
+					this.hide_top_optios = true;
+				}
+			}
+		});
 		
 		this.shared_service.loginValueData.subscribe((obj)=>{
 			this.header_open_toggle = false;
 			this.user_account_data = obj;
-			console.log("this.common_params.application_path ", this.common_params.application_path);
 			this.preview_image =  this.common_params.application_path + this.common_params.default_image;
 			if(this.user_account_data.length > 0){
 				if(this.user_account_data[0]['profile_photo']!= '' && this.user_account_data[0]['profile_photo']!= null ){

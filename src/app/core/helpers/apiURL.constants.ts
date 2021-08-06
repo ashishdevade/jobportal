@@ -42,5 +42,6 @@ export const apiUrl = {
     FORGOT_PASSWORD : "/user/forgot_password",
     CHANGE_PASSWORD : "/user/change_password",
     VALIDATE_PASSWORD : "/user/validate_temp_password",
+    ADMIN_LOGIN: "/admin/admin_validate_login",
     
 }

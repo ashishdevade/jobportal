@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select'; 
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { CategoryComponent } from './category/category.component';
@@ -21,13 +24,10 @@ import { CardComponent } from 'src/app/Shared/card/card.component';
 import { JobTypeComponent } from './job-type/job-type.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { LicenseCertificationComponent } from './license-certification/license-certification.component';
-import { NgSelectModule } from '@ng-select/ng-select'; 
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { JobLocationPreferComponent } from './job-location-prefer/job-location-prefer.component';
 import { TimelineHiringComponent } from './timeline-hiring/timeline-hiring.component';
 import { ReviewComponent } from './review/review.component';
 /*import { AngularEditorModule } from '@kolkov/angular-editor';*/
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
 	declarations: [CategoryComponent,

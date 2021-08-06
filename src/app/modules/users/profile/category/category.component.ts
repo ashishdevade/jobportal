@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit {
 	public account_access_type = "";
 	public job_profile_list = [];
 	public industry_list = [];
+	public page_heading = "";
 	public industry_label = "";
 	modalRef: BsModalRef;
 	constructor(
@@ -39,9 +40,11 @@ export class CategoryComponent implements OnInit {
 		this.account_access_type = sessionStorage.account_type;
 		if(this.account_access_type == 'Company'){
 			this.page_id = 1;
+			this.page_heading = "Job Category";
 			this.lang['category_title'] = "Job Profile";
 			this.lang['subcategory_title'] = "Which Team/Department this role comes under?";
 		} else {
+			this.page_heading = "Job Category";
 			this.lang['category_title'] = "Select a Job Profile you are interested in";
 			this.lang['subcategory_title'] = "Select the type of Industry you would like to work in";
 		}

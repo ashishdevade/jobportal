@@ -72,12 +72,12 @@ export class CommonFunctions {
 	public company_profile_settings_list = [
 	{"page_id" : "10", "name" : "Company Location", "link":"user/profile/location", "order" : "1", "previous_page" : "0", "next_page" : "1" },
 	{"page_id" :"1", "name" : "Job Category ", "link":"user/profile/category", "order" : "2", "previous_page" : "10", "next_page" : "3" },
-	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "3", "previous_page" : "1", "next_page" : "14" },
-	{"page_id" : "14", "name" : "Job Type", "link":"user/profile/job-type", "order" : "4", "previous_page" : "3", "next_page" : "7" },
+	{"page_id" :"3", "name" : "Expertise Level", "link":"user/profile/expertise-level", "order" : "3", "previous_page" : "1", "next_page" : "0" },
+	/*{"page_id" : "14", "name" : "Job Type", "link":"user/profile/job-type", "order" : "4", "previous_page" : "3", "next_page" : "7" },
 	{"page_id" :"7", "name" : "Pay", "link":"user/profile/hourly-rate", "order" : "5", "previous_page" : "14", "next_page" : "15" },
 	{"page_id" : "15", "name" : "Job Location Preference", "link":"user/profile/job-location-preference", "order" : "6", "previous_page" : "7", "next_page" : "16" },
 	{"page_id" : "16", "name" : "Timeline For Hiring", "link":"user/profile/timeline-hiring", "order" : "7", "previous_page" : "15", "next_page" : "8" },
-	{"page_id" :"8", "name" : "Job Title & Description", "link":"user/profile/title-overview", "order" : "8", "previous_page" : "16", "next_page" : "0" },
+	{"page_id" :"8", "name" : "Job Title & Description", "link":"user/profile/title-overview", "order" : "8", "previous_page" : "16", "next_page" : "0" },*/
 	]
 	
 	public timeline_hiring = [

@@ -1,0 +1,60 @@
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<!-- Titlebar
+	================================================== -->
+	<div id="titlebar" class="gradient">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Administration Portal</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-5 offset-xl-3">
+
+
+				<div class="login-register-page">
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Log In</h3>
+					</div>
+
+					<!-- Form -->
+					<form method="post" id="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.valid)">
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="email" class="input-text with-border mb-0 pb-0" [pattern]="this.common_params.email_valid_regex" name="email_address" [(ngModel)]="email_address" id="email_address" placeholder="Email Address" required #emailaddress="ngModel" />
+							<div *ngIf="emailaddress.invalid && (emailaddress.dirty || emailaddress.touched)" class="text-danger small">
+								Valid Email Address is required.
+							</div>
+						</div>
+						<div class="input-with-icon-left mt-3">
+							<i class="icon-material-outline-lock"></i>
+							<input type="password" class="input-text with-border  mb-0 pb-0" name="password" id="password" placeholder="Password" required [(ngModel)]="user_password" #password="ngModel" />
+							<div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger small">
+								Password is required
+							</div>
+						</div>
+						<div class=" mt-2 mb-3">
+							<a [routerLink]="['/auth/forgot-password']" class="forgot-password mt-3">Forgot Password?</a>
+						</div>
+					</form>
+
+					<!-- Button -->
+					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" form="login-form" [disabled]="loginForm.invalid">Log In <i class="icon-material-outline-arrow-right-alt"></i></button>
+
+				
+				
+					
+				</div>
+
+			</div>
+		</div>
+	</div>

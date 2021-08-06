@@ -159,3 +159,16 @@ body{
 .ck.ck-balloon-panel {
   z-index: 10054 !important;
 }
+
+
+.admin_menu_expand_collapse{
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: max-content !important;
+    pointer-events: auto !important;
+}
+
+.dashboard-nav ul li ul li{
+    padding-left: 50px !important;  
+}

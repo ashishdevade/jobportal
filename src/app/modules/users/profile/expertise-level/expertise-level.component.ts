@@ -37,6 +37,9 @@ export class ExpertiseLevelComponent implements OnInit {
 		}
 		this.account_access_type = sessionStorage.account_type;
 		this.links =  this.common_params.get_profile_previous_next_page(this.page_id);
+		if(this.links.next_link== ""){
+			this.links.next_link = "user/profile/review";
+		}
 		this.expertise_level = this.common_params.expertise_level;
 		this.form_data.expertise_level = this.expertise_level[0]['value'];
 		this.show_loader = true;

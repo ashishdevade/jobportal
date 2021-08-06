@@ -524,5 +524,14 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.VALIDATE_PASSWORD, data_object); // this.common_params.httpOptions
 	}
 	
+	admin_validate_login(username, password): Observable<any> {
+		let data_object = {
+			email: username,
+			password: password,
+		};
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADMIN_LOGIN, data_object); // this.common_params.httpOptions
+	}
+	
 	
 }

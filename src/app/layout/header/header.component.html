@@ -16,7 +16,7 @@
 
 				<!-- Main Navigation -->
 				<nav id="navigation">
-					<ul id="responsive">
+					<!-- <ul id="responsive">
 
 						<li><a href="javascript:;">Find Work</a>
 							<ul class="dropdown-nav">
@@ -46,7 +46,7 @@
 						</li>
  
 
-					</ul>
+					</ul> -->
 				</nav>
 				<div class="clearfix"></div>
 				<!-- Main Navigation / End -->
@@ -56,7 +56,21 @@
 
 
 			<!-- Right Side Content / End -->
-			<div class="right-side">
+			<!-- <div class="right-side" >
+				<div class="header-widget hide-on-mobile">
+					<div class="header-notifications">
+						<div class="header-notifications-trigger">
+							<p>Admin Section</p>
+						</div>
+					</div>
+					<div class="header-notifications">
+						<div class="header-notifications-trigger">
+							<a href="javascript:;"><i class="icon-material-outline-power-settings-new"></i></a>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<div class="right-side" *ngIf="hide_top_optios">
 
 				<!--  User Notifications -->
 				<div class="header-widget hide-on-mobile">
@@ -223,7 +237,7 @@
 								<div class="status-switch" id="snackbar-user-status">
 									<label class="user-online current-status">Online</label>
 									<label class="user-invisible">Invisible</label>
-									<!-- Status Indicator -->
+								
 									<span class="status-indicator" aria-hidden="true"></span>
 								</div>	
 							</div>
@@ -238,6 +252,7 @@
 					</div>
 
 				</div>
+				
 				<!-- User Menu / End -->
 
 				<!-- Mobile Navigation Button -->

@@ -19,6 +19,12 @@ const routes: Routes = [
     loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),
     data: { showHeader: true, showFooter: true }
   },
+   {
+    path: 'admin',
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    data: { showHeader: true, showFooter: true }
+  },
 ];
 
 const config: ExtraOptions = {
