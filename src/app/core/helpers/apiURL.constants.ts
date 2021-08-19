@@ -43,5 +43,11 @@ export const apiUrl = {
     CHANGE_PASSWORD : "/user/change_password",
     VALIDATE_PASSWORD : "/user/validate_temp_password",
     ADMIN_LOGIN: "/admin/admin_validate_login",
+    ALL_COMPANY_USERS: "/admin/get_all_companies",
+    ALL_CANDIDATE_USERS: "/admin/get_all_candidate_users",
+    ADMIN_USER_CHANGE_PASSWORD: "/admin/admin_user_change_password",
+    UPDATE_ADMIN_USER_EDIT: "/admin/update_admin_user_edit",
+    SOFT_DELETE_USER: "/admin/soft_delete_user",
+    
     
 }

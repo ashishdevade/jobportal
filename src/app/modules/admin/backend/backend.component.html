@@ -1,0 +1,11 @@
+<div class="dashboard-container">
+	<div class="page_data_loader_popup" *ngIf="loader_toggle"></div>
+	<app-admin-sidebar></app-admin-sidebar>
+	<!-- Dashboard Content
+		================================================== -->
+		<div class="dashboard-content-container" data-simplebar>
+			<router-outlet></router-outlet>
+		</div>
+		<!-- Dashboard Content / End -->
+
+	</div>

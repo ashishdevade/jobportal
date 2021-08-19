@@ -1,0 +1,291 @@
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+<div class="dashboard-content-inner pt-3 pl-4 pr-4" >
+	<div class="dashboard-headline mb-4">
+		<div class="row">
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<h3>Edit Users</h3>
+			</div>
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<li><a [routerLink]="['/admin/dashboard']">Home</a></li>
+						<li>Edit User</li>
+						<li class="capatalise">{{account_type}}</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="dashboard-box margin-top-0 margin-bottom-30">
+				<div class="headline pt-3 pb-2 pl-3 pr-3">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> <span class="capatalise">{{account_type}} </span> Edit</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-6"></div>
+					</div>
+				</div>
+				<div class="content with-padding pt-1 padding-bottom-10">
+					<tabset [justified]="true" class="mt-1">
+						<tab heading="User Details">
+							<form method="post" id="job_type-form" #userform="ngForm" (ngSubmit)="on_submit(userform.valid)" class="mt-3"  >
+								<h5 class="mb-2 form-inner-heading">General Details</h5>
+								<div class="row">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5> First Name <span class="text-danger font-20">*</span></h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="first_name" id="first_name" placeholder="Enter First Name" required [(ngModel)]="form_data.first_name" #first_name="ngModel" />
+											<div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)" class="text-danger small"> First Name is required </div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5> Last Name <span class="text-danger font-20">*</span></h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="last_name" id="last_name" placeholder="Enter Last Name" [(ngModel)]="form_data.last_name" required #last_name="ngModel" />
+											<div *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)" class="text-danger small"> Last Name is required </div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5> Email Address <span class="text-danger font-20">*</span></h5>
+											<input type="email" class=" height-38 input-text with-border  mb-0 pb-0" name="email" id="email" placeholder="Enter Email Address" [(ngModel)]="form_data.email_id" required #email="ngModel" />
+											<div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger small"> Email is required </div>
+										</div>
+									</div>
+								</div>
+								<ng-container *ngIf="this.account_type== 'company'">
+									<div class="row">
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											<div class="submit-field">
+												<h5> Company Name <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="company_name" id="company_name" placeholder="Enter Company Name" required [(ngModel)]="form_data.company_name" #company_name="ngModel" />
+												<div *ngIf="company_name.invalid && (company_name.dirty || company_name.touched)" class="text-danger small"> Company Name is required </div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											<div class="submit-field">
+												<h5> Industry <span class="text-danger font-20">*</span></h5>
+												<select class="form-control with-border" title="Select industry" name="industry" id="industry" [(ngModel)]="form_data.industry" required #industryobj="ngModel"> 
+													<option value="">Select a Industry</option>
+													<option *ngFor="let ind of this.industry_list" [value]="ind.id"> {{ind.name}}</option>
+													<option value="-1"> Other</option>
+												</select>
+												<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small"> Industry is required </div>
+												
+											</div>
+										</div>
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4" *ngIf="form_data.industry== -1" >
+											<div class="submit-field">
+												<h5> Other Industry Name <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="other_industry" id="other_industry" placeholder="Enter Other Industry Address" [(ngModel)]="form_data.other_industry" required #other_industry="ngModel" />
+												<div *ngIf="other_industry.invalid && (other_industry.dirty || other_industry.touched)" class="text-danger small"> Other Industry is required </div>
+											</div>
+										</div>
+									</div>
+								</ng-container>
+								
+								<!-- <ng-container *ngIf="this.account_type== 'company'"> -->
+									<hr class="mt-1 mb-3">
+									<h5 class="mb-2 form-inner-heading">Location</h5>
+									<div class="row">
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											<div class="submit-field">
+												<h5>Country <span class="text-danger font-20">*</span></h5>
+												<ng-container >										
+													<ng-select [items]="country_list"  bindLabel="name" placeholder="Select Country" appendTo="body" [multiple]="false" name="country_list" id="country_list" [(ngModel)]="form_data.country" class="input1text with-border  mb-0 pb-0" required #CountryField="ngModel" (change)="get_state($event)"> </ng-select>
+													<div *ngIf="CountryField.invalid && (CountryField.dirty || CountryField.touched || CountryField.submitted)" class="text-danger small"> Country is required </div>
+												</ng-container>
+											</div>
+										</div>
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											<div class="submit-field">
+												<h5>State <span class="text-danger font-20">*</span></h5>
+												<ng-container > 
+													<ng-select [items]="state_list"  bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false" name="state_list" id="state_list" [(ngModel)]="form_data.state" class="input1text with-border  mb-0 pb-0" required #stateyField="ngModel" (change)="state_select($event)" > </ng-select>
+													<div *ngIf="stateyField.invalid && (stateyField.dirty || stateyField.touched || stateyField.submitted)" class="text-danger small"> State is required </div>
+												</ng-container>
+												
+											</div>
+										</div>
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											
+											<div class="submit-field">
+												<h5>City <span class="text-danger font-20">*</span></h5>
+												<ng-select [items]="city_list"  bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false" name="city_list" id="city_list" [(ngModel)]="form_data.city" class="input1text with-border  mb-0 pb-0" required #cityField="ngModel" (change)="city_select($event)" > </ng-select>
+												<div *ngIf="cityField.invalid && (cityField.dirty || cityField.touched || cityField.submitted)" class="text-danger small"> City is required </div>
+												
+											</div>
+										</div>
+									</div>
+									<div class="row" *ngIf="form_data.city != ''">
+										<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+											<div class="submit-field">
+												<h5> Street Address <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0"
+												name="street_address" id="street_address" placeholder="Enter Street Address" required
+												[(ngModel)]="form_data.street_address" #street_address="ngModel" />
+												<div *ngIf="street_address.invalid && (street_address.dirty || street_address.touched)"
+												class="text-danger small">
+												Street Address is required
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-6 col-6 col-sm-6 col-md-6">
+										<div class="submit-field">
+											<h5> ZIP/Postal Code <span class="text-danger font-20">*</span></h5>
+											<input type="text" class=" height-38 input-text with-border  mb-0 pb-0"
+											name="zipcode" id="zipcode" placeholder="Enter Zip/Postal Code" [(ngModel)]="form_data.zipcode" required
+											#zipcode="ngModel" />
+											<div *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)" class="text-danger small">
+												ZIP/Postal Code is required
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- </ng-container> -->
+								
+								
+								<hr class="mt-1 mb-3">
+								<h5 class="mb-2 form-inner-heading">Category</h5>
+								<div class="row">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Job Profile <span class="text-danger font-20">*</span></h5>
+											<select class="form-control with-border" title="Select Category" name="category" id="category" [(ngModel)]="form_data.category_id" required #jobprofile="ngModel"> 
+												<option value="">Select a Job Profile</option>
+												<option *ngFor="let item of this.job_profile_list" [value]="item.id"> {{item.profile_name}}</option>
+											</select>
+											<div *ngIf="jobprofile.invalid && (jobprofile.dirty || jobprofile.touched)"
+											class="text-danger small">
+											Job Profile is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-8 col-8 col-sm-8 col-md-8" *ngIf="this.account_type== 'student'">
+									<div class="submit-field">
+										<h5> Select the type of Industry you would like to work in <span class="text-danger font-20">*</span></h5>
+										<select   class="form-control with-border" name="subcategory_id" id="subcategory_id" title="Select subcategory_id" [(ngModel)]="form_data.subcategory_id" required #industryObj="ngModel" (change)="get_industry_label(industryObj.value)">
+											<option value=""> Select a industry</option>
+											<option *ngFor="let item of this.industry_list" [value]="item.id"> {{item.name}}</option>
+										</select>
+										<div *ngIf="industryObj.invalid && (industryObj.dirty || industryObj.touched)"
+										class="text-danger small">
+										Industry is required.
+									</div>
+								</div>
+								</div>
+								
+								<div class="col-xl-8 col-8 col-sm-8 col-md-8" *ngIf="this.account_type== 'company'">
+									<div class="submit-field">
+										<h5> Which Team/Department this role comes under?</h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="team_department" id="team_department" placeholder=""  [(ngModel)]="form_data.team_department" #team_department="ngModel" /> <!-- required -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Expertise Level <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Category" name="level" id="level" [(ngModel)]="form_data.level" required #expertlevel="ngModel"> 
+											<option value="">Select a Expertise Level</option>
+											<option *ngFor="let item of this.expertise_level" [value]="item.value"> {{item.heading}}</option>
+										</select>
+										<div *ngIf="expertlevel.invalid && (expertlevel.dirty || expertlevel.touched)"
+										class="text-danger small">
+										Expertise Level is required.
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="row">
+							<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+								<div class="submit-field">
+									<h5>Account Status <span class="text-danger font-20">*</span></h5>
+									<div class="feedback-yes-no margin-top-0">
+										<div class="radio">
+											<input id="radio-1" name="radio" type="radio" name="status" [value]="1" [(ngModel)]="this.form_data.status">
+											<label for="radio-1"><span class="radio-label"></span> Active</label>
+										</div>
+
+										<div class="radio">
+											<input id="radio-2" name="radio" type="radio"  name="status" [value]="0" [(ngModel)]="this.form_data.status">
+											<label for="radio-2"><span class="radio-label"></span> Inactive</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xl-12">
+								<hr class="mt-1 mb-1">
+								<div class="row">
+									<div class="col-xl-6">
+										<button type="submit" class="button ripple-effect big mt-3" [disabled]="userform.invalid"><i class="icon-feather-check"></i> Update</button>
+									</div>
+
+									<div class="col-xl-6">
+										<button type="button" (click)="goback()" class="button gray ripple-effect big mt-3 float-right" ><i class="icon-feather-x"></i> Cancel</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</tab>
+				<tab heading="Change Password">
+					<form method="post" id="job_type-form" #passwordform="ngForm" (ngSubmit)="on_password_submit(passwordform.valid)"  class="mt-3">
+						<div class="row">
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5> New Password <span class="text-danger font-20">*</span></h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="new_password" id="new_password" placeholder="Enter New Password" required [(ngModel)]="password_form_data.new_password" #new_password="ngModel" />
+									<div *ngIf="new_password.invalid && (new_password.dirty || new_password.touched)" class="text-danger small"> New Password is required </div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5> Re-enter Password <span class="text-danger font-20">*</span></h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="re_enter_password" id="re_enter_password" placeholder="Enter Re-enter Password" required [(ngModel)]="password_form_data.re_enter_password" #re_enter_password="ngModel" />
+									<div *ngIf="re_enter_password.invalid && (re_enter_password.dirty || re_enter_password.touched)" class="text-danger small"> Re-enter Password is required </div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl-12">
+								<hr class="mt-1 mb-1">
+								<div class="row">
+									<div class="col-xl-6">
+										<button type="submit" class="button ripple-effect big mt-3" [disabled]="passwordform.invalid"><i class="icon-feather-check"></i> Change</button>
+									</div>
+
+									<div class="col-xl-6">
+										<button type="button" (click)="goback()" class="button gray ripple-effect big mt-3 float-right" ><i class="icon-feather-x"></i> Cancel</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</tab>
+			</tabset>
+		</div>
+		
+	</div>
+
+			<!-- <div class="col-xl-12">
+				
+			</div> -->
+		</div>
+
+	</div>
+	
+	
+</div>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonFunctions } from "src/app/core/helpers/common.functions";
+import { CommonService } from "src/app/core/services/common.service";
+import { MainService } from "src/app/core/services/main.service";
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -6,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-sidebar.component.scss']
 })
 export class AdminSidebarComponent implements OnInit {
+  public common_params = new CommonFunctions();
+  
   public manage_user_toggle = false;
   public manage_task_toggle = false;
-  constructor() { }
+  constructor(
+    public common_service:CommonService, 
+    public service:MainService,
+    ) { }
 
   ngOnInit(): void {
   }

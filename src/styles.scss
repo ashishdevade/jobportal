@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "node_modules/sweetalert2/src/sweetalert2";
 
 .page_data_loader {
     position: fixed;
@@ -17,7 +19,7 @@
 .page_data_loader_popup {
     position: fixed;
     opacity: .8;
-    z-index: 1060;
+    z-index: 1060 !important;
     left: 0px;
     top: 0px;
     width: 100%;
@@ -171,4 +173,48 @@ body{
 
 .dashboard-nav ul li ul li{
     padding-left: 50px !important;  
+}
+
+
+.grid-max-size{
+    max-height:600px;   
+}
+
+.badge-custom{
+    font-size: 85% !important;
+}
+
+.ag-theme-material .ag-cell, .ag-theme-material .ag-full-width-row .ag-cell-wrapper.ag-row-group{
+    line-height: 40px !important; 
+}
+
+.form-control-sm {
+    height: calc(1.5em + .5rem + 2px) !important;
+    padding: .25rem .5rem !important;
+    font-size: .875rem !important;
+    line-height: 1.5 !important;
+    border-radius: .2rem !important;
+}
+
+.line-height-40{
+    line-height: 40px !important;
+
+}
+
+.capatalise {
+    text-transform: capitalize;
+}
+
+.form-inner-heading{
+    font-size: 1.1rem !important;
+    font-weight: 600;
+}
+
+.full-page-container, .dashboard-container{
+    height: auto !important;
+    min-height: calc(106vh - 82px) !important;
+}
+
+.height-container{
+  min-height: calc(66vh - 100px) !important ;  
 }

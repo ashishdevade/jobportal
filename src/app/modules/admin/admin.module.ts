@@ -1,19 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgSelectModule } from '@ng-select/ng-select'; 
+import { SharedModules } from 'src/app/core/shared.module';
+
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdmindashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { BackendComponent } from './backend/backend.component';
 import { AdminSidebarComponent } from './common/admin-sidebar/admin-sidebar.component';
 
 
 @NgModule({
   declarations: [
-    AdmindashboardComponent,
-    AdminSidebarComponent
+  AdminSidebarComponent,
+  BackendComponent
   ],
   imports: [
-    CommonModule,
-    AdminRoutingModule
+  CommonModule,
+  AdminRoutingModule,
+  SharedModules,
+  ModalModule.forRoot(),
+  NgSelectModule,
+  ],
+  exports : [
+  AdminSidebarComponent
   ]
 })
 export class AdminModule { }

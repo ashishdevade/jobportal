@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { SharedModules } from './core/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+
 import { Interceptor } from './core/Interceptor/interceptor';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +21,8 @@ import { Interceptor } from './core/Interceptor/interceptor';
     AppRoutingModule,
     SharedModules,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+  
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,8 +1,15 @@
 import { HttpHeaders } from '@angular/common/http';
+import {GridOptions, Module, AllCommunityModules} from "@ag-grid-community/all-modules";
 /*import { AngularEditorConfig } from '@kolkov/angular-editor';*/
 
 export class CommonFunctions {
+	public gridOptions: GridOptions;
+	public gridApi:any;
+	public grid_params:any;
+	
+	
 	public login_paqge_link = '/auth/login';
+	public admin_login_paqge_link = '/admin/auth/login';
 	public href: any = window.location.href;
 	public application_path = this.get_current_url();
 	public email_valid_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -236,6 +243,20 @@ export class CommonFunctions {
 		}
 	}
 	
+	public check_admin_session(){
+		if(sessionStorage.getItem("is_admin_logged_in") == null || sessionStorage.getItem("is_admin_logged_in") == '0'){
+			return this.admin_login_paqge_link;
+		} else {
+			if(sessionStorage.getItem('system_config') == null || sessionStorage.getItem('system_config') == undefined){
+				return this.admin_login_paqge_link;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	
+	
 	public get_session_data(parameter_name = null, do_deserilze){
 		let data:any;
 		if(sessionStorage !=  null  || sessionStorage.getItem('system_config') != undefined){
@@ -259,21 +280,42 @@ export class CommonFunctions {
 		}
 		return result;
 	}
+ 
+ 		public grid_options(){
+		this.gridOptions =   <GridOptions>{
+			defaultColDef:{
+				editable: false,
+				enableRowGroup:true,
+				enablePivot:true,
+				enableValue:true,
+				sortable:true,
+				resizable: true,
+				filter: true
+			},
+			rowHeight: 40, 
+			pagination: false,
+			paginationPageSize: this.default_size,
+			onGridReady: () => {
+				this.gridOptions.api.sizeColumnsToFit();
+			},
+		};
+		
+		return this.gridOptions;
+	}
 	
-	/*public angular_editor_config: AngularEditorConfig = {
-		editable: true,
-		spellcheck: true,
-		sanitize: false,
-		height: 'auto',
-		minHeight: '0',
-		maxHeight: 'auto',
-		placeholder: 'Enter text here...',
-		translate: 'no',
-		defaultParagraphSeparator: 'p',
-		defaultFontName: 'Arial',
-		toolbarHiddenButtons: [
-		['bold']
-		],
-	};*/
+	onGridReady(params) {
+		this.grid_params = params;
+		this.gridApi = params.api;
+		let gridColumnApi = params.columnApi;
+		this.gridApi.setDomLayout('autoHeight');
+	}
+	
+	on_page_size_change(newPageSize) {
+		this.gridOptions.api.paginationSetPageSize(Number(newPageSize));
+	}
+	
+	onAgGridSearch() {
+		this.gridOptions.api.setQuickFilter((<HTMLInputElement>document.getElementById("search_grid")).value);
+	}
 
 }

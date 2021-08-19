@@ -5,6 +5,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommonFunctions } from "../helpers/common.functions";
 import { varConstants } from '../helpers/variable.constants';
+import Swal from 'sweetalert2/dist/sweetalert2';
 
 @Injectable({
 	providedIn: 'root'
@@ -40,7 +41,15 @@ export class CommonService {
 			this.change_route(check_session);
 		}
 	}
-
+	
+	check_admin_session_on() {
+		let check_session = this.common_params.check_admin_session();
+		if (check_session != false) {
+			this.show_toast('i', "Your session has expired, Please re-login!", "");
+			this.change_route(check_session);
+		}
+	}
+	
 	signout() {
 		sessionStorage.removeItem("is_logged_in");
 		sessionStorage.removeItem("user_id");
@@ -49,6 +58,17 @@ export class CommonService {
 
 		setTimeout(() => {
 			this.change_route(this.common_params.login_paqge_link);
+		}, 100);
+	}
+	
+	signout_admin() {
+		sessionStorage.removeItem("is_admin_logged_in");
+		sessionStorage.removeItem("admin_id");
+		sessionStorage.removeItem("admin_details");
+		this.show_toast('w', "Your session has been terminated!", "");
+
+		setTimeout(() => {
+			this.change_route(this.common_params.admin_login_paqge_link);
 		}, 100);
 	}
 
@@ -108,5 +128,24 @@ export class CommonService {
 					break;
 			}
 		}
+	}
+	
+	show_sweet_confirm_box(title, text, callback, error_callback){
+		Swal.fire({
+			title: title,
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: '<i class="fa fa-trash"></i> Yes',
+			cancelButtonText: '<i class="fa fa-times"></i> No'
+		}).then((result) => {
+			if (result.value) {
+				callback()
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				if(error_callback != undefined && error_callback!= ""){
+					error_callback()
+				}
+			}
+		})
 	}
 }

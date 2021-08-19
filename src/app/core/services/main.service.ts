@@ -533,5 +533,53 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADMIN_LOGIN, data_object); // this.common_params.httpOptions
 	}
 	
+	get_all_compny_users(search): Observable<any> {
+		let data_object = {
+			search: search,
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_COMPANY_USERS, data_object); // this.common_params.httpOptions
+	}
+	
+	get_all_candidate_users(search): Observable<any> {
+		let data_object = {
+			search: search,
+			// access_type: access_type,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ALL_CANDIDATE_USERS, data_object); // this.common_params.httpOptions
+	}
+	
+	admin_user_change_password(user_id, password): Observable<any> {
+		let data_object = {
+			user_id: user_id,
+			new_pass: password,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADMIN_USER_CHANGE_PASSWORD, data_object); // this.common_params.httpOptions
+	}
+	
+	get_user_profile(type, user_id): Observable<any> {
+		let data_object = {
+			type: type,
+			user_id: user_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.PROFILE_SETTING, data_object); // this.common_params.httpOptions
+	}
+	
+	update_admin_user_edit(user_id, access_type, dataset): Observable<any> {
+		
+		let data_object = dataset;
+		data_object.user_id = user_id;
+		data_object.access_type = access_type;
+
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.UPDATE_ADMIN_USER_EDIT, data_object); // this.common_params.httpOptions
+	}
+	
+	soft_delete_user(user_id): Observable<any> {
+		let data_object = {
+			user_id: user_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.SOFT_DELETE_USER, data_object); // this.common_params.httpOptions
+	}
+	
 	
 }

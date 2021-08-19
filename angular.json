@@ -36,7 +36,8 @@
               "src/assets/css/style.scss",
               "src/assets/css/colors/blue.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss",
             ],
             "scripts": []
           },
