@@ -317,5 +317,9 @@ export class CommonFunctions {
 	onAgGridSearch() {
 		this.gridOptions.api.setQuickFilter((<HTMLInputElement>document.getElementById("search_grid")).value);
 	}
+	
+	ongrid_refresh(type) {
+		this.gridOptions.api.refreshCells(type);
+	}
 
 }

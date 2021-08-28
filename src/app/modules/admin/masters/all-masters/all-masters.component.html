@@ -1,0 +1,104 @@
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+<div class="dashboard-content-inner pt-3 pl-4 pr-4" >
+	<div class="dashboard-headline mb-4">
+		<div class="row">
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<h3>{{this.page_heading}}</h3>
+			</div>
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<li><a [routerLink]="['/admin/dashboard']">Home</a></li>
+						<li>{{this.breadcrumb_heading}}</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="dashboard-box margin-top-0">
+				<div class="headline pt-3 pb-2 pl-3 pr-3">
+					<div class="row">
+						
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> {{this.grid_heading }}</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<div class="float-right">
+								<button (click)="add_master()" title="Add" class="btn btn-sm btn-outline-primary font-size-13px mr-1"><i class="icon-material-outline-add"></i></button>
+							</div>
+							<div class="float-right mr-2">
+								<input type="text" class="form-control form-control-sm" name="search" id="search" placeholder="Search Users" [(ngModel)]="this.searchstring" (input)="search_users()" />
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="admin-grid-section pb-3 ">
+					<div class="col-sm-12 col-md-12 col-lg-12 col-12 overflow-auto" *ngIf="this.columnDefs.length > 0">
+						<div class="ag-theme-material grid-max-size" >
+							<ag-grid-angular #userListGrid
+							style="width: 100%;"
+							class="ag-theme-material"
+							[gridOptions]="gridOptions"
+							[rowData]="list_data"
+							[columnDefs]="columnDefs"
+							rowSelection="multiple"
+							(gridReady)="this.common_params.onGridReady($event)">
+						</ag-grid-angular>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+
+<ng-template #job_type_template>
+	<form method="post" id="job_type-form" #job_type_overview_form="ngForm" (ngSubmit)="on_submit(job_type_overview_form.valid)">
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">{{popup_title}} </h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="register_modal_ref.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="input-with-icon-left mt-3">
+				<i class="icon-material-outline-person-pin"></i>
+				<input type="text" class="input-text with-border"  name="name"  [(ngModel)]="form_data.name" id="name" placeholder="Name" required  #userfirstname="ngModel"/>
+				<div *ngIf="userfirstname.invalid && (userfirstname.dirty || userfirstname.touched)" class="text-danger small">
+					Name is required. 
+				</div>
+			</div>
+			<ng-container *ngIf="this.screen == 'skills' ||  this.screen == 'job-subcategory'">
+				<ng-select [items]="category_list"  bindLabel="name" placeholder="Select Category" appendTo="body" [multiple]="false" name="category_list" id="category_list" [(ngModel)]="this.form_data.category_name" class="input1text with-border  mb-0 pb-0" required #categoryField="ngModel" (change)="select_category($event)"> </ng-select>
+				<div *ngIf="categoryField.invalid && (categoryField.dirty || categoryField.touched || categoryField.submitted)" class="text-danger small"> Category is required </div>
+			</ng-container>
+			
+			<ng-container *ngIf="this.screen == 'industries'">
+				<ng-select [items]="access_type_list"  bindLabel="name" placeholder="Select Access Type" appendTo="body" [multiple]="false" name="access_type_list" id="access_type_list" [(ngModel)]="this.form_data.access_type" class="input1text with-border  mb-0 pb-0" required #accessType="ngModel" (change)="select_access_type($event)"> </ng-select>
+				<div *ngIf="accessType.invalid && (accessType.dirty || accessType.touched || accessType.submitted)" class="text-danger small"> Access Type is required </div>
+			</ng-container>
+			
+			
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="float-left">
+						<button type="submit" class="button ripple-effect ml-2" [disabled]="job_type_overview_form.invalid"><i class="icon-feather-check"></i> {{action_button_text}} </button>
+					</div>
+					<div class="float-right">
+						<button type="button" (click)="register_modal_ref.hide()" class="button gray ripple-effect ml-2"><i class="icon-line-awesome-times"></i> Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-template>
+

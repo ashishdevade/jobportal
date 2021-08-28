@@ -48,6 +48,9 @@ export const apiUrl = {
     ADMIN_USER_CHANGE_PASSWORD: "/admin/admin_user_change_password",
     UPDATE_ADMIN_USER_EDIT: "/admin/update_admin_user_edit",
     SOFT_DELETE_USER: "/admin/soft_delete_user",
+    GET_ALL_MASTERS_DATA: "/admin/get_all_masters_data",
+    ADD_UPDATE_MASTER_DATA: "/admin/add_update_master_data",
+    DELETE_MASTER_DATA: "/admin/delete_master_data",
     
     
 }

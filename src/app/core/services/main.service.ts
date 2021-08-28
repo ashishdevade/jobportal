@@ -581,5 +581,28 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.SOFT_DELETE_USER, data_object); // this.common_params.httpOptions
 	}
 	
+	get_all_masters_data(screen, search, master_id): Observable<any> {
+		let data_object = {
+			screen: screen,
+			search: search,
+			id: master_id,
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_ALL_MASTERS_DATA, data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_master_data(screen, master_id, form_data): Observable<any> {
+		form_data.screen = screen;
+		form_data.master_id = master_id;
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_MASTER_DATA, form_data); // this.common_params.httpOptions
+	}
+	
+	delete_master_data(screen , master_id): Observable<any> {
+		let data_object = {
+			screen: screen,
+			master_id: master_id
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.DELETE_MASTER_DATA, data_object); // this.common_params.httpOptions
+	}
+	
 	
 }

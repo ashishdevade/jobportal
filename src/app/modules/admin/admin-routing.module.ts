@@ -26,6 +26,12 @@ const routes: Routes = [
     component : BackendComponent,
     loadChildren: () => import('./manage-users/manage-users.module').then(m => m.ManageUsersModule),    
     data: { showHeader: true, showFooter: true }
+  }, 
+  {
+    path: 'masters',
+    component : BackendComponent,
+    loadChildren: () => import('./masters/masters.module').then(m => m.MastersModule),    
+    data: { showHeader: true, showFooter: true }
   },
 ];
 

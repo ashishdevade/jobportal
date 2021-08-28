@@ -118,11 +118,7 @@ export class CandidatesComponent implements OnInit {
       status = '<span class="text-white badge  badge-secondary p-1 badge-custom">Inactive</span>';
     }    
     return status;
-  }
-  
-  public add(){
-    
-  }
+  } 
   
   public edit_function(user_id){
     let edit_router = '/admin/users/edit/student/' + user_id; 
@@ -167,8 +163,6 @@ export class CandidatesComponent implements OnInit {
    this.register_modal_ref = this.modalService.show( template, this.common_params.modal_config );
    this.show_loader = false;
  }
- 
- 
  
  on_submit(isValid: Boolean){
    if (isValid){

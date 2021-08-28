@@ -36,11 +36,11 @@
 								</li>
 								<li><a href="javascript:;" (click)="expand_collapse_menu(2)"><i class="icon-material-outline-assignment"></i> Masters</a>
 									<ul [ngClass]="{'admin_menu_expand_collapse' : manage_task_toggle == true}">
-										<li><a href="javascript:;">Job Profiles</a></li>
-										<li><a href="javascript:;">Job Category</a></li>
-										<li><a href="javascript:;">Job Subcategory</a></li>
-										<li><a href="javascript:;">Industries </a></li>
-										<li><a href="javascript:;">Skills</a></li>
+										<li><a href="javascript:;" [routerLink]="['/admin/masters/s/job-profile']">Job Profiles</a></li>
+										<li><a href="javascript:;" [routerLink]="['/admin/masters/s/job-category']">Job Category</a></li>
+										<li><a href="javascript:;" [routerLink]="['/admin/masters/s/job-subcategory']">Job Subcategory</a></li>
+										<li><a href="javascript:;" [routerLink]="['/admin/masters/s/industries']">Industries </a></li>
+										<li><a href="javascript:;" [routerLink]="['/admin/masters/s/skills']">Skills</a></li>
 									</ul>	
 								</li>
 							</ul>
