@@ -14,6 +14,26 @@
 					</div>
 				</div>
 
+				<div class="sidebar-widget">
+					<h3>Expert Level</h3>
+
+					<div class="switches-list">
+						<div class="switch-container">
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Beginner </label>
+						</div>
+
+						<div class="switch-container">
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Intermediate</label>
+						</div>
+
+						<div class="switch-container">
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Expert</label>
+						</div>
+
+						
+					</div>
+
+				</div>
 				
 				<!-- Keywords -->
 				<div class="sidebar-widget">
@@ -31,42 +51,43 @@
 				<!-- Category -->
 				<div class="sidebar-widget">
 					<h3>Category</h3>
-					<select class="default" multiple data-selected-text-format="count" data-size="7" title="All Categories" style=" height: 199px;">
-						<option>Admin Support</option>
-						<option>Customer Service</option>
-						<option>Data Analytics</option>
-						<option>Design & Creative</option>
-						<option>Legal</option>
-						<option>Software Developing</option>
-						<option>IT & Networking</option>
-						<option>Writing</option>
-						<option>Translation</option>
-						<option>Sales & Marketing</option>
-					</select>
+					<div class="submit-field">
+						<ng-select [items]="category_list"  bindLabel="name" placeholder="Select Category" appendTo="body" [multiple]="true" name="category_list" id="category_list" [(ngModel)]="form_data.category" class="input1text with-border  mb-0 pb-0" #CountryField="ngModel" (change)="get_category($event)"> </ng-select>
+					</div>
+				</div>
+				
+				<div class="sidebar-widget">
+					<h3>Industry</h3>
+					<div class="submit-field">
+						<ng-select [items]="Industry_list"  bindLabel="name" placeholder="Select Industry" appendTo="body" [multiple]="true" name="Industry_list" id="Industry_list" [(ngModel)]="form_data.industry" class="input1text with-border  mb-0 pb-0" #CountryField="ngModel" (change)="get_industry($event)"> </ng-select>
+					</div>
+				</div>
+				
+				<div class="sidebar-widget">
+					<h3>Skills</h3>
+					<div class="submit-field">
+						<ng-select [items]="skill_list"  bindLabel="name" placeholder="Select Skills" appendTo="body" [multiple]="true" name="skill_list" id="skill_list" [(ngModel)]="form_data.skills" class="input1text with-border  mb-0 pb-0" #CountryField="ngModel" (change)="get_skills($event)"> </ng-select>
+					</div>
 				</div>
 				
 				<!-- Job Types -->
 				<div class="sidebar-widget">
 					<h3>Job Type</h3>
-
 					<div class="switches-list">
-						<div class="switch-container">
-							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Freelance</label>
-						</div>
-
-						<div class="switch-container">
-							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Full Time</label>
-						</div>
-
 						<div class="switch-container">
 							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Part Time</label>
 						</div>
-
 						<div class="switch-container">
-							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Internship</label>
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Full Time</label>
 						</div>
 						<div class="switch-container">
-							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Temporary</label>
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Intern</label>
+						</div>
+						<div class="switch-container">
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Contract</label>
+						</div>
+						<div class="switch-container">
+							<label class="switch"><input type="checkbox"><span class="switch-button"></span> Freelance</label>
 						</div>
 					</div>
 
@@ -171,11 +192,6 @@
 
 					<!-- Job Listing Details -->
 					<div class="job-listing-details">
-						<!-- Logo -->
-						<div class="job-listing-company-logo">
-							<img src="images/company-logo-01.png" alt="">
-						</div>
-
 						<!-- Details -->
 						<div class="job-listing-description">
 							<h4 class="job-listing-company">Hexagon <span class="verified-badge" title="Verified Employer" data-tippy-placement="top"></span></h4>
@@ -203,11 +219,6 @@
 
 					<!-- Job Listing Details -->
 					<div class="job-listing-details">
-						<!-- Logo -->
-						<div class="job-listing-company-logo">
-							<img src="images/company-logo-02.png" alt="">
-						</div>
-
 						<!-- Details -->
 						<div class="job-listing-description">
 							<h4 class="job-listing-company">Coffee</h4>
@@ -236,11 +247,6 @@
 
 					<!-- Job Listing Details -->
 					<div class="job-listing-details">
-						<!-- Logo -->
-						<div class="job-listing-company-logo">
-							<img src="images/company-logo-03.png" alt="">
-						</div>
-
 						<!-- Details -->
 						<div class="job-listing-description">
 							<h4 class="job-listing-company">King <span class="verified-badge" title="Verified Employer" data-tippy-placement="top"></span></h4>
@@ -268,11 +274,6 @@
 
 					<!-- Job Listing Details -->
 					<div class="job-listing-details">
-						<!-- Logo -->
-						<div class="job-listing-company-logo">
-							<img src="images/company-logo-04.png" alt="">
-						</div>
-
 						<!-- Details -->
 						<div class="job-listing-description">
 							<h4 class="job-listing-company">Mates</h4>
