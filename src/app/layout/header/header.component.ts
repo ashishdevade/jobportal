@@ -20,6 +20,14 @@ export class HeaderComponent implements OnInit {
 	public user_account_data = [];
 	public service_url = "";
 	public hide_top_optios = false
+	
+	public account_type = '';
+	
+	public items: string[] = [
+	'The first choice!',
+	'And another choice for you.',
+	'but wait! A third!'
+	];
 
 	constructor(
 		private router: Router,
@@ -36,6 +44,12 @@ export class HeaderComponent implements OnInit {
 				} else {
 					this.hide_top_optios = true;
 				}
+				
+				this.header_flag = (sessionStorage.is_logged_in!= undefined ) ? sessionStorage.is_logged_in : 0; 
+				
+				if(this.header_flag == '1'){
+					this.account_type = sessionStorage.account_type
+				}
 			}
 		});
 		
@@ -49,6 +63,10 @@ export class HeaderComponent implements OnInit {
 				}
 			}
 			this.header_flag = sessionStorage.is_logged_in;
+			
+			if(this.header_flag == '1'){
+				this.account_type = sessionStorage.account_type
+			}
 		});
 		
 	}
@@ -75,6 +93,16 @@ export class HeaderComponent implements OnInit {
 			}
 		});
 		
+	}
+	
+	onHidden(): void {
+		console.log('Dropdown is hidden');
+	}
+	onShown(): void {
+		console.log('Dropdown is shown');
+	}
+	isOpenChange(): void {
+		console.log('Dropdown state is changed');
 	}
 	
 	get_user_profile_settings(type, callback) {

@@ -116,6 +116,21 @@ export class CommonFunctions {
 	{ value: 5, heading: 'Freelance', description: "I am looking for a freelance project that fits my criteria" },
 	];
 	
+	public candidate_type = [
+		{ value: 1, heading: 'Part-Time'},
+		{ value: 2, heading: 'Full-Time'},
+		{ value: 3, heading: 'Intern'},
+		{ value: 4, heading: 'Contractor'},
+		{ value: 5, heading: 'Freelancer'},
+	];
+	
+	public project_length = [
+		{ value: '1 - 3 Months', heading: '1 - 3 Months' },
+		{ value: '3 - 6 Months', heading: '3 - 6 Months' },
+		{ value: 'More than 6 Months', heading: 'More than 6 Months' },
+		
+	];
+	
 	public modal_config = {
 		class: 'modal-lg',
 		backdrop: true,

@@ -1,0 +1,473 @@
+<div class="margin-top-50"></div>
+<div class="page_data_loader" *ngIf="show_loader"></div>
+
+<div class="container">
+	<div class="headline mb-4">
+		<div class="row">
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<h3>Job Postings</h3>
+			</div>
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				
+			</div>
+		</div>
+	</div>
+	<form method="post" id="job_type-form" #userform="ngForm" (ngSubmit)="on_submit(userform.valid)" class="mt-3">
+	<div class="row">
+		<div class="col-xl-12 col-md-12 col-sm-12 col-lg-12">
+			<div class="dashboard-box margin-top-0 margin-bottom-30">
+				<div class="headline pt-3 pb-2 pl-3 pr-3">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> <span class="capatalise" *ngIf="this.job_id!= null"> Edit  </span> <span class="capatalise" *ngIf="this.job_id== null"> Add  </span> Job</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-6"></div>
+					</div>
+				</div>
+				<div class="content with-padding pt-1 padding-bottom-10">
+							<h5 class="mb-2 form-inner-heading mt-3">General Details</h5>
+							<div class="row mt-1">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5> Job Title <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="job_title" id="job_title"
+											placeholder="Enter Job Title" required [(ngModel)]="form_data.job_title" #job_title="ngModel" />
+										<div *ngIf="job_title.invalid && (job_title.dirty || job_title.touched)" class="text-danger small"> Job Title is required </div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Job Category <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Category" name="category" id="category"
+											[(ngModel)]="form_data.category_id" required #category="ngModel">
+											<option value="" disabled>Select a Job Category</option>
+											<option *ngFor="let item of this.job_category_list" [value]="item.category_id"> {{item.name}}</option>
+										</select>
+										<div *ngIf="category.invalid && (category.dirty || category.touched)" class="text-danger small">
+											Job Category is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Job Profile <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Profile" name="profile" id="profile"
+											[(ngModel)]="form_data.profile_id" required #jobprofileobj="ngModel">
+											<option value="" disabled>Select a Job Profile</option>
+											<option *ngFor="let item of this.job_profile_list" [value]="item.id"> {{item.profile_name}}</option>
+										</select>
+										<div *ngIf="jobprofileobj.invalid && (jobprofileobj.dirty || jobprofileobj.touched)" class="text-danger small">
+											Job profile is required.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+									<div class="submit-field">
+										<h5> Job Description <span class="text-danger font-20">*</span> </h5>
+										<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="job_desc"
+											id="job_desc" rows="5" placeholder="Description of job requirement" [(ngModel)]="form_data.job_desc"
+											#job_desc="ngModel"> </textarea>
+									</div>
+								</div>
+								
+							</div>
+								<div class="row">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5> Skills  <span class="text-danger font-20">*</span></h5>
+												<ng-select [items]="skills_list" bindLabel="name" placeholder="Select Skills" appendTo="body" [multiple]="true"
+													name="skills_list" id="skills_list" [(ngModel)]="form_data.skills" class="input1text with-border  mb-0 pb-0"
+													#skillfield="ngModel" (change)="select_skills($event)"> </ng-select>
+											<div *ngIf="skillfield.invalid && (skillfield.dirty || skillfield.touched)" class="text-danger small"> Company Name is required </div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5> Industry <span class="text-danger font-20">*</span></h5>
+											<ng-select [items]="industry_list" bindLabel="name" placeholder="Select Industry" appendTo="body" [multiple]="true"
+												name="industry" id="industry" [(ngModel)]="form_data.industry" class="input1text with-border  mb-0 pb-0"
+												#industryobj="ngModel" (change)="select_industry($event)"> </ng-select>
+											<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small"> Industry is required </div>
+						
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Job Location </h5>
+											<ng-container>
+												<ng-select [items]="country_list" bindLabel="name" placeholder="Select Country" appendTo="body"
+													[multiple]="false" name="country_field" id="country_field" [(ngModel)]="form_data.job_country"
+													class="input1text with-border  mb-0 pb-0" required #jobLocation="ngModel" disabled >
+												</ng-select>
+												<span class="text-muted text-sm">Job belongs to which country</span>
+											</ng-container>
+											
+										</div>
+									</div>
+								</div>
+							<hr class="mt-1 mb-3">
+							<h5 class="mb-2 form-inner-heading">Candidate</h5>
+							<div class="row">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Total Candidate Required <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select total required candidates" name="candidate_required" id="candidate_required"
+											[(ngModel)]="form_data.candidate_required_id" required #candidateRequired="ngModel">
+											<option *ngFor="let item of this.candidate_required_list" [value]="item.key"> {{item.value}}</option>
+										</select>
+										<div *ngIf="candidateRequired.invalid && (candidateRequired.dirty || candidateRequired.touched)" class="text-danger small">
+											Job Profile is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Candidate Type <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Candidate Type" name="candidate_type" id="candidate_type"
+											[(ngModel)]="form_data.candidate_type" required #candidateType="ngModel">
+											<option *ngFor="let item of this.candidate_type_list" [value]="item.value"> {{item.heading}}</option>
+										</select>
+										<div *ngIf="candidateType.invalid && (candidateType.dirty || candidateType.touched)" class="text-danger small">
+											Candidate Type is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Candidate language </h5>
+										<ng-select [items]="candidate_language_list" bindLabel="name" placeholder="Select Language" appendTo="body" [multiple]="true"
+											name="candidate_language" id="candidate_language" [(ngModel)]="form_data.candidate_language" class="input1text with-border  mb-0 pb-0"
+											 #candidatelanguage="ngModel">
+										</ng-select>
+										<span class="text-muted text-sm">Candidate Should know following languages</span>
+										<!-- <div *ngIf="candidatelanguage.invalid && (candidatelanguage.dirty || candidatelanguage.touched)" class="text-danger small">
+											Candidate Type is required.
+										</div> -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+									<div class="submit-field">
+										<h5> Candidate Requirement Details <span class="text-danger font-20">*</span> </h5>
+										<textarea class=" input-text with-border  mb-0 pb-0" rows="10" name="candidate_req_details"
+											id="candidate_req_details" rows="5" placeholder="Describe the right candidate for this job"
+											[(ngModel)]="form_data.candidate_req_details" #candidate_req_details="ngModel"> </textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Candidates Country </h5>
+										<ng-container>
+											<ng-select [items]="country_list" bindLabel="name" placeholder="Select Country" appendTo="body"
+												[multiple]="false" name="candidate_country" id="candidate_country" [(ngModel)]="form_data.candidate_country"
+												class="input1text with-border  mb-0 pb-0" required #CountryCandidate="ngModel" (change)="get_state($event)">
+											</ng-select>
+											<span class="text-muted text-sm">Country candidate should belong to</span>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Candidates State </h5>
+										<ng-container>
+											<ng-select [items]="state_list" bindLabel="name" placeholder="Select State" appendTo="body"
+												[multiple]="false" name="state_list" id="state_list" [(ngModel)]="form_data.candidate_state"
+												class="input1text with-border  mb-0 pb-0" #CandidateState="ngModel" (change)="state_select($event)">
+											</ng-select>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Candidates City </h5>
+										<ng-container>
+											<ng-select [items]="city_list" bindLabel="name" placeholder="Select City" appendTo="body"
+												[multiple]="false" name="city_list" id="city_list" [(ngModel)]="form_data.candidate_city"
+												class="input1text with-border  mb-0 pb-0" #CandidateCity="ngModel" (change)="city_select($event)">
+											</ng-select>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						<div class="row">
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5>Candidate Expertise Level <span class="text-danger font-20">*</span></h5>
+									<select class="form-control with-border" title="Select Expertise" name="level" id="level"
+										[(ngModel)]="form_data.expert_level" required #expertlevel="ngModel">
+											<option *ngFor="let item of this.expertise_level" [value]="item.value"> {{item.heading}}</option>
+									</select>
+									<div *ngIf="expertlevel.invalid && (expertlevel.dirty || expertlevel.touched)" class="text-danger small">
+										Expertise Level is required.
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field ">
+									<h5> Minimum hours from candidate per week</h5>
+									<div class="input-group">
+										<input type="text" class="form-control height-38 input-text with-border  mb-0 pb-0" name="minimum_hours_from_candidate" id="minimum_hours_from_candidate"
+											placeholder="20 | 30 | 40" [(ngModel)]="form_data.minimum_hours_from_candidate" #minimum_hours_from_candidate="ngModel"
+											pattern="[0-9]+" />
+										<div class="input-group-append">
+											<span class="input-group-text" id="basic-addon2">Hours</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						
+						 
+						
+							<hr class="mt-1 mb-3">
+							<h5 class="mb-2 form-inner-heading">Project Details</h5>
+							<div class="row">
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Rate Type <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Rate Type" name="rate_type" id="rate_type"
+										[(ngModel)]="form_data.rate_type" required #rate_type="ngModel">
+										<option value="" disabled>Select a Rate Type</option>
+										<option value="hourly"> Hourly Rate </option>
+										<option value="fixed"> Fixed Rate </option>
+									</select>
+									<div *ngIf="rate_type.invalid && (rate_type.dirty || rate_type.touched)" class="text-danger small">
+										Rate Type is required.
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
+								<div class="submit-field">
+									<h5>Hourly Rate From ($) <span class="text-danger font-20">*</span></h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_from" id="hourly_rate_from" placeholder="Enter Hourly Rate From" required [(ngModel)]="form_data.hourly_rate_from" #hourly_rate_from="ngModel"  pattern="[0-9]+" />
+									<div *ngIf="hourly_rate_from.invalid && (hourly_rate_from.dirty || hourly_rate_from.touched)" class="text-danger small">
+										Hourly Rate From is required, (only number allowed))
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-1 col-1 col-sm-1 col-md-1" *ngIf="form_data.rate_type == 'hourly'">
+								<div class="submit-field  mt-4 pt-2">to</div>
+								
+							</div>
+							<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
+								<div class="submit-field">
+									<h5>Hourly Rate To ($) <span class="text-danger font-20">*</span></h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_to" id="hourly_rate_to" placeholder="Enter Hourly Rate To" required [(ngModel)]="form_data.hourly_rate_to" #hourly_rate_to="ngModel" pattern="[0-9]+" />
+									<div *ngIf="hourly_rate_to.invalid && (hourly_rate_to.dirty || hourly_rate_to.touched)" class="text-danger small">
+										Hourly Rate To is required, (only number allowed))
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4" *ngIf="form_data.rate_type == 'fixed'">
+								<div class="submit-field">
+									<h5>Fixed Rate ($) <span class="text-danger font-20">*</span></h5>
+									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="fixed_rate" id="fixed_rate"
+										placeholder="Fixed Rate" required [(ngModel)]="form_data.fixed_rate" 	#fixed_rate="ngModel" pattern="[0-9]+" />
+									<div *ngIf="fixed_rate.invalid && (fixed_rate.dirty || fixed_rate.touched)" class="text-danger small">
+										Fixed Rate is required, (only number allowed))
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5>Project Type <span class="text-danger font-20">*</span></h5>
+									<select class="form-control with-border" title="Select Project Status" name="project_type" id="project_type"
+										[(ngModel)]="form_data.project_type" required #project_type="ngModel">
+							
+										<option value="1"> Short Term </option>
+										<option value="2"> Long Term </option>
+									</select>
+									<div *ngIf="project_type.invalid && (project_type.dirty || project_type.touched)" class="text-danger small">
+										Project Status is required.
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5>Project Status <span class="text-danger font-20">*</span></h5>
+									<select class="form-control with-border" title="Select Project Status" name="project_status" id="project_status"
+										[(ngModel)]="form_data.project_status" required #project_status="ngModel">
+										
+										<option value="1"> New Project </option>
+										<option value="2"> On Going Project </option>
+									</select>
+									<div *ngIf="project_status.invalid && (project_status.dirty || project_status.touched)" class="text-danger small">
+										Project Status is required.
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+								<div class="submit-field">
+									<h5>Project Length <span class="text-danger font-20">*</span></h5>
+									<select class="form-control with-border" title="Select Project Length" name="project_length" id="project_length"
+										[(ngModel)]="form_data.project_length" required #project_length="ngModel">
+										
+										<option *ngFor="let length of project_length_list" [value]="length.value"> {{length.heading}} </option>
+										
+									</select>
+									<div *ngIf="project_length.invalid && (project_length.dirty || project_length.touched)" class="text-danger small">
+										Project Length is required.
+									</div>
+								</div>
+							</div>
+						</div>
+
+							<div class="row">
+								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+									<div class="submit-field">
+										<h5>Job Status <span class="text-danger font-20">*</span></h5>
+										<div class="feedback-yes-no margin-top-0">
+											<div class="radio">
+												<input id="draft" name="radio" type="radio" name="status" [value]="1" [(ngModel)]="this.form_data.status">
+												<label for="draft"><span class="radio-label"></span> Draft </label>
+											</div>
+											<div class="radio">
+												<input id="active" name="radio" type="radio" name="status" [value]="2" [(ngModel)]="this.form_data.status">
+												<label for="active"><span class="radio-label"></span> Active </label>
+											</div>
+						
+											<div class="radio">
+												<input id="inactive" name="radio" type="radio" name="status" [value]="3" [(ngModel)]="this.form_data.status">
+												<label for="inactive"><span class="radio-label"></span> Inactive </label>
+											</div>
+												<div class="radio">
+													<input id="closed" name="radio" type="radio" name="status" [value]="4" [(ngModel)]="this.form_data.status">
+													<label for="closed"><span class="radio-label"></span> Closed </label>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							
+						</div>
+						
+					</div> 
+					<hr class="mt-1 mb-1">
+					
+				<div class="dashboard-box margin-top-0 margin-bottom-30">
+					<div class="headline pt-3 pb-2 pl-3 pr-3">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-lg-6">
+								<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> <span class="capatalise"> Interview Questions  </span> </h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-lg-6">
+								<div class="pull-right float-right">
+									<button type="button" class="btn btn-sm btn-success big mt-1" (click)="add_more_rows()" ><i class="icon-feather-plus"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="content with-padding pt-3 padding-bottom-10">
+						<h5 class="mb-2 form-inner-heading pb-3">Add and Update interview question, User will answer them when applying for job</h5>
+						
+						<ng-container *ngFor="let item of form_data.question_list; let i = index">
+							<div class="row">
+								<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+									<div class="submit-field">
+										<h5> Question {{i + 1}} <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="question_{{i}}" id="question_{{i}}"
+											placeholder="Enter Question {{i + 1}}" required [(ngModel)]="item.question" #question="ngModel" />
+										<div *ngIf="question.invalid && (question.dirty || question.touched)" class="text-danger small"> Question is required </div>
+									</div>
+								</div>
+								<div class="col-xl-3 col-3 col-sm-3 col-md-3">
+									<div class="submit-field">
+										<h5>Is Mandatory <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Question" name="mandatoryfield_{{i}}" id="mandatoryfield_{{i}}"
+											[(ngModel)]="item.mandatory" required #mandatoryfield="ngModel">
+								
+											<option value="1"> Yes </option>
+											<option value="2"> No </option>
+										</select>
+										<div *ngIf="mandatoryfield.invalid && (mandatoryfield.dirty || mandatoryfield.touched)" class="text-danger small">
+											Project Status is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-1 col-1 col-sm-1 col-md-1">
+									<br>
+									<button type="button" class="btn btn-sm btn-danger mt-3" (click)="remove_row(i)"><i class="icon-line-awesome-times-circle-o"></i></button>
+								</div>
+								</div>
+						</ng-container>
+							</div>
+						</div>
+						
+						<div class="dashboard-box margin-top-0 margin-bottom-30">
+							<div class="headline pt-3 pb-2 pl-3 pr-3">
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-lg-6">
+										<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> <span
+												class="capatalise"> Skills and expertise </span> </h3>
+									</div>
+									<div class="col-md-6 col-sm-6 col-lg-6">
+										<div class="pull-right float-right">
+											<button type="button" class="btn btn-sm btn-success big mt-1" (click)="add_more_skills()"><i
+													class="icon-feather-plus"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content with-padding pt-3 padding-bottom-10">
+								<h5 class="mb-2 form-inner-heading pb-3">Add skills and expertise as hashtag for the applicant to see whether they fit this job
+								</h5>
+						
+								<ng-container *ngFor="let item of form_data.skill_expertise_list; let i = index">
+									<div class="row">
+										<div class="col-xl-8 col-8 col-sm-8 col-md-8">
+											<div class="submit-field">
+												<h5> Skill / Expertise heading <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="skill_expertise_heading"
+													id="skill_expertise_heading_{{i}}" placeholder="Enter Heading {{i + 1}}" required [(ngModel)]="item.heading"
+													#skill_expertise_heading="ngModel" />
+												<div *ngIf="skill_expertise_heading.invalid && (skill_expertise_heading.dirty || skill_expertise_heading.touched)"  class="text-danger small"> Skill/Expertise is required </div>
+											</div>
+										</div>
+										<div class="col-xl-3 col-3 col-sm-3 col-md-3">
+											<div class="submit-field">
+												<h5>Values (Hashtags) <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="multiple_hashtags"
+													id="multiple_hashtags_{{i}}" placeholder="Enter Hashtag Values {{i + 1}}" required [(ngModel)]="item.multiple_hastags"
+													#multiple_hashtags="ngModel" />
+												<div *ngIf="multiple_hashtags.invalid && (multiple_hashtags.dirty || multiple_hashtags.touched)"
+													class="text-danger small"> Hashtags is required </div>
+											</div>
+										</div>
+										<div class="col-xl-1 col-1 col-sm-1 col-md-1">
+											<br>
+											<button type="button" class="btn btn-sm btn-danger mt-3" (click)="remove_skills(i)"><i
+													class="icon-line-awesome-times-circle-o"></i></button>
+										</div>
+									</div>
+								</ng-container>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="row">
+									<div class="col-xl-6">
+										<button type="submit" class="button ripple-effect big mt-3" [disabled]="userform.invalid"><i class="icon-feather-check"></i> <span class="capatalise" *ngIf="this.job_id!= null"> Update Job </span> <span class="capatalise" *ngIf="this.job_id== null">
+											Save Job  </span></button>
+									</div>
+						
+									<div class="col-xl-6">
+										<button type="button" (click)="goback()" class="button gray ripple-effect big mt-3 float-right"><i class="icon-feather-x"></i> Cancel</button>
+									</div>
+								</div>
+							</div>
+				   	</div>
+				</div>
+			</div>
+		</form>
+	</div>
+

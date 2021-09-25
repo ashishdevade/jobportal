@@ -6,8 +6,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModules } from 'src/app/core/shared.module';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { BackendComponent } from './backend/backend.component';
 import { AdminSidebarComponent } from './common/admin-sidebar/admin-sidebar.component';
+import { BackendComponent } from './backend/backend.component';
 
 
 @NgModule({

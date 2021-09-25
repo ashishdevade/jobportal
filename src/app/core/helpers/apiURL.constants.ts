@@ -51,6 +51,9 @@ export const apiUrl = {
     GET_ALL_MASTERS_DATA: "/admin/get_all_masters_data",
     ADD_UPDATE_MASTER_DATA: "/admin/add_update_master_data",
     DELETE_MASTER_DATA: "/admin/delete_master_data",
+    GET_JOB_POSTING: '/jobs/get_job_posting',
+    ADD_UPDATE_JOB_POSTING: '/jobs/add_update_job_posting',
+    DELETE_JOB_POSTING: '/jobs/delete_job_posting',
     
     
 }

@@ -190,14 +190,9 @@ export class ReviewComponent implements OnInit {
 
 		for (let i = (d.getFullYear() + 10); i >= (d.getFullYear() - 50); i--) {
 			this.to_year_array.push(i);
-		}
-
-		/*for (let i = 1; i <= 52; i++) {
-			this.to_week_array.push(i);
-		}*/
+		} 
 		
 		this.to_week_array = this.common_params.timeline_hiring_weekly_list;
-		
 		this.month_arr = this.common_params.month_array;
 		
 		this.show_loader = true;

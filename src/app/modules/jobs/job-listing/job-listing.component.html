@@ -1,0 +1,54 @@
+<div class="page_data_loader_popup" *ngIf="show_loader"></div>
+<div class="dashboard-content-inner pt-3 pl-4 pr-4" >
+	<div class="dashboard-headline mb-4">
+		<div class="row">
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				<h3>Job Listings</h3>
+			</div>
+			<div class="col-xl-6 col-md-6 col-lg-6">
+				
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="dashboard-box margin-top-0">
+				<div class="headline pt-3 pb-2 pl-3 pr-3">
+					<div class="row">
+						
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<h3 class="mb-0 line-height-40"><i class="icon-material-outline-business-center"></i> My Jobs</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<div class="float-right">
+								<button (click)="add_new_job_posting()" title="Post a new job" class="btn btn-sm btn-outline-primary font-size-13px mr-1"><i class="icon-material-outline-add"></i> Post New Job</button>
+							</div>
+							<div class="float-right mr-2">
+								<input type="text" class="form-control form-control-sm" name="search" id="search" placeholder="Search Jobs" [(ngModel)]="this.searchstring" (input)="search_users()" />
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="admin-grid-section">
+					<div class="col-sm-12 col-md-12 col-lg-12 col-12">
+						<div class="ag-theme-material grid-max-size">
+							<ag-grid-angular #userListGrid
+							style="width: 100%;"
+							class="ag-theme-material"
+							[gridOptions]="gridOptions"
+							[rowData]="user_list"
+							[columnDefs]="columnDefs"
+							rowSelection="multiple"
+							(gridReady)="this.common_params.onGridReady($event)">
+						</ag-grid-angular>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+

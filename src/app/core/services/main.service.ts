@@ -35,6 +35,14 @@ export class MainService {
 	}
 
 	check_login(username, password): Observable<any> {
+		if(sessionStorage.getItem("system_config")){
+			this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
+		} else {
+			this.get_config((config_data) => {
+				this.config_file_data = JSON.parse(config_data);		
+			});		
+		}
+		
 		let data_object = {
 			email: username,
 			password: password,
@@ -525,6 +533,14 @@ export class MainService {
 	}
 	
 	admin_validate_login(username, password): Observable<any> {
+		if(sessionStorage.getItem("system_config")){
+			this.config_file_data = JSON.parse(sessionStorage.getItem('system_config'));
+		} else {
+			this.get_config((config_data) => {
+				this.config_file_data = JSON.parse(config_data);		
+			});		
+		}
+		
 		let data_object = {
 			email: username,
 			password: password,
@@ -604,5 +620,31 @@ export class MainService {
 		return this.httpclient.post(this.config_file_data.service_url + apiUrl.DELETE_MASTER_DATA, data_object); // this.common_params.httpOptions
 	}
 	
+	get_job_posting(search, job_id, data_type): Observable<any> {
+		let company_details = JSON.parse(sessionStorage.user_details);
+		let data_object = {
+			search: search,
+			company_id: company_details.company_id,
+			job_id: job_id,
+			data_type: data_type
+			
+		};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.GET_JOB_POSTING, data_object); // this.common_params.httpOptions
+	}
+	
+	add_update_job_posting(dataset, job_id): Observable<any> {
+		let company_details = JSON.parse(sessionStorage.user_details);
+		let data_object = dataset;
+		data_object.job_id = (job_id != null && job_id != undefined && job_id != '') ? job_id : 0;
+		dataset.company_id = company_details.company_id;
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.ADD_UPDATE_JOB_POSTING, data_object); // this.common_params.httpOptions
+	}
+	
+	delete_job_posting(job_id): Observable<any> {
+		let data_object = {
+			job_id: job_id,
+			};
+		return this.httpclient.post(this.config_file_data.service_url + apiUrl.DELETE_JOB_POSTING, data_object); // this.common_params.httpOptions
+	}
 	
 }
