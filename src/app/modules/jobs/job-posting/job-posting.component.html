@@ -41,7 +41,8 @@
 										<select class="form-control with-border" title="Select Category" name="category" id="category"
 											[(ngModel)]="form_data.category_id" required #category="ngModel">
 											<option value="" disabled>Select a Job Category</option>
-											<option *ngFor="let item of this.job_category_list" [value]="item.category_id"> {{item.name}}</option>
+											<!-- <option *ngFor="let item of this.job_category_list" [value]="item.category_id"> {{item.name}}</option> -->
+											<option *ngFor="let item of this.job_profile_list" [value]="item.id"> {{item.profile_name}}</option>
 										</select>
 										<div *ngIf="category.invalid && (category.dirty || category.touched)" class="text-danger small">
 											Job Category is required.
@@ -49,6 +50,13 @@
 									</div>
 								</div>
 								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5> Department <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="job_title" id="job_title"
+											placeholder="Enter Department" [(ngModel)]="form_data.department" #job_title="ngModel" />
+									</div>
+								</div>
+								<!-- <div class="col-xl-4 col-4 col-sm-4 col-md-4">
 									<div class="submit-field">
 										<h5>Job Profile <span class="text-danger font-20">*</span></h5>
 										<select class="form-control with-border" title="Select Profile" name="profile" id="profile"
@@ -60,7 +68,7 @@
 											Job profile is required.
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							<div class="row">
 								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
@@ -84,13 +92,20 @@
 										</div>
 									</div>
 									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										
 										<div class="submit-field">
-											<h5> Industry <span class="text-danger font-20">*</span></h5>
-											<ng-select [items]="industry_list" bindLabel="name" placeholder="Select Industry" appendTo="body" [multiple]="true"
-												name="industry" id="industry" [(ngModel)]="form_data.industry" class="input1text with-border  mb-0 pb-0"
-												#industryobj="ngModel" (change)="select_industry($event)"> </ng-select>
-											<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small"> Industry is required </div>
-						
+											<h5> Industry</h5>
+											<ng-container *ngIf="this.form_data.industry!= -1">
+												<ng-select [items]="industry_list" bindLabel="name" placeholder="Select Industry" appendTo="body" [multiple]="false"
+												name="industry" id="industry" [(ngModel)]="form_data.industry_name" class="input1text with-border  mb-0 pb-0"
+												#industryobj="ngModel" (change)="select_industry($event)" disabled > </ng-select>
+												<div *ngIf="industryobj.invalid && (industryobj.dirty || industryobj.touched)" class="text-danger small"> Industry is required </div>
+											</ng-container>
+											<ng-container *ngIf="this.form_data.industry== -1 && this.form_data.other_industry!= '' ">
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="job_title" id="job_title"
+													placeholder="Enter Job Title" required [(ngModel)]="this.form_data.other_industry" #job_title="ngModel" readonly disabled />
+											</ng-container>
+												
 										</div>
 									</div>
 									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
@@ -104,6 +119,32 @@
 												<span class="text-muted text-sm">Job belongs to which country</span>
 											</ng-container>
 											
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-12 col-12 col-sm-12 col-md-12">
+										<div class="submit-field">
+											<h5>Preference </h5>
+											<div class="feedback-yes-no margin-top-0">
+												<div class="radio">
+													<input id="remote" name="radio" type="radio" name="preference" value="Remote"
+														[(ngModel)]="this.form_data.job_preference">
+													<label for="remote"><span class="radio-label"></span> Remote </label>
+												</div>
+												<div class="radio">
+													<input id="onSite" name="radio" type="radio" name="preference" value="On-Site"
+														[(ngModel)]="this.form_data.job_preference">
+													<label for="onSite"><span class="radio-label"></span> On-Site </label>
+												</div>
+								
+												<div class="radio">
+													<input id="flexible" name="radio" type="radio" name="preference" value="Flexible"
+														[(ngModel)]="this.form_data.job_preference">
+													<label for="flexible"><span class="radio-label"></span> Flexible </label>
+												</div>
+												
+											</div>
 										</div>
 									</div>
 								</div>
@@ -148,7 +189,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
 									<div class="submit-field">
 										<h5> Candidate Requirement Details <span class="text-danger font-20">*</span> </h5>
@@ -157,15 +198,19 @@
 											[(ngModel)]="form_data.candidate_req_details" #candidate_req_details="ngModel"> </textarea>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="row">
+								<div class="col-xl-12 col-12 col-sm-12 col-md-12 mb-2">
+									<h5 class="mb-2 form-inner-heading">Candidates Prefered Location</h5>
+								</div>
+								
 								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
 									<div class="submit-field">
 										<h5>Candidates Country </h5>
 										<ng-container>
 											<ng-select [items]="country_list" bindLabel="name" placeholder="Select Country" appendTo="body"
 												[multiple]="false" name="candidate_country" id="candidate_country" [(ngModel)]="form_data.candidate_country"
-												class="input1text with-border  mb-0 pb-0" required #CountryCandidate="ngModel" (change)="get_state($event)">
+												class="input1text with-border  mb-0 pb-0" #CountryCandidate="ngModel" (change)="get_state($event)">
 											</ng-select>
 											<span class="text-muted text-sm">Country candidate should belong to</span>
 										</ng-container>
@@ -222,103 +267,134 @@
 								</div>
 							</div>
 							</div>
-						
+							<ng-container *ngIf="form_data.candidate_type == '1' || form_data.candidate_type == '2' || form_data.candidate_type == '3'">
+								<hr class="mt-1 mb-3">
+								<h5 class="mb-2 form-inner-heading">Salary Details</h5>
+									<div class="row">
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+											<div class="submit-field">
+												<h5>Rate Type <span class="text-danger font-20">*</span></h5>
+												<select class="form-control with-border" title="Select Rate Type" name="rate_type" id="rate_type"
+													[(ngModel)]="form_data.rate_type" required #rate_type="ngModel">
+													<option value="" disabled>Select a Rate Type</option>
+													<option value="hourly"> Hourly </option>
+													<option value="yearly"> Yearly</option>
+												</select>
+												<div *ngIf="rate_type.invalid && (rate_type.dirty || rate_type.touched)" class="text-danger small">
+													Rate Type is required.
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-4 col-sm-4 col-md-4" >
+											<div class="submit-field">
+												<h5>Salary ($) <span class="text-danger font-20">*</span></h5>
+												<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="fixed_rate" id="fixed_rate"
+													placeholder="Salary" required [(ngModel)]="form_data.fixed_rate" #fixed_rate="ngModel" pattern="[0-9]+" />
+												<div *ngIf="fixed_rate.invalid && (fixed_rate.dirty || fixed_rate.touched)" class="text-danger small">
+													Salary is required, (only number allowed))
+												</div>
+											</div>
+										</div>
+									</div>
+							</ng-container>
 						 
 						
-							<hr class="mt-1 mb-3">
-							<h5 class="mb-2 form-inner-heading">Project Details</h5>
+							<ng-container *ngIf="form_data.candidate_type == '4' || form_data.candidate_type == '5'">
+								<hr class="mt-1 mb-3">
+								<h5 class="mb-2 form-inner-heading">Project Details</h5>
+								<div class="row">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Rate Type <span class="text-danger font-20">*</span></h5>
+											<select class="form-control with-border" title="Select Rate Type" name="rate_type" id="rate_type"
+											[(ngModel)]="form_data.rate_type" required #rate_type="ngModel">
+											<option value="" disabled>Select a Rate Type</option>
+											<option value="hourly"> Hourly Rate </option>
+											<option value="fixed"> Fixed Rate </option>
+										</select>
+										<div *ngIf="rate_type.invalid && (rate_type.dirty || rate_type.touched)" class="text-danger small">
+											Rate Type is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
+									<div class="submit-field">
+										<h5>Hourly Rate From ($) <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_from" id="hourly_rate_from" placeholder="Enter Hourly Rate From" required [(ngModel)]="form_data.hourly_rate_from" #hourly_rate_from="ngModel"  pattern="[0-9]+" />
+										<div *ngIf="hourly_rate_from.invalid && (hourly_rate_from.dirty || hourly_rate_from.touched)" class="text-danger small">
+											Hourly Rate From is required, (only number allowed))
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-1 col-1 col-sm-1 col-md-1" *ngIf="form_data.rate_type == 'hourly'">
+									<div class="submit-field  mt-4 pt-2">to</div>
+									
+								</div>
+								<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
+									<div class="submit-field">
+										<h5>Hourly Rate To ($) <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_to" id="hourly_rate_to" placeholder="Enter Hourly Rate To" required [(ngModel)]="form_data.hourly_rate_to" #hourly_rate_to="ngModel" pattern="[0-9]+" />
+										<div *ngIf="hourly_rate_to.invalid && (hourly_rate_to.dirty || hourly_rate_to.touched)" class="text-danger small">
+											Hourly Rate To is required, (only number allowed))
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4" *ngIf="form_data.rate_type == 'fixed'">
+									<div class="submit-field">
+										<h5>Fixed Rate ($) <span class="text-danger font-20">*</span></h5>
+										<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="fixed_rate" id="fixed_rate"
+											placeholder="Fixed Rate" required [(ngModel)]="form_data.fixed_rate" 	#fixed_rate="ngModel" pattern="[0-9]+" />
+										<div *ngIf="fixed_rate.invalid && (fixed_rate.dirty || fixed_rate.touched)" class="text-danger small">
+											Fixed Rate is required, (only number allowed))
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
 									<div class="submit-field">
-										<h5>Rate Type <span class="text-danger font-20">*</span></h5>
-										<select class="form-control with-border" title="Select Rate Type" name="rate_type" id="rate_type"
-										[(ngModel)]="form_data.rate_type" required #rate_type="ngModel">
-										<option value="" disabled>Select a Rate Type</option>
-										<option value="hourly"> Hourly Rate </option>
-										<option value="fixed"> Fixed Rate </option>
-									</select>
-									<div *ngIf="rate_type.invalid && (rate_type.dirty || rate_type.touched)" class="text-danger small">
-										Rate Type is required.
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
-								<div class="submit-field">
-									<h5>Hourly Rate From ($) <span class="text-danger font-20">*</span></h5>
-									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_from" id="hourly_rate_from" placeholder="Enter Hourly Rate From" required [(ngModel)]="form_data.hourly_rate_from" #hourly_rate_from="ngModel"  pattern="[0-9]+" />
-									<div *ngIf="hourly_rate_from.invalid && (hourly_rate_from.dirty || hourly_rate_from.touched)" class="text-danger small">
-										Hourly Rate From is required, (only number allowed))
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-1 col-1 col-sm-1 col-md-1" *ngIf="form_data.rate_type == 'hourly'">
-								<div class="submit-field  mt-4 pt-2">to</div>
+										<h5>Project Type <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Project Status" name="project_type" id="project_type"
+											[(ngModel)]="form_data.project_type" required #project_type="ngModel">
 								
-							</div>
-							<div class="col-xl-3 col-3 col-sm-3 col-md-3" *ngIf="form_data.rate_type == 'hourly'">
-								<div class="submit-field">
-									<h5>Hourly Rate To ($) <span class="text-danger font-20">*</span></h5>
-									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="hourly_rate_to" id="hourly_rate_to" placeholder="Enter Hourly Rate To" required [(ngModel)]="form_data.hourly_rate_to" #hourly_rate_to="ngModel" pattern="[0-9]+" />
-									<div *ngIf="hourly_rate_to.invalid && (hourly_rate_to.dirty || hourly_rate_to.touched)" class="text-danger small">
-										Hourly Rate To is required, (only number allowed))
+											<option value="1"> Short Term </option>
+											<option value="2"> Long Term </option>
+										</select>
+										<div *ngIf="project_type.invalid && (project_type.dirty || project_type.touched)" class="text-danger small">
+											Project Status is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Project Status <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Project Status" name="project_status" id="project_status"
+											[(ngModel)]="form_data.project_status" required #project_status="ngModel">
+											
+											<option value="1"> New Project </option>
+											<option value="2"> On Going Project </option>
+										</select>
+										<div *ngIf="project_status.invalid && (project_status.dirty || project_status.touched)" class="text-danger small">
+											Project Status is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+									<div class="submit-field">
+										<h5>Project Length <span class="text-danger font-20">*</span></h5>
+										<select class="form-control with-border" title="Select Project Length" name="project_length" id="project_length"
+											[(ngModel)]="form_data.project_length" required #project_length="ngModel">
+											
+											<option *ngFor="let length of project_length_list" [value]="length.value"> {{length.heading}} </option>
+											
+										</select>
+										<div *ngIf="project_length.invalid && (project_length.dirty || project_length.touched)" class="text-danger small">
+											Project Length is required.
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4" *ngIf="form_data.rate_type == 'fixed'">
-								<div class="submit-field">
-									<h5>Fixed Rate ($) <span class="text-danger font-20">*</span></h5>
-									<input type="text" class=" height-38 input-text with-border  mb-0 pb-0" name="fixed_rate" id="fixed_rate"
-										placeholder="Fixed Rate" required [(ngModel)]="form_data.fixed_rate" 	#fixed_rate="ngModel" pattern="[0-9]+" />
-									<div *ngIf="fixed_rate.invalid && (fixed_rate.dirty || fixed_rate.touched)" class="text-danger small">
-										Fixed Rate is required, (only number allowed))
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="submit-field">
-									<h5>Project Type <span class="text-danger font-20">*</span></h5>
-									<select class="form-control with-border" title="Select Project Status" name="project_type" id="project_type"
-										[(ngModel)]="form_data.project_type" required #project_type="ngModel">
-							
-										<option value="1"> Short Term </option>
-										<option value="2"> Long Term </option>
-									</select>
-									<div *ngIf="project_type.invalid && (project_type.dirty || project_type.touched)" class="text-danger small">
-										Project Status is required.
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="submit-field">
-									<h5>Project Status <span class="text-danger font-20">*</span></h5>
-									<select class="form-control with-border" title="Select Project Status" name="project_status" id="project_status"
-										[(ngModel)]="form_data.project_status" required #project_status="ngModel">
-										
-										<option value="1"> New Project </option>
-										<option value="2"> On Going Project </option>
-									</select>
-									<div *ngIf="project_status.invalid && (project_status.dirty || project_status.touched)" class="text-danger small">
-										Project Status is required.
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-4 col-4 col-sm-4 col-md-4">
-								<div class="submit-field">
-									<h5>Project Length <span class="text-danger font-20">*</span></h5>
-									<select class="form-control with-border" title="Select Project Length" name="project_length" id="project_length"
-										[(ngModel)]="form_data.project_length" required #project_length="ngModel">
-										
-										<option *ngFor="let length of project_length_list" [value]="length.value"> {{length.heading}} </option>
-										
-									</select>
-									<div *ngIf="project_length.invalid && (project_length.dirty || project_length.touched)" class="text-danger small">
-										Project Length is required.
-									</div>
-								</div>
-							</div>
-						</div>
+							</ng-container>
 
 							<div class="row">
 								<div class="col-xl-12 col-12 col-sm-12 col-md-12">
@@ -393,16 +469,16 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-xl-1 col-1 col-sm-1 col-md-1">
+								<div class="col-xl-1 col-1 col-sm-1 col-md-1 pr-0">
 									<br>
-									<button type="button" class="btn btn-sm btn-danger mt-3" (click)="remove_row(i)"><i class="icon-line-awesome-times-circle-o"></i></button>
+									<button type="button" class="btn btn-sm btn-danger mt-3 float-right pull-right" (click)="remove_row(i)"><i class="icon-line-awesome-times-circle-o"></i></button>
 								</div>
 								</div>
 						</ng-container>
 							</div>
 						</div>
 						
-						<div class="dashboard-box margin-top-0 margin-bottom-30">
+						<!-- <div class="dashboard-box margin-top-0 margin-bottom-30">
 							<div class="headline pt-3 pb-2 pl-3 pr-3">
 								<div class="row">
 									<div class="col-md-6 col-sm-6 col-lg-6">
@@ -450,7 +526,7 @@
 									</div>
 								</ng-container>
 							</div>
-						</div>
+						</div> -->
 						
 						<div class="row">
 							<div class="col-xl-12">

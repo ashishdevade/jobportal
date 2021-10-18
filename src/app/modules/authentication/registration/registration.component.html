@@ -62,7 +62,7 @@
 						<div class="input-with-icon-left" *ngIf="account_type == 'Company'">
 							<i class="icon-material-outline-location-city"></i>
 							<select  class="with-border p-0"  title="Select Industry" name="industry" id="industry" [(ngModel)]="industry" required #industryobj="ngModel" (change)="select_industry()">
-								<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  Select an Industry</option>
+								<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  Select an Industry</option>
 								<option *ngFor="let item of this.industry_list" [value]="item.id" class="t-t-cap"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; {{item.name}}</option>
 								<option value="-1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Other</option>
 							</select>
@@ -73,7 +73,7 @@
 						
 						<div class="input-with-icon-left mt-3"  *ngIf="industry == -1">
 							<i class="icon-material-outline-location-city"></i>
-							<input type="text" class="input-text with-border"  name="other_industry"  [(ngModel)]="other_industry" id="other_industry" placeholder="Enter Your Industry" required  #otherindustry="ngModel"/>
+							<input type="text" class="input-text with-border"  name="other_industry"  [(ngModel)]="other_industry" id="other_industry" placeholder="Enter Your Industry Name" required  #otherindustry="ngModel"/>
 							<div *ngIf="otherindustry.invalid && (otherindustry.dirty || otherindustry.touched)" class="text-danger small">
 								Industry is required. 
 							</div>

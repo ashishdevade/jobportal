@@ -14,7 +14,7 @@ export class RegistrationComponent implements OnInit {
 
 	public common_params = new CommonFunctions();
 	public company_name = "";
-	public industry:any = 0;
+	public industry:any = '';
 	public other_industry = "";
 	public firstname = "";
 	public lastname = "";
@@ -32,6 +32,7 @@ export class RegistrationComponent implements OnInit {
 		) { }
 
 	ngOnInit() {
+		this.industry = '';
 		this.get_industry_list("");
 	}
 	

@@ -70,7 +70,16 @@ export class JobPostionComponent implements OnInit {
 
     });
     
-    this.get_industry_list(() => {
+    this.get_industry_list((response) => {
+      let d = response.data.filter((obj)=>{
+        return obj.id == this.company_details.industry
+      });
+      
+      if (d.length > 0){
+        this.form_data.industry = d[0]['id'];
+        this.form_data.industry_name = d[0]['name'];
+      }
+      
       this.get_job_profile(() => {
         this.show_loader = false;
 
@@ -80,12 +89,14 @@ export class JobPostionComponent implements OnInit {
     if (this.job_id == null) {
       this.success_message = 'Job Posting Added Successfully';
       this.form_data.candidate_required_id = 1;
-      this.form_data.candidate_type = '5';
+      this.form_data.candidate_type = '2';
       this.form_data.rate_type = 'hourly';
       this.form_data.project_status = '1';
       this.form_data.project_type  = '1';
       this.form_data.category_id = '';
-      this.form_data.profile_id = '';
+      this.form_data.profile_id = 0;
+      
+      this.form_data.other_industry = this.company_details.industry;
       this.form_data.minimum_hours_from_candidate = 20;
       this.form_data.job_country_id = this.company_details['country_id'];
       this.form_data.job_country_name = this.company_details['country'];
@@ -93,6 +104,8 @@ export class JobPostionComponent implements OnInit {
       this.form_data.project_length = this.project_length_list[0]['value'];
       this.form_data.expert_level = this.expertise_level[0]['value']
       this.form_data.status = 1;
+      this.form_data.job_preference = 'Remote';
+      this.form_data.department = '';
       this.form_data.hourly_rate_from = 5;
       this.form_data.hourly_rate_to = 200;
       this.form_data.question_list = [];
@@ -132,13 +145,15 @@ export class JobPostionComponent implements OnInit {
         this.form_data.candidate_country = this.form_data.candidate_country_name;
         this.form_data.candidate_state = this.form_data.candidate_state_name;
         this.form_data.candidate_city = this.form_data.candidate_city_name;
-				this.form_data.candidate_country_id = this.form_data.candidate_country_id
+          this.form_data.candidate_country_id = (this.form_data.candidate_country_id != null) ? this.form_data.candidate_country_id : 0
 				this.form_data.candidate_country_name = this.form_data.candidate_country_name
 				this.form_data.candidate_state_name = this.form_data.candidate_state_name
-				this.form_data.candidate_state_id = this.form_data.candidate_state_id
-				this.form_data.candidate_city_id = this.form_data.candidate_city_id
+          this.form_data.candidate_state_id = (this.form_data.candidate_state_id != null) ? this.form_data.candidate_state_id : 0
+          this.form_data.candidate_city_id = (this.form_data.candidate_city_id != null) ? this.form_data.candidate_city_id : 0
 				this.form_data.candidate_city_name = this.form_data.candidate_city_name
-				this.form_data.candidate_language = this.form_data.candidate_language
+          this.form_data.candidate_language = this.form_data.candidate_language
+          this.form_data.department = this.form_data.department
+          this.form_data.job_preference = this.form_data.job_preference
 				this.form_data.status = parseInt(this.form_data.job_status)
        
           console.log("this.form_data ", this.form_data);
@@ -279,7 +294,7 @@ export class JobPostionComponent implements OnInit {
         if (response.status == 200) {
           this.industry_list = response['data'];
           if (callback != "" && callback != undefined) {
-            callback()
+            callback(response)
           } else {
             this.show_loader = false;
           }
@@ -396,7 +411,7 @@ export class JobPostionComponent implements OnInit {
           this.show_loader = false;
           setTimeout(() => {
             this.goback()
-          });
+          }, 1000);
 
         } else {
           this.common_service.show_toast('e', "one " + this.common_service.error_message, "");
