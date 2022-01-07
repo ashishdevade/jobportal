@@ -114,11 +114,47 @@
 											<ng-container>
 												<ng-select [items]="country_list" bindLabel="name" placeholder="Select Country" appendTo="body"
 													[multiple]="false" name="country_field" id="country_field" [(ngModel)]="form_data.job_country"
-													class="input1text with-border  mb-0 pb-0" required #jobLocation="ngModel" disabled >
+													class="input1text with-border  mb-0 pb-0" required #jobLocation="ngModel" >
 												</ng-select>
 												<span class="text-muted text-sm">Job belongs to which country</span>
 											</ng-container>
 											
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Job Location Country </h5>
+											<ng-container>
+												<ng-select [items]="country_list" bindLabel="name" placeholder="Select Country" appendTo="body"
+													[multiple]="false" name="country_field" id="country_field" [(ngModel)]="form_data.job_country"
+													class="input1text with-border  mb-0 pb-0" required #jobLocation="ngModel" (change)="job_get_state($event)">
+												</ng-select>
+												<span class="text-muted text-sm">Job belongs to which country</span>
+											</ng-container>
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Job Location State </h5>
+											<ng-container>
+												<ng-select [items]="job_state_list" bindLabel="name" placeholder="Select State" appendTo="body" [multiple]="false"
+													name="job_state_list" id="job_state_list" [(ngModel)]="form_data.location_state"
+													class="input1text with-border  mb-0 pb-0" #CandidateState="ngModel" (change)="job_state_select($event)">
+												</ng-select>
+											</ng-container>
+										</div>
+									</div>
+									<div class="col-xl-4 col-4 col-sm-4 col-md-4">
+										<div class="submit-field">
+											<h5>Job Location City </h5>
+											<ng-container>
+												<ng-select [items]="job_city_list" bindLabel="name" placeholder="Select City" appendTo="body" [multiple]="false"
+													name="job_city_list" id="job_city_list" [(ngModel)]="form_data.location_city"
+													class="input1text with-border  mb-0 pb-0" #CandidateCity="ngModel" (change)="job_city_select($event)">
+												</ng-select>
+											</ng-container>
 										</div>
 									</div>
 								</div>

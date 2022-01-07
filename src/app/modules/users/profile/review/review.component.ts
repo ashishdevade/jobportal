@@ -235,27 +235,35 @@ export class ReviewComponent implements OnInit {
 				return res.value == this.user_account_data[0]['location_preference'];
 			});			
 			
-			this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
+			if (location_res.length > 0){
+				this.user_account_data[0]['location_preference_label'] = location_res[0]['heading'];
+			}
 			
 			let timeline_hiring_res = this.timeline_hiring.filter((res)=>{
 				return res.value == this.user_account_data[0]['timeline_hiring'];
 			});			
 			
-			this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
+			if (timeline_hiring_res.length > 0){
+				this.user_account_data[0]['timeline_hiring_label'] = timeline_hiring_res[0]['heading'];
+			}
 			
 			let weekly_arr_res = this.to_week_array.filter((res)=>{
 				return res.value == this.user_account_data[0]['timeline_hiring_weeks'];
 			});
 			
-			this.user_account_data[0]['timeline_hiring_week_label'] = weekly_arr_res[0]['heading'];
-			
+			if (weekly_arr_res.length > 0){
+				this.user_account_data[0]['timeline_hiring_week_label'] = weekly_arr_res[0]['heading'];
+			}
 		}
 		
 		let job_type_res = this.job_type.filter((res)=>{
 			return res.value == this.user_account_data[0]['job_type'];
 		});			
 		
-		this.user_account_data[0]['job_type_label'] = job_type_res[0]['heading'];
+		if (job_type_res.length > 0){
+			this.user_account_data[0]['job_type_label'] = job_type_res[0]['heading'];
+		}
+		
 		
 		if(this.user_account_data[0]['uploaded_jd']!= '' && this.user_account_data[0]['uploaded_jd']!= null){
 			this.user_account_data[0]['uploaded_jd'] =  this.service_url + '/' + this.user_account_data[0]['uploaded_jd'];;

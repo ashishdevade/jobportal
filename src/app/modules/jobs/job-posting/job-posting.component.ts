@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild  } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { CommonFunctions } from "src/app/core/helpers/common.functions";
@@ -14,35 +14,37 @@ import { SharedService } from "src/app/core/services/shared.service";
 
 export class JobPostionComponent implements OnInit {
 
-  public job_id:any = '';
+  public job_id: any = '';
   public common_params = new CommonFunctions();
   public show_loader = false;
-  public form_data:any = {};
-  public password_form_data:any = {};
+  public form_data: any = {};
+  public password_form_data: any = {};
   public success_message = '';
-  public candidate_required_list:any = [];
-  public candidate_type_list : any = [];
-  public job_category_list:any = [];
-  public skills_list:any = [];
-  public country_list:any = [];
+  public candidate_required_list: any = [];
+  public candidate_type_list: any = [];
+  public job_category_list: any = [];
+  public skills_list: any = [];
+  public country_list: any = [];
   public job_profile_list: any;
   public industry_list: any;
-  public  candidate_language_list: any;
+  public candidate_language_list: any;
   state_list: any;
   city_list: any;
-  expertise_level:any
+  expertise_level: any
   public project_length_list = [];
   public question_list = [];
-  public company_details:any = {};
-  
+  public company_details: any = {};
+  public job_state_list: any = [];
+  public job_city_list: any = [];
+
   constructor(
     private router: Router,
     private ActivatedRoute: ActivatedRoute,
-    public common_service : CommonService,
-    public service : MainService,
-    public shared_service : SharedService
-    ) {  }
-  
+    public common_service: CommonService,
+    public service: MainService,
+    public shared_service: SharedService
+  ) { }
+
   ngOnInit() {
     this.common_service.check_session_on();
     this.job_id = this.ActivatedRoute.snapshot.paramMap.get('one');
@@ -50,57 +52,63 @@ export class JobPostionComponent implements OnInit {
     this.project_length_list = this.common_params.project_length;
     this.company_details = JSON.parse(sessionStorage.user_details);
     this.candidate_type_list = this.common_params.candidate_type;
-    for(var i = 1; i <= 100; i++){
-      this.candidate_required_list.push( { "key" : i, "value" : i } );
+    for (var i = 1; i <= 100; i++) {
+      this.candidate_required_list.push({ "key": i, "value": i });
     }
-  
+
     this.show_loader = true;
-    this.get_language_list(()=>{
-      
+    this.get_language_list(() => {
+
     });
     this.get_countries(() => {
 
     });
-    
+
     this.get_skills(() => {
 
     });
-    
+
     this.get_category_list(() => {
 
     });
-    
+
     this.get_industry_list((response) => {
-      let d = response.data.filter((obj)=>{
+      let d = response.data.filter((obj) => {
         return obj.id == this.company_details.industry
       });
-      
-      if (d.length > 0){
+
+      if (d.length > 0) {
         this.form_data.industry = d[0]['id'];
         this.form_data.industry_name = d[0]['name'];
       }
-      
+
       this.get_job_profile(() => {
         this.show_loader = false;
 
       });
     });
-    
+
     if (this.job_id == null) {
       this.success_message = 'Job Posting Added Successfully';
       this.form_data.candidate_required_id = 1;
       this.form_data.candidate_type = '2';
       this.form_data.rate_type = 'hourly';
       this.form_data.project_status = '1';
-      this.form_data.project_type  = '1';
+      this.form_data.project_type = '1';
       this.form_data.category_id = '';
       this.form_data.profile_id = 0;
-      
+
       this.form_data.other_industry = this.company_details.industry;
       this.form_data.minimum_hours_from_candidate = 20;
       this.form_data.job_country_id = this.company_details['country_id'];
       this.form_data.job_country_name = this.company_details['country'];
       this.form_data.job_country = this.company_details['country'];
+      this.form_data.location_state_id = '';
+      this.form_data.location_state = '';
+      this.form_data.location_state_name = '';
+      this.form_data.location_city_id = '';
+      this.form_data.location_city = '';
+      this.form_data.location_city_name = '';
       this.form_data.project_length = this.project_length_list[0]['value'];
       this.form_data.expert_level = this.expertise_level[0]['value']
       this.form_data.status = 1;
@@ -112,6 +120,16 @@ export class JobPostionComponent implements OnInit {
       this.form_data.skill_expertise_list = [];
       this.add_more_rows();
       this.add_more_skills();
+      this.service.get_states(this.form_data.job_country_id).subscribe(response => {
+        if (response.status == 200) {
+          this.job_state_list = response.data;
+        }
+        this.show_loader = false;
+
+      }, error => {
+        this.show_loader = false;
+        this.common_service.show_toast('e', this.common_service.error_message, "");
+      });
     } else {
       this.success_message = 'Job Posting Updated Successfully';
       this.get_all_job_posting(this.job_id, (response) => {
@@ -121,51 +139,72 @@ export class JobPostionComponent implements OnInit {
         if (response != undefined && response['data'] != undefined) {
           this.form_data = response['data'][0];
           this.form_data.job_desc = this.form_data.job_description,
-          
-				
-        this.form_data.candidate_req_details = this.form_data.candidate_required_description
-				this.form_data.expert_level = this.form_data.expert_level
-          this.form_data.job_country = this.form_data.location_country;
-				this.form_data.job_country_id = this.form_data.location_country_id
-				this.form_data.job_country_name = this.form_data.location_country
-				this.form_data.category_id = this.form_data.category
-				this.form_data.profile_id = this.form_data.job_profile_id
-				this.form_data.industry = this.form_data.industry_id
-				this.form_data.skills = this.form_data.skills_list
-				this.form_data.rate_type = this.form_data.rate_type
-				this.form_data.hourly_rate_from = this.form_data.hourly_rate_from
-				this.form_data.hourly_rate_to = this.form_data.hourly_rate_to
-				this.form_data.fixed_rate = this.form_data.fixed_rate
-				this.form_data.project_type = this.form_data.project_type
-				this.form_data.project_status = this.form_data.project_status
-				this.form_data.project_length = this.form_data.project_length
-				this.form_data.candidate_type = this.form_data.candidate_required_type
-				this.form_data.candidate_required_id = this.form_data.total_candidate_required
-				this.form_data.minimum_hours_from_candidate = this.form_data.minimum_hours_from_candidate
-        this.form_data.candidate_country = this.form_data.candidate_country_name;
-        this.form_data.candidate_state = this.form_data.candidate_state_name;
-        this.form_data.candidate_city = this.form_data.candidate_city_name;
+
+
+            this.form_data.candidate_req_details = this.form_data.candidate_required_description
+          this.form_data.expert_level = this.form_data.expert_level
+          this.form_data.job_country_id = (this.form_data.location_country_id != null) ? this.form_data.location_country_id : this.company_details['country_id'];
+          this.form_data.job_country = (this.form_data.location_country != null) ? this.form_data.location_country : this.company_details['country'];
+          this.form_data.job_country_name = (this.form_data.location_country != null) ? this.form_data.location_country : this.company_details['country'];
+
+          this.form_data.location_state_id = this.form_data.location_state_id;
+          this.form_data.location_state = this.form_data.location_state;
+          this.form_data.location_state_name = this.form_data.location_state;
+
+          this.form_data.location_city_id = this.form_data.location_city_id;
+          this.form_data.location_city = this.form_data.location_city
+          this.form_data.location_city_name = this.form_data.location_city;
+
+          this.form_data.category_id = this.form_data.category
+          this.form_data.profile_id = this.form_data.job_profile_id
+          this.form_data.industry = this.form_data.industry_id
+          this.form_data.skills = this.form_data.skills_list
+          this.form_data.rate_type = this.form_data.rate_type
+          this.form_data.hourly_rate_from = this.form_data.hourly_rate_from
+          this.form_data.hourly_rate_to = this.form_data.hourly_rate_to
+          this.form_data.fixed_rate = this.form_data.fixed_rate
+          this.form_data.project_type = this.form_data.project_type
+          this.form_data.project_status = this.form_data.project_status
+          this.form_data.project_length = this.form_data.project_length
+          this.form_data.candidate_type = this.form_data.candidate_required_type
+          this.form_data.candidate_required_id = this.form_data.total_candidate_required
+          this.form_data.minimum_hours_from_candidate = this.form_data.minimum_hours_from_candidate
+          this.form_data.candidate_country = this.form_data.candidate_country_name;
+          this.form_data.candidate_state = this.form_data.candidate_state_name;
+          this.form_data.candidate_city = this.form_data.candidate_city_name;
           this.form_data.candidate_country_id = (this.form_data.candidate_country_id != null) ? this.form_data.candidate_country_id : 0
-				this.form_data.candidate_country_name = this.form_data.candidate_country_name
-				this.form_data.candidate_state_name = this.form_data.candidate_state_name
+          this.form_data.candidate_country_name = (this.form_data.candidate_country_name!= null && this.form_data.candidate_country_name!= "null") ? this.form_data.candidate_country_name : ""
+          this.form_data.candidate_state_name = (this.form_data.candidate_state_name!= null && this.form_data.candidate_state_name!= "null") ? this.form_data.candidate_state_name : ""
           this.form_data.candidate_state_id = (this.form_data.candidate_state_id != null) ? this.form_data.candidate_state_id : 0
           this.form_data.candidate_city_id = (this.form_data.candidate_city_id != null) ? this.form_data.candidate_city_id : 0
-				this.form_data.candidate_city_name = this.form_data.candidate_city_name
+          this.form_data.candidate_city_name = (this.form_data.candidate_city_name!= null && this.form_data.candidate_city_name!= "null") ? this.form_data.candidate_city_name : ""
           this.form_data.candidate_language = this.form_data.candidate_language
           this.form_data.department = this.form_data.department
           this.form_data.job_preference = this.form_data.job_preference
-				this.form_data.status = parseInt(this.form_data.job_status)
-       
+          this.form_data.status = parseInt(this.form_data.job_status)
           console.log("this.form_data ", this.form_data);
+
+          this.service.get_states(this.form_data.job_country_id).subscribe(response => {
+            if (response.status == 200) {
+              this.job_state_list = response.data;
+            }
+            this.show_loader = false;
+
+          }, error => {
+            this.show_loader = false;
+            this.common_service.show_toast('e', this.common_service.error_message, "");
+          });
         } else {
           this.common_service.show_toast('i', "No Jobs Found.", "");
           this.form_data = {};
         }
       });
     }
+
+    
   }
-  
-  get_all_job_posting(job_id , callback) {
+
+  get_all_job_posting(job_id, callback) {
     this.service.get_job_posting('', job_id, 'd').subscribe(response => {
       if (response.status == 200) {
         if (callback != "" && callback != undefined) {
@@ -182,7 +221,7 @@ export class JobPostionComponent implements OnInit {
       this.common_service.show_toast('e', this.common_service.error_message, "");
     });
   }
-  
+
   get_skills(callback) {
     this.show_loader = true;
     console.log(" in get_skills ");
@@ -202,18 +241,18 @@ export class JobPostionComponent implements OnInit {
     });
   }
 
-  
+
   add_more_rows() {
     this.form_data.question_list.push({
       "question": "",
       "mandatory": "1",
     });
   }
-  
-  remove_row(index){
+
+  remove_row(index) {
     this.form_data.question_list.splice(index, 1);
   }
-  
+
   add_more_skills() {
     this.form_data.skill_expertise_list.push({
       "headinng": "",
@@ -224,7 +263,7 @@ export class JobPostionComponent implements OnInit {
   remove_skills(index) {
     this.form_data.skill_expertise_list.splice(index, 1);
   }
-  
+
   get_category_list(callback) {
     setTimeout(() => {
       this.service.get_category_list('').subscribe(response => {
@@ -246,7 +285,7 @@ export class JobPostionComponent implements OnInit {
       });
     }, 50);
   }
-   
+
   get_language_list(callback) {
     this.show_loader = true;
     console.log(" in get_language_list ");
@@ -265,7 +304,7 @@ export class JobPostionComponent implements OnInit {
       this.common_service.show_toast('e', this.common_service.error_message, "");
     });
   }
-  
+
   get_job_profile(callback) {
     setTimeout(() => {
       this.service.get_job_profile('').subscribe(response => {
@@ -286,10 +325,10 @@ export class JobPostionComponent implements OnInit {
       });
     }, 50);
   }
-  
+
   get_industry_list(callback) {
     setTimeout(() => {
-     let  typeind = 'Company';
+      let typeind = 'Company';
       this.service.get_industry_list('', typeind).subscribe(response => {
         if (response.status == 200) {
           this.industry_list = response['data'];
@@ -308,7 +347,7 @@ export class JobPostionComponent implements OnInit {
       });
     }, 50);
   }
-  
+
   get_countries(callback) {
     this.show_loader = true;
     this.service.get_countries(-1).subscribe(response => {
@@ -326,10 +365,10 @@ export class JobPostionComponent implements OnInit {
       this.common_service.show_toast('e', this.common_service.error_message, "");
     });
   }
-  
+
   get_states(country_id, callback) {
-    this.show_loader = true;
     console.log(" in get_states ");
+    this.show_loader = true;
     this.service.get_states(country_id).subscribe(response => {
       if (response.status == 200) {
         this.state_list = response.data;
@@ -363,7 +402,44 @@ export class JobPostionComponent implements OnInit {
       this.common_service.show_toast('e', this.common_service.error_message, "");
     });
   }
-  
+
+  job_get_state($event) {
+    this.form_data.job_country_name = $event.name;
+    this.form_data.job_country_id = $event.id;
+    this.show_loader = true;
+    this.service.get_states(this.form_data.job_country_id).subscribe(response => {
+      if (response.status == 200) {
+        this.job_state_list = response.data;
+      }
+      this.show_loader = false;
+
+    }, error => {
+      this.show_loader = false;
+      this.common_service.show_toast('e', this.common_service.error_message, "");
+    });
+  }
+
+  job_state_select($event) {
+    this.form_data.location_state_name = $event.name;
+    this.form_data.location_state_id = $event.id;
+    this.show_loader = true;
+    this.service.get_cities(this.form_data.location_state_id).subscribe(response => {
+      if (response.status == 200) {
+        this.job_city_list = response.data;
+      }
+      this.show_loader = false;
+
+    }, error => {
+      this.show_loader = false;
+      this.common_service.show_toast('e', this.common_service.error_message, "");
+    });
+  }
+
+  job_city_select($event) {
+    this.form_data.location_city_name = $event.name;
+    this.form_data.location_city_id = $event.id;
+  }
+
   get_state($event) {
     this.form_data.candidate_country_name = $event.name;
     this.form_data.candidate_country_id = $event.id;
@@ -379,27 +455,27 @@ export class JobPostionComponent implements OnInit {
       this.show_loader = false
     })
   }
-  
+
   city_select($event) {
     this.form_data.candidate_city_name = $event.name;
     this.form_data.candidate_city_id = $event.id;
   }
-  
+
   select_skills($event) {
     this.form_data.skill_name = $event.name;
     this.form_data.skill_id = $event.id;
   }
-  
+
   select_industry($event) {
     this.form_data.industry_name = $event.name;
     this.form_data.industry_id = $event.id;
   }
-  
-  goback(){
+
+  goback() {
     let edit_router = 'jobs/listing';
     this.common_service.change_route(edit_router);
   }
-  
+
   on_submit(isValid: Boolean) {
     console.log("isValid ", isValid);
     if (isValid) {
@@ -423,9 +499,8 @@ export class JobPostionComponent implements OnInit {
         this.common_service.show_toast('e', "two " + this.common_service.error_message, "");
 
       });
-   
+
     }
   }
 
 }
- 
